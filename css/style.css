@@ -1120,24 +1120,30 @@ footer {
   font-family: 'Space Grotesk', sans-serif;
 }
 
-/* ─── Page Transitions ──────────────────────────────────────────────────────── */
-.page-transition {
+/* ─── Page Transition Overlay ───────────────────────────────────────────────── */
+#page-transition {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 850;
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  background: linear-gradient(135deg, rgba(13,148,136,0.07) 0%, rgba(124,58,237,0.07) 100%);
+  backdrop-filter: blur(1px);
+  transition: opacity 0.2s ease;
 }
 
-.page-transition.active {
-  opacity: 1;
-  transform: translateY(0);
-}
+#page-transition.active { opacity: 1; }
 
-/* Language switch transition */
-.lang-switching {
+/* ─── Language Switch Overlay ───────────────────────────────────────────────── */
+#lang-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 850;
   opacity: 0;
-  transition: opacity 0.25s ease;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(3px);
+  transition: opacity 0.18s ease;
 }
 
-.lang-switching.switched {
-  opacity: 1;
-}
+#lang-overlay.active { opacity: 1; }

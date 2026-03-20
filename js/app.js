@@ -133,16 +133,28 @@ function initNav() {
     lastY = y;
   }, { passive: true });
 
-  // Smooth scroll for anchor links
+  // Smooth scroll for anchor links with page transition
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
       const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
+      if (!target) return;
+      // close mobile menu if open
+      mobileMenu.classList.remove('open');
+      menuOverlay.classList.remove('open');
+
+      const overlay = document.getElementById('page-transition');
+      if (overlay) {
+        overlay.classList.add('active');
+        setTimeout(() => {
+          // instant scroll under the overlay
+          document.documentElement.style.scrollBehavior = 'auto';
+          target.scrollIntoView({ block: 'start' });
+          document.documentElement.style.scrollBehavior = '';
+          setTimeout(() => overlay.classList.remove('active'), 50);
+        }, 200);
+      } else {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // close mobile menu if open
-        mobileMenu.classList.remove('open');
-        menuOverlay.classList.remove('open');
       }
     });
   });
