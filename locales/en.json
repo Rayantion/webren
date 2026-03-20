@@ -38,6 +38,8 @@
     "item_7_desc": "Professional email setup via Gmail — send & receive from your own domain (noreply@yourdomain.com). Branded, reliable, and hassle-free.",
     "item_8_title": "Form → Google Sheets",
     "item_8_desc": "Contact forms that save submissions to Google Sheets and auto-reply with a branded email — \"We'll get back to you shortly.\" Zero friction, full data control.",
+    "item_9_title": "Cloudflare Security",
+    "item_9_desc": "Your site protected by Cloudflare — DDoS protection, SSL/TLS encryption, WAF firewall. Trusted by millions of websites worldwide.",
     "new_badge": "New"
   },
   "portfolio": {
@@ -90,7 +92,7 @@
   },
   "footer": {
     "tagline": "Premium web development for modern businesses.",
-    "copyright": "© 2025 Webren. All rights reserved.",
+    "copyright": "© 2025 Web人. All rights reserved.",
     "built_with": "Built with clean code & attention to detail."
   }
 }

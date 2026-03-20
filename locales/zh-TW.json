@@ -38,6 +38,8 @@
     "item_7_desc": "透過Gmail建立專業電子郵件——以您的網域收發郵件（noreply@yourdomain.com）。品牌化、可靠且簡單易用。",
     "item_8_title": "表單 → Google試算表",
     "item_8_desc": "聯絡表單將提交內容儲存至Google試算表，並自動回覆品牌郵件——「我們將盡快與您聯繫。」零阻力，完整資料掌控。",
+    "item_9_title": "Cloudflare 安全防護",
+    "item_9_desc": "網站由 Cloudflare 提供保護——DDoS防禦、SSL/TLS加密、WAF防火牆。保護全球數百萬網站的信賴選擇。",
     "new_badge": "新增"
   },
   "portfolio": {
@@ -90,7 +92,7 @@
   },
   "footer": {
     "tagline": "為現代企業提供頂級網站開發。",
-    "copyright": "© 2025 Webren。保留所有權利。",
+    "copyright": "© 2025 Web人。保留所有權利。",
     "built_with": "以乾淨程式碼與細心打造。"
   }
 }

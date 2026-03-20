@@ -1159,3 +1159,24 @@ footer {
     transform: translateY(0);
   }
 }
+
+/* ─── Portfolio Live Badge ─────────────────────────────────────────────────── */
+.portfolio-live-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #DC2626;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 100px;
+  letter-spacing: 0.5px;
+  z-index: 5;
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
