@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── Primary Meta ─────────────────────────────────────────────────── -->
+  <title>Webren — Modern Web Development | SEO, GEO, AIO & i18n Specialists</title>
+  <meta name="description" content="We build premium, high-performance websites optimised for search engines, AI discovery (GEO/AIO), and global audiences with native multi-language support.">
+  <meta name="keywords" content="web development, SEO, GEO, AIO, i18n, multilingual website, responsive design, modern website">
+  <meta name="author" content="Webren">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://webren.dev/">
+
+  <!-- ── Open Graph ────────────────────────────────────────────────────── -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://webren.dev/">
+  <meta property="og:title" content="Webren — Modern Web Development">
+  <meta property="og:description" content="Premium websites engineered for SEO, AI discovery, and global audiences. i18n-native from day one.">
+  <meta property="og:image" content="https://webren.dev/og-image.jpg">
+
+  <!-- ── Twitter Card ──────────────────────────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Webren — Modern Web Development">
+  <meta name="twitter:description" content="Premium websites built for SEO, GEO, AIO & multilingual audiences.">
+
+  <!-- ── Hreflang (i18n SEO) ───────────────────────────────────────────── -->
+  <link rel="alternate" hreflang="en" href="https://webren.dev/">
+  <link rel="alternate" hreflang="zh-TW" href="https://webren.dev/?lang=zh-TW">
+  <link rel="alternate" hreflang="x-default" href="https://webren.dev/">
+
+  <!-- ── Fonts ─────────────────────────────────────────────────────────── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- ── Styles ────────────────────────────────────────────────────────── -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- ── Structured Data ───────────────────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://webren.dev/#organization",
+        "name": "Webren",
+        "url": "https://webren.dev/",
+        "description": "Modern web development studio specialising in SEO, GEO, AIO, and multi-language websites.",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "availableLanguage": ["English", "Chinese"]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://webren.dev/#website",
+        "url": "https://webren.dev/",
+        "name": "Webren",
+        "publisher": { "@id": "https://webren.dev/#organization" }
+      },
+      {
+        "@type": "Service",
+        "name": "Web Development Services",
+        "provider": { "@id": "https://webren.dev/#organization" },
+        "serviceType": ["Web Development", "SEO", "GEO Optimization", "Multilingual Websites"],
+        "areaServed": "Worldwide"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is GEO (Generative Engine Optimization)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GEO is the practice of optimising website content to appear in AI-generated answers from tools like ChatGPT, Perplexity, and Google SGE. It involves entity-based content structures and AI-indexable markup."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you build multilingual websites?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Every website we build includes native i18n support with proper hreflang tags, locale-aware routing, and professional translations."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+<!-- Cursor glow -->
+<div id="cursor-glow" aria-hidden="true"></div>
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     NAVBAR
+──────────────────────────────────────────────────────────────────────────── -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container nav-inner">
+
+    <a href="#" class="nav-logo" aria-label="Webren home">
+      <div class="logo-dot"></div>
+      Web<span>ren</span>
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#hero" data-i18n="nav.home">Home</a></li>
+      <li><a href="#services" data-i18n="nav.services">Services</a></li>
+      <li><a href="#features" data-i18n="nav.features">Features</a></li>
+      <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language selector">
+        <button class="lang-btn active" data-lang="en" aria-label="Switch to English">EN</button>
+        <button class="lang-btn" data-lang="zh-TW" aria-label="切換至繁體中文">中文</button>
+      </div>
+      <a href="https://wa.me/6285183005811" class="btn-cta-sm desktop-only" target="_blank" rel="noopener noreferrer">
+        WhatsApp ↗
+      </a>
+      <button id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<nav id="mobile-menu" aria-label="Mobile navigation">
+  <a href="#hero" data-i18n="nav.home">Home</a>
+  <a href="#services" data-i18n="nav.services">Services</a>
+  <a href="#features" data-i18n="nav.features">Features</a>
+  <a href="#contact" data-i18n="nav.contact">Contact</a>
+  <div style="margin-top:16px; display:flex; gap:8px;">
+    <button class="lang-btn active" data-lang="en" style="flex:1; padding:12px; border-radius:10px; border:1px solid #e2e8f0; background:#fff; font-weight:600; cursor:pointer;">EN</button>
+    <button class="lang-btn" data-lang="zh-TW" style="flex:1; padding:12px; border-radius:10px; border:1px solid #e2e8f0; background:#fff; font-weight:600; cursor:pointer;">中文</button>
+  </div>
+</nav>
+<div id="menu-overlay" aria-hidden="true"></div>
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     HERO
+──────────────────────────────────────────────────────────────────────────── -->
+<section id="hero" aria-labelledby="hero-title">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+  <div class="container hero-content">
+
+    <div class="badge badge-teal reveal">
+      <span class="badge-dot"></span>
+      <span data-i18n="hero.badge">Modern Web Development</span>
+    </div>
+
+    <h1 id="hero-title">
+      <span data-i18n="hero.title" class="reveal">We Build Websites That</span><br>
+      <span class="gradient-text reveal" data-i18n="hero.title_highlight">Perform &amp; Convert</span>
+    </h1>
+
+    <p class="reveal" data-i18n="hero.subtitle">
+      Premium web experiences engineered for search engines, AI discovery, and global audiences. Your brand, elevated.
+    </p>
+
+    <div class="hero-actions reveal">
+      <a href="https://wa.me/6285183005811" class="btn-primary" target="_blank" rel="noopener noreferrer">
+        <span>💬</span>
+        <span data-i18n="hero.cta_primary">Start Your Project</span>
+      </a>
+      <a href="#services" class="btn-secondary">
+        <span data-i18n="hero.cta_secondary">View Services</span>
+        <span>↓</span>
+      </a>
+    </div>
+
+    <div class="hero-stats reveal">
+      <div class="stat-item">
+        <span class="stat-number" data-count="50" data-suffix="+">0+</span>
+        <span class="stat-label" data-i18n="hero.stat_1_label">Sites Delivered</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-count="8" data-suffix="+">0+</span>
+        <span class="stat-label" data-i18n="hero.stat_2_label">Languages Supported</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-count="99" data-suffix="%">0%</span>
+        <span class="stat-label" data-i18n="hero.stat_3_label">Uptime SLA</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="scroll-indicator" aria-hidden="true">
+    <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+  </div>
+</section>
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     SERVICES
+──────────────────────────────────────────────────────────────────────────── -->
+<section id="services" aria-labelledby="services-title">
+  <div class="container">
+
+    <header class="section-header">
+      <div class="badge badge-teal reveal">
+        <span class="badge-dot"></span>
+        <span data-i18n="services.badge">What We Build</span>
+      </div>
+      <h2 id="services-title" class="reveal" data-i18n="services.title">Full-Stack Web Services</h2>
+      <p class="reveal" data-i18n="services.subtitle">From landing pages to complex web applications — we engineer digital experiences that drive results.</p>
+    </header>
+
+    <div class="services-grid">
+
+      <article class="service-card reveal">
+        <div class="service-icon teal" aria-hidden="true">🔍</div>
+        <h3 data-i18n="services.item_1_title">SEO Engineering</h3>
+        <p data-i18n="services.item_1_desc">Technical SEO from the ground up. Schema markup, Core Web Vitals optimization, semantic HTML, and structured data that search engines love.</p>
+      </article>
+
+      <article class="service-card reveal">
+        <div class="service-icon violet" aria-hidden="true">🤖</div>
+        <h3 data-i18n="services.item_2_title">GEO &amp; AIO Ready</h3>
+        <p data-i18n="services.item_2_desc">Generative Engine Optimization — built for AI search (ChatGPT, Perplexity, Gemini). Entity-based content structures and AI-indexable markup.</p>
+      </article>
+
+      <article class="service-card reveal">
+        <div class="service-icon cyan" aria-hidden="true">🌐</div>
+        <h3 data-i18n="services.item_3_title">Multi-Language (i18n)</h3>
+        <p data-i18n="services.item_3_desc">Native internationalization with hreflang tags, locale-aware routing, and professional translations. Reach every market.</p>
+      </article>
+
+      <article class="service-card reveal">
+        <div class="service-icon emerald" aria-hidden="true">⚡</div>
+        <h3 data-i18n="services.item_4_title">Performance First</h3>
+        <p data-i18n="services.item_4_desc">100/100 Lighthouse scores. Sub-2s load times. Optimized assets, lazy loading, and CDN strategies for blazing-fast delivery.</p>
+      </article>
+
+      <article class="service-card reveal">
+        <div class="service-icon teal" aria-hidden="true">📱</div>
+        <h3 data-i18n="services.item_5_title">Responsive Design</h3>
+        <p data-i18n="services.item_5_desc">Pixel-perfect across all devices. Mobile-first architecture with fluid layouts that look stunning from phone to 4K.</p>
+      </article>
+
+      <article class="service-card reveal">
+        <div class="service-icon violet" aria-hidden="true">💻</div>
+        <h3 data-i18n="services.item_6_title">Modern Tech Stack</h3>
+        <p data-i18n="services.item_6_desc">Clean, maintainable code. Vanilla HTML/CSS/JS, React, Next.js, or whatever fits your project — we build it right.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     FEATURES
+──────────────────────────────────────────────────────────────────────────── -->
+<section id="features" aria-labelledby="features-title">
+  <div class="container">
+
+    <header class="section-header">
+      <div class="badge badge-violet reveal">
+        <span class="badge-dot"></span>
+        <span data-i18n="features.badge">Why Choose Us</span>
+      </div>
+      <h2 id="features-title" class="reveal" data-i18n="features.title">Built for the Modern Web</h2>
+      <p class="reveal" data-i18n="features.subtitle">We don't just make websites pretty — we make them work harder for your business.</p>
+    </header>
+
+    <div class="features-grid">
+
+      <div class="feature-item reveal">
+        <div class="feature-icon" aria-hidden="true">🧠</div>
+        <div class="feature-body">
+          <h3 data-i18n="features.item_1_title">AI Search Optimized</h3>
+          <p data-i18n="features.item_1_desc">Your site surfaces in ChatGPT, Perplexity, and Google SGE answers. GEO is the next frontier — we're already there.</p>
+        </div>
+      </div>
+
+      <div class="feature-item reveal">
+        <div class="feature-icon" aria-hidden="true">🌏</div>
+        <div class="feature-body">
+          <h3 data-i18n="features.item_2_title">Global-Ready i18n</h3>
+          <p data-i18n="features.item_2_desc">Every site we build supports multiple languages from day one. Switch between EN and 中文 right on this page.</p>
+        </div>
+      </div>
+
+      <div class="feature-item reveal">
+        <div class="feature-icon" aria-hidden="true">✨</div>
+        <div class="feature-body">
+          <h3 data-i18n="features.item_3_title">Clean, Semantic Code</h3>
+          <p data-i18n="features.item_3_desc">No bloat, no frameworks you don't need. Every line of code serves a purpose and is maintainable long-term.</p>
+        </div>
+      </div>
+
+      <div class="feature-item reveal">
+        <div class="feature-icon" aria-hidden="true">📊</div>
+        <div class="feature-body">
+          <h3 data-i18n="features.item_4_title">Structured Data &amp; Schema</h3>
+          <p data-i18n="features.item_4_desc">Rich results in Google Search. FAQ, How-To, Organization, and LocalBusiness schemas implemented correctly.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     DEMO SECTION
+──────────────────────────────────────────────────────────────────────────── -->
+<section id="demo" aria-labelledby="demo-title">
+  <div class="container">
+    <div class="demo-card reveal">
+      <div class="badge badge-teal">
+        <span class="badge-dot"></span>
+        <span data-i18n="demo.badge">Live Demo</span>
+      </div>
+      <h2 id="demo-title" data-i18n="demo.title">i18n in Action</h2>
+      <p data-i18n="demo.subtitle">This entire page is available in multiple languages. Toggle between English and Traditional Chinese using the button above.</p>
+
+      <div class="demo-lang-big">
+        <button class="lang-btn active" data-lang="en">🇬🇧 English</button>
+        <button class="lang-btn" data-lang="zh-TW">🇹🇼 繁體中文</button>
+      </div>
+
+      <div class="demo-note">
+        <span>ℹ️</span>
+        <span data-i18n="demo.note">Built with i18next — the industry-standard internationalization library.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     CONTACT
+──────────────────────────────────────────────────────────────────────────── -->
+<section id="contact" aria-labelledby="contact-title">
+  <div class="container contact-inner">
+
+    <div class="contact-text">
+      <div class="badge reveal">
+        <span class="badge-dot"></span>
+        <span data-i18n="contact.badge">Get In Touch</span>
+      </div>
+      <h2 id="contact-title" class="reveal" data-i18n="contact.title">Ready to Build Something Great?</h2>
+      <p class="reveal" data-i18n="contact.subtitle">Let's talk about your project. We respond fast and give honest, straightforward advice.</p>
+
+      <ul class="contact-features reveal">
+        <li>
+          <div class="check-icon" aria-hidden="true">✓</div>
+          <span data-i18n="contact.feature_1">Free project consultation</span>
+        </li>
+        <li>
+          <div class="check-icon" aria-hidden="true">✓</div>
+          <span data-i18n="contact.feature_2">No-commitment quote</span>
+        </li>
+        <li>
+          <div class="check-icon" aria-hidden="true">✓</div>
+          <span data-i18n="contact.feature_3">Fast turnaround times</span>
+        </li>
+        <li>
+          <div class="check-icon" aria-hidden="true">✓</div>
+          <span data-i18n="contact.feature_4">Transparent pricing</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="contact-card reveal">
+      <h3>💬 WhatsApp</h3>
+      <p>+62 851-8300-5811</p>
+
+      <a href="https://wa.me/6285183005811" class="wa-button" target="_blank" rel="noopener noreferrer" aria-label="Contact on WhatsApp">
+        <span class="wa-icon">📲</span>
+        <span data-i18n="contact.whatsapp_cta">Chat on WhatsApp</span>
+      </a>
+
+      <p class="wa-note" data-i18n="contact.whatsapp_note">Available Mon–Sat, 9am–6pm WIB</p>
+
+      <div class="tech-tags">
+        <span class="tech-tag">HTML5</span>
+        <span class="tech-tag">CSS3</span>
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">SEO</span>
+        <span class="tech-tag">GEO</span>
+        <span class="tech-tag">i18n</span>
+        <span class="tech-tag">Three.js</span>
+        <span class="tech-tag">Schema.org</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     FOOTER
+──────────────────────────────────────────────────────────────────────────── -->
+<footer role="contentinfo">
+  <div class="container footer-inner">
+    <a href="#" class="footer-logo" aria-label="Webren">Web<span>ren</span></a>
+    <span class="footer-tagline" data-i18n="footer.built_with">Built with clean code &amp; attention to detail.</span>
+    <span class="footer-copy" data-i18n="footer.copyright">© 2025 Webren. All rights reserved.</span>
+  </div>
+</footer>
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     SCRIPTS (CDN)
+──────────────────────────────────────────────────────────────────────────── -->
+<!-- Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+        onload="window.dispatchEvent(new Event('three-loaded'))"></script>
+
+<!-- App Scripts -->
+<script src="js/i18n.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

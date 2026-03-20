@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "home": "首頁",
+    "services": "服務",
+    "features": "特色",
+    "contact": "聯絡"
+  },
+  "hero": {
+    "badge": "現代網站開發",
+    "title": "我們打造",
+    "title_highlight": "高效能・高轉換率網站",
+    "subtitle": "專業網站體驗，針對搜尋引擎、AI探索及全球受眾優化。讓您的品牌脫穎而出。",
+    "cta_primary": "開始您的專案",
+    "cta_secondary": "查看服務",
+    "stat_1_label": "完成專案",
+    "stat_2_label": "支援語言",
+    "stat_3_label": "正常運行保證"
+  },
+  "services": {
+    "badge": "我們的服務",
+    "title": "全方位網站開發",
+    "subtitle": "從登陸頁面到複雜網頁應用——我們打造帶來實際成果的數位體驗。",
+    "item_1_title": "SEO 技術優化",
+    "item_1_desc": "從基礎建構技術SEO。結構化資料標記、Core Web Vitals優化、語意HTML，讓搜尋引擎愛上您的網站。",
+    "item_2_title": "GEO 與 AIO 優化",
+    "item_2_desc": "生成式搜尋引擎優化——為AI搜尋（ChatGPT、Perplexity、Gemini）而建。基於實體的內容結構與AI可索引標記。",
+    "item_3_title": "多語言支援 (i18n)",
+    "item_3_desc": "原生國際化，包含hreflang標籤、地區感知路由及專業翻譯。觸及每一個市場。",
+    "item_4_title": "極致效能",
+    "item_4_desc": "Lighthouse滿分100。載入時間低於2秒。優化資源、延遲載入及CDN策略，實現超快速傳遞。",
+    "item_5_title": "響應式設計",
+    "item_5_desc": "跨裝置像素完美呈現。行動裝置優先架構，流暢佈局在手機到4K螢幕上都令人驚艷。",
+    "item_6_title": "現代技術堆疊",
+    "item_6_desc": "乾淨、可維護的程式碼。原生HTML/CSS/JS、React、Next.js或任何適合您專案的技術——我們確保品質。"
+  },
+  "features": {
+    "badge": "為何選擇我們",
+    "title": "為現代網路而生",
+    "subtitle": "我們不只讓網站好看——我們讓它為您的業務更努力運作。",
+    "item_1_title": "AI搜尋優化",
+    "item_1_desc": "您的網站出現在ChatGPT、Perplexity和Google SGE的答案中。GEO是下一個前沿——我們已經在那裡了。",
+    "item_2_title": "全球化i18n",
+    "item_2_desc": "我們建立的每個網站從第一天起就支援多種語言。就在這個頁面上切換EN和中文。",
+    "item_3_title": "乾淨語意程式碼",
+    "item_3_desc": "無冗餘、無不必要框架。每一行程式碼都有其目的，並可長期維護。",
+    "item_4_title": "結構化資料與Schema",
+    "item_4_desc": "在Google搜尋中獲得豐富結果。正確實作FAQ、How-To、Organization和LocalBusiness schemas。"
+  },
+  "demo": {
+    "badge": "實時展示",
+    "title": "i18n 實際運作",
+    "subtitle": "整個頁面都有多種語言版本。使用上方按鈕在英文和繁體中文之間切換。",
+    "note": "使用 i18next 建構——業界標準的國際化函式庫。"
+  },
+  "contact": {
+    "badge": "聯絡我們",
+    "title": "準備好打造精彩作品了嗎？",
+    "subtitle": "讓我們談談您的專案。我們回覆迅速，給予誠實直接的建議。",
+    "whatsapp_cta": "WhatsApp 聯絡",
+    "whatsapp_note": "週一至週六，上午9時至下午6時（WIB）",
+    "feature_1": "免費專案諮詢",
+    "feature_2": "無需承諾報價",
+    "feature_3": "快速交付時間",
+    "feature_4": "透明定價"
+  },
+  "footer": {
+    "tagline": "為現代企業提供頂級網站開發。",
+    "copyright": "© 2025 Webren。保留所有權利。",
+    "built_with": "以乾淨程式碼與細心打造。"
+  }
+}

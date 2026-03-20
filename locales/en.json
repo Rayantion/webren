@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "features": "Features",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Modern Web Development",
+    "title": "We Build Websites That",
+    "title_highlight": "Perform & Convert",
+    "subtitle": "Premium web experiences engineered for search engines, AI discovery, and global audiences. Your brand, elevated.",
+    "cta_primary": "Start Your Project",
+    "cta_secondary": "View Services",
+    "stat_1_label": "Sites Delivered",
+    "stat_2_label": "Languages Supported",
+    "stat_3_label": "Uptime SLA"
+  },
+  "services": {
+    "badge": "What We Build",
+    "title": "Full-Stack Web Services",
+    "subtitle": "From landing pages to complex web applications — we engineer digital experiences that drive results.",
+    "item_1_title": "SEO Engineering",
+    "item_1_desc": "Technical SEO from the ground up. Schema markup, Core Web Vitals optimization, semantic HTML, and structured data that search engines love.",
+    "item_2_title": "GEO & AIO Ready",
+    "item_2_desc": "Generative Engine Optimization — built for AI search (ChatGPT, Perplexity, Gemini). Entity-based content structures and AI-indexable markup.",
+    "item_3_title": "Multi-Language (i18n)",
+    "item_3_desc": "Native internationalization with hreflang tags, locale-aware routing, and professional translations. Reach every market.",
+    "item_4_title": "Performance First",
+    "item_4_desc": "100/100 Lighthouse scores. Sub-2s load times. Optimized assets, lazy loading, and CDN strategies for blazing-fast delivery.",
+    "item_5_title": "Responsive Design",
+    "item_5_desc": "Pixel-perfect across all devices. Mobile-first architecture with fluid layouts that look stunning from phone to 4K.",
+    "item_6_title": "Modern Tech Stack",
+    "item_6_desc": "Clean, maintainable code. Vanilla HTML/CSS/JS, React, Next.js, or whatever fits your project — we build it right."
+  },
+  "features": {
+    "badge": "Why Choose Us",
+    "title": "Built for the Modern Web",
+    "subtitle": "We don't just make websites pretty — we make them work harder for your business.",
+    "item_1_title": "AI Search Optimized",
+    "item_1_desc": "Your site surfaces in ChatGPT, Perplexity, and Google SGE answers. GEO is the next frontier — we're already there.",
+    "item_2_title": "Global-Ready i18n",
+    "item_2_desc": "Every site we build supports multiple languages from day one. Switch between EN and 中文 right on this page.",
+    "item_3_title": "Clean, Semantic Code",
+    "item_3_desc": "No bloat, no frameworks you don't need. Every line of code serves a purpose and is maintainable long-term.",
+    "item_4_title": "Structured Data & Schema",
+    "item_4_desc": "Rich results in Google Search. FAQ, How-To, Organization, and LocalBusiness schemas implemented correctly."
+  },
+  "demo": {
+    "badge": "Live Demo",
+    "title": "i18n in Action",
+    "subtitle": "This entire page is available in multiple languages. Toggle between English and Traditional Chinese using the button above.",
+    "note": "Built with i18next — the industry-standard internationalization library."
+  },
+  "contact": {
+    "badge": "Get In Touch",
+    "title": "Ready to Build Something Great?",
+    "subtitle": "Let's talk about your project. We respond fast and give honest, straightforward advice.",
+    "whatsapp_cta": "Chat on WhatsApp",
+    "whatsapp_note": "Available Mon–Sat, 9am–6pm WIB",
+    "feature_1": "Free project consultation",
+    "feature_2": "No-commitment quote",
+    "feature_3": "Fast turnaround times",
+    "feature_4": "Transparent pricing"
+  },
+  "footer": {
+    "tagline": "Premium web development for modern businesses.",
+    "copyright": "© 2025 Webren. All rights reserved.",
+    "built_with": "Built with clean code & attention to detail."
+  }
+}
