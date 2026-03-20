@@ -60,7 +60,7 @@ const I18N = (() => {
     const saved = localStorage.getItem('webren_lang');
     const browserLang = navigator.language;
     const preferred = saved ||
-      (browserLang.startsWith('zh') ? 'zh-TW' : 'en');
+      (browserLang.startsWith('en') ? 'en' : 'zh-TW');
     await switchLanguage(preferred);
   }
 
