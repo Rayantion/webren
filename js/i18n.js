@@ -42,6 +42,12 @@ const I18N = (() => {
 
   async function switchLanguage(lang) {
     if (!supportedLangs.includes(lang)) return;
+    
+    // Trigger transition out
+    document.body.classList.add('lang-switching');
+    
+    await new Promise(r => setTimeout(r, 150)); // Brief pause for fade out
+    
     currentLang = lang;
     const data = await loadLocale(lang);
     applyTranslations(data);
@@ -54,13 +60,17 @@ const I18N = (() => {
 
     // Update font class for CJK
     document.body.classList.toggle('lang-zh', lang === 'zh-TW');
+    
+    // Trigger transition in
+    setTimeout(() => {
+      document.body.classList.remove('lang-switching');
+    }, 100);
   }
 
   async function init() {
     const saved = localStorage.getItem('webren_lang');
-    const browserLang = navigator.language;
-    const preferred = saved ||
-      (browserLang.startsWith('en') ? 'en' : 'zh-TW');
+    // Default to zh-TW (Chinese Traditional)
+    const preferred = saved || 'zh-TW';
     await switchLanguage(preferred);
   }
 

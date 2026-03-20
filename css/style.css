@@ -1119,3 +1119,25 @@ footer {
   color: rgba(255,255,255,0.5);
   font-family: 'Space Grotesk', sans-serif;
 }
+
+/* ─── Page Transitions ──────────────────────────────────────────────────────── */
+.page-transition {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.page-transition.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Language switch transition */
+.lang-switching {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.lang-switching.switched {
+  opacity: 1;
+}

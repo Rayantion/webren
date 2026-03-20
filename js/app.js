@@ -197,7 +197,13 @@ function initCounters() {
 function initLangToggle() {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      I18N.switchLanguage(btn.dataset.lang);
+      // Add fade transition
+      document.body.classList.add('lang-switching');
+      I18N.switchLanguage(btn.dataset.lang).then(() => {
+        setTimeout(() => {
+          document.body.classList.remove('lang-switching');
+        }, 250);
+      });
     });
   });
 }
@@ -234,6 +240,19 @@ function initCardTilt() {
   });
 }
 
+// ─── Page/Section Transitions ─────────────────────────────────────────────────
+function initPageTransitions() {
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
+      
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+}
+
 // ─── Boot ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await I18N.init();
@@ -244,6 +263,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initLangToggle();
   initCursorGlow();
   initCardTilt();
+  initPageTransitions();
 
   // Three.js loads async via CDN — wait for it
   if (typeof THREE !== 'undefined') {
