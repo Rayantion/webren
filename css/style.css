@@ -1139,11 +1139,23 @@ footer {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 850;
+  z-index: 9999;
   opacity: 0;
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(3px);
-  transition: opacity 0.18s ease;
+  background: #ffffff;
+  transition: none;
 }
 
-#lang-overlay.active { opacity: 1; }
+#lang-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+  animation: langDropdownFill 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes langDropdownFill {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

@@ -207,14 +207,19 @@ function initCounters() {
 
 // ─── Language Toggle ──────────────────────────────────────────────────────────
 function initLangToggle() {
+  const overlay = document.getElementById('lang-overlay');
+  
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      // Add fade transition
-      document.body.classList.add('lang-switching');
+      if (btn.classList.contains('active')) return;
+      
+      // Trigger dropdown fill animation
+      overlay.classList.add('active');
+      
       I18N.switchLanguage(btn.dataset.lang).then(() => {
         setTimeout(() => {
-          document.body.classList.remove('lang-switching');
-        }, 250);
+          overlay.classList.remove('active');
+        }, 300);
       });
     });
   });
