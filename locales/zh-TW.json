@@ -2,8 +2,10 @@
   "nav": {
     "home": "首頁",
     "services": "服務",
+    "portfolio": "作品集",
     "features": "特色",
-    "contact": "聯絡"
+    "contact": "聯絡",
+    "cta": "取得報價"
   },
   "hero": {
     "badge": "現代網站開發",
@@ -31,7 +33,28 @@
     "item_5_title": "響應式設計",
     "item_5_desc": "跨裝置像素完美呈現。行動裝置優先架構，流暢佈局在手機到4K螢幕上都令人驚艷。",
     "item_6_title": "現代技術堆疊",
-    "item_6_desc": "乾淨、可維護的程式碼。原生HTML/CSS/JS、React、Next.js或任何適合您專案的技術——我們確保品質。"
+    "item_6_desc": "乾淨、可維護的程式碼。原生HTML/CSS/JS、React、Next.js或任何適合您專案的技術——我們確保品質。",
+    "item_7_title": "電子郵件服務",
+    "item_7_desc": "透過Gmail建立專業電子郵件——以您的網域收發郵件（noreply@yourdomain.com）。品牌化、可靠且簡單易用。",
+    "item_8_title": "表單 → Google試算表",
+    "item_8_desc": "聯絡表單將提交內容儲存至Google試算表，並自動回覆品牌郵件——「我們將盡快與您聯繫。」零阻力，完整資料掌控。",
+    "new_badge": "新增"
+  },
+  "portfolio": {
+    "badge": "我們的作品",
+    "title": "作品集展示",
+    "subtitle": "真實網站，真實成果——用心打造，長久耐用。",
+    "visit": "造訪網站",
+    "tag_personal": "個人",
+    "tag_business": "商業",
+    "tag_corporate": "企業",
+    "tag_forms": "表單",
+    "project_1_title": "Rayantion.me",
+    "project_1_desc": "一個展示作品集、技能與服務的精緻個人網站——針對SEO和全球受眾優化，支援多語言。",
+    "project_2_title": "Decisionfield.online",
+    "project_2_desc": "整合聯絡表單、Google試算表資料擷取與自動回覆郵件確認的專業商業網站。",
+    "project_3_title": "Thetaindo.co.id",
+    "project_3_desc": "為本地與國際市場打造的印尼企業網站，具備GEO優化與全裝置響應式設計。"
   },
   "features": {
     "badge": "為何選擇我們",
@@ -56,6 +79,8 @@
     "badge": "聯絡我們",
     "title": "準備好打造精彩作品了嗎？",
     "subtitle": "讓我們談談您的專案。我們回覆迅速，給予誠實直接的建議。",
+    "card_title": "立即洽談",
+    "card_subtitle": "透過WhatsApp聯繫我們——最快速的開始方式。",
     "whatsapp_cta": "WhatsApp 聯絡",
     "whatsapp_note": "週一至週六，上午9時至下午6時（WIB）",
     "feature_1": "免費專案諮詢",

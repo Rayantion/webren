@@ -113,6 +113,7 @@
     <ul class="nav-links" role="list">
       <li><a href="#hero" data-i18n="nav.home">Home</a></li>
       <li><a href="#services" data-i18n="nav.services">Services</a></li>
+      <li><a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a></li>
       <li><a href="#features" data-i18n="nav.features">Features</a></li>
       <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
     </ul>
@@ -137,6 +138,7 @@
 <nav id="mobile-menu" aria-label="Mobile navigation">
   <a href="#hero" data-i18n="nav.home">Home</a>
   <a href="#services" data-i18n="nav.services">Services</a>
+  <a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a>
   <a href="#features" data-i18n="nav.features">Features</a>
   <a href="#contact" data-i18n="nav.contact">Contact</a>
   <div style="margin-top:16px; display:flex; gap:8px;">
@@ -252,6 +254,122 @@
         <div class="service-icon violet" aria-hidden="true">💻</div>
         <h3 data-i18n="services.item_6_title">Modern Tech Stack</h3>
         <p data-i18n="services.item_6_desc">Clean, maintainable code. Vanilla HTML/CSS/JS, React, Next.js, or whatever fits your project — we build it right.</p>
+      </article>
+
+      <article class="service-card service-card--highlight reveal">
+        <div class="service-icon cyan" aria-hidden="true">✉️</div>
+        <span class="service-new-badge" data-i18n="services.new_badge">New</span>
+        <h3 data-i18n="services.item_7_title">Email Service</h3>
+        <p data-i18n="services.item_7_desc">Professional email setup via Gmail — send &amp; receive from your own domain (noreply@yourdomain.com). Branded, reliable, and hassle-free.</p>
+      </article>
+
+      <article class="service-card service-card--highlight reveal">
+        <div class="service-icon emerald" aria-hidden="true">📊</div>
+        <span class="service-new-badge" data-i18n="services.new_badge">New</span>
+        <h3 data-i18n="services.item_8_title">Form → Google Sheets</h3>
+        <p data-i18n="services.item_8_desc">Contact forms that save submissions to Google Sheets and auto-reply with a branded email — "We'll get back to you shortly." Zero friction, full data control.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     PORTFOLIO
+──────────────────────────────────────────────────────────────────────────── -->
+<section id="portfolio" aria-labelledby="portfolio-title">
+  <div class="container">
+
+    <header class="section-header">
+      <div class="badge badge-violet reveal">
+        <span class="badge-dot"></span>
+        <span data-i18n="portfolio.badge">Our Work</span>
+      </div>
+      <h2 id="portfolio-title" class="reveal" data-i18n="portfolio.title">Live Portfolio</h2>
+      <p class="reveal" data-i18n="portfolio.subtitle">Real websites, real results — crafted with care and built to last.</p>
+    </header>
+
+    <div class="portfolio-grid">
+
+      <!-- Project 1: Rayantion.me -->
+      <article class="portfolio-card reveal">
+        <div class="portfolio-card-header portfolio-header--teal">
+          <div class="portfolio-browser-dots" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="portfolio-url-bar">
+            <span class="portfolio-lock" aria-hidden="true">🔒</span>
+            <span class="portfolio-url-text">rayantion.me</span>
+          </div>
+          <div class="portfolio-preview-icon" aria-hidden="true">🌟</div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-tags">
+            <span class="ptag ptag-teal" data-i18n="portfolio.tag_personal">Personal</span>
+            <span class="ptag ptag-violet">SEO</span>
+            <span class="ptag ptag-cyan">i18n</span>
+          </div>
+          <h3 data-i18n="portfolio.project_1_title">Rayantion.me</h3>
+          <p data-i18n="portfolio.project_1_desc">A sleek personal website showcasing portfolio, skills, and services — optimized for SEO and global audiences with multi-language support.</p>
+          <a href="https://rayantion.me" target="_blank" rel="noopener noreferrer" class="portfolio-link" aria-label="Visit Rayantion.me">
+            <span data-i18n="portfolio.visit">Visit Site</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H6M12 2v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 2: Decisionfield.online -->
+      <article class="portfolio-card reveal">
+        <div class="portfolio-card-header portfolio-header--violet">
+          <div class="portfolio-browser-dots" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="portfolio-url-bar">
+            <span class="portfolio-lock" aria-hidden="true">🔒</span>
+            <span class="portfolio-url-text">decisionfield.online</span>
+          </div>
+          <div class="portfolio-preview-icon" aria-hidden="true">🎯</div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-tags">
+            <span class="ptag ptag-violet" data-i18n="portfolio.tag_business">Business</span>
+            <span class="ptag ptag-teal">SEO</span>
+            <span class="ptag ptag-emerald" data-i18n="portfolio.tag_forms">Forms</span>
+          </div>
+          <h3 data-i18n="portfolio.project_2_title">Decisionfield.online</h3>
+          <p data-i18n="portfolio.project_2_desc">A professional business website with integrated contact forms, Google Sheets data capture, and auto-reply email confirmation.</p>
+          <a href="https://decisionfield.online" target="_blank" rel="noopener noreferrer" class="portfolio-link" aria-label="Visit Decisionfield.online">
+            <span data-i18n="portfolio.visit">Visit Site</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H6M12 2v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 3: Thetaindo.co.id -->
+      <article class="portfolio-card reveal">
+        <div class="portfolio-card-header portfolio-header--cyan">
+          <div class="portfolio-browser-dots" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="portfolio-url-bar">
+            <span class="portfolio-lock" aria-hidden="true">🔒</span>
+            <span class="portfolio-url-text">thetaindo.co.id</span>
+          </div>
+          <div class="portfolio-preview-icon" aria-hidden="true">🏢</div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-tags">
+            <span class="ptag ptag-cyan" data-i18n="portfolio.tag_corporate">Corporate</span>
+            <span class="ptag ptag-teal">SEO</span>
+            <span class="ptag ptag-violet">GEO</span>
+          </div>
+          <h3 data-i18n="portfolio.project_3_title">Thetaindo.co.id</h3>
+          <p data-i18n="portfolio.project_3_desc">An Indonesian corporate website built for local and international markets, featuring GEO optimization and responsive design for all devices.</p>
+          <a href="https://thetaindo.co.id" target="_blank" rel="noopener noreferrer" class="portfolio-link" aria-label="Visit Thetaindo.co.id">
+            <span data-i18n="portfolio.visit">Visit Site</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12L12 2M12 2H6M12 2v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
       </article>
 
     </div>

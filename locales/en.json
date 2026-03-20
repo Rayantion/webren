@@ -2,8 +2,10 @@
   "nav": {
     "home": "Home",
     "services": "Services",
+    "portfolio": "Portfolio",
     "features": "Features",
-    "contact": "Contact"
+    "contact": "Contact",
+    "cta": "Get a Quote"
   },
   "hero": {
     "badge": "Modern Web Development",
@@ -31,7 +33,28 @@
     "item_5_title": "Responsive Design",
     "item_5_desc": "Pixel-perfect across all devices. Mobile-first architecture with fluid layouts that look stunning from phone to 4K.",
     "item_6_title": "Modern Tech Stack",
-    "item_6_desc": "Clean, maintainable code. Vanilla HTML/CSS/JS, React, Next.js, or whatever fits your project — we build it right."
+    "item_6_desc": "Clean, maintainable code. Vanilla HTML/CSS/JS, React, Next.js, or whatever fits your project — we build it right.",
+    "item_7_title": "Email Service",
+    "item_7_desc": "Professional email setup via Gmail — send & receive from your own domain (noreply@yourdomain.com). Branded, reliable, and hassle-free.",
+    "item_8_title": "Form → Google Sheets",
+    "item_8_desc": "Contact forms that save submissions to Google Sheets and auto-reply with a branded email — \"We'll get back to you shortly.\" Zero friction, full data control.",
+    "new_badge": "New"
+  },
+  "portfolio": {
+    "badge": "Our Work",
+    "title": "Live Portfolio",
+    "subtitle": "Real websites, real results — crafted with care and built to last.",
+    "visit": "Visit Site",
+    "tag_personal": "Personal",
+    "tag_business": "Business",
+    "tag_corporate": "Corporate",
+    "tag_forms": "Forms",
+    "project_1_title": "Rayantion.me",
+    "project_1_desc": "A sleek personal website showcasing portfolio, skills, and services — optimized for SEO and global audiences with multi-language support.",
+    "project_2_title": "Decisionfield.online",
+    "project_2_desc": "A professional business website with integrated contact forms, Google Sheets data capture, and auto-reply email confirmation.",
+    "project_3_title": "Thetaindo.co.id",
+    "project_3_desc": "An Indonesian corporate website built for local and international markets, featuring GEO optimization and responsive design for all devices."
   },
   "features": {
     "badge": "Why Choose Us",
@@ -56,6 +79,8 @@
     "badge": "Get In Touch",
     "title": "Ready to Build Something Great?",
     "subtitle": "Let's talk about your project. We respond fast and give honest, straightforward advice.",
+    "card_title": "Let's Talk",
+    "card_subtitle": "Reach us on WhatsApp — fastest way to start.",
     "whatsapp_cta": "Chat on WhatsApp",
     "whatsapp_note": "Available Mon–Sat, 9am–6pm WIB",
     "feature_1": "Free project consultation",
