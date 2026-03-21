@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# AI crawlers — welcome for GEO/AIO indexing
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+Sitemap: https://webren.dev/sitemap.xml

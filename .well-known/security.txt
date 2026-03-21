@@ -1,0 +1,4 @@
+Contact: mailto:security@webren.dev
+Expires: 2027-03-21T00:00:00.000Z
+Preferred-Languages: en, zh-TW
+Canonical: https://webren.dev/.well-known/security.txt

@@ -285,6 +285,8 @@ h1, h2, h3, h4 {
   border: none;
   cursor: pointer;
   padding: 8px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #menu-toggle span {
@@ -1040,7 +1042,7 @@ footer {
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .btn-cta-sm.desktop-only { display: none; }
-  #menu-toggle { display: flex; pointer-events: auto; position: relative; z-index: 1001; }
+  #menu-toggle { display: flex; pointer-events: auto; position: relative; z-index: 1001; min-width: 44px; min-height: 44px; justify-content: center; align-items: center; }
   #mobile-menu { display: flex; }
   #menu-overlay { display: block; }
 
