@@ -96,35 +96,39 @@ All content is localised via i18n keys — separate keys per mode (e.g. `restaur
   1. **Mode selector** — 3 buttons: Company / Restaurant / Store
   2. **Theme colors** — 4 color pickers + hex inputs: Primary, Accent, Background, Text
      - **Auto-theme button**: user picks Primary only → system auto-generates remaining 3 colors using color theory:
-       - Accent: 30° analogous hue shift
-       - Background: primary hue at 10% saturation, 8% lightness (deep dark)
-       - Text: white (#F9FAFB) for dark bg, near-black (#111827) for light bg
-  3. **Font selector** — 2 dropdowns (Heading, Body) populated from ~20 curated Google Fonts options. Loading a new font injects a `<link>` tag and applies CSS variables.
+       - Accent: 150° split-complementary hue shift from primary (provides strong contrast, not too similar to primary)
+       - Background: primary hue at 10% saturation, 8% lightness (deep dark tone)
+       - Text: if background HSL lightness < 40% → `#F9FAFB` (white); otherwise → `#111827` (near-black)
+     - After auto-theme runs, all 4 color pickers update to reflect generated values and remain individually editable
+  3. **Font selector** — 2 dropdowns (Heading, Body) populated from ~20 curated Google Fonts options. Before injecting a `<link>` for a Google Font, check if a `<link>` with that font's href already exists to avoid duplicate tags. Applies fonts via CSS variables.
   4. **Language toggle** — EN / 中文 buttons
   5. **Contact fields** (required, validated before sending):
      - Full Name (required, min 2 chars)
      - Email (required, valid email format regex)
-     - Phone Number (required, valid: digits/+/spaces/dashes, min 8 digits)
-  6. **Send to Web人** button — validates fields, POSTs to n8n webhook, shows success/error toast
+     - Phone Number (required: min 8 numeric digits, excluding +, spaces, and dashes)
+  6. **Send to Web人** button — validates fields, then: disable button + show loading state → POST to n8n webhook → on response show success or error toast → re-enable button. This prevents double-submit.
+     - If the n8n webhook URL is still the placeholder (development), the POST will fail and the error toast will display naturally — no special mock-success needed.
 
 ### 3. Live View Counter (Footer)
 - Displayed on every mode: `Today | Yesterday | Last Month | Total`
 - Animated count-up on page load (matching webren's existing counter style)
-- **Demo mode**: shows realistic mock numbers (no real API call)
-- If `viewCounter: false` in config → counter row is hidden
+- **Demo mode**: fixed mock values — Today: 47, Yesterday: 83, Last Month: 1,240, Total: 8,600 (no real API call)
+- If `viewCounter: false` in config → counter row is hidden entirely
 - Future: will hit the Cloudflare KV Worker endpoint and show webren's actual traffic
 
 ### 4. i18n
 - i18next via CDN
-- English default on load
+- English default on load; `fallbackLng: 'en'` so any missing zh-TW key falls back to English
 - Traditional Chinese (zh-TW) available
 - All 3 modes fully translated
 - Language preference persisted in `localStorage`
+- Mode/theme/font config persisted in `localStorage` on every change, loaded on next page visit (config.json defaults used only on first visit)
+- Contact drawer fields are not affected by mode or language switching — they persist until submitted or manually cleared
 
 ### 5. Page Transitions
-- Dropdown fill-up overlay (CSS) triggered on:
-  - Mode switch
-  - Language switch
+- Dropdown fill-up overlay (CSS), 400ms duration, ease-in-out
+- Triggered on: mode switch and language switch
+- If a transition is already in progress, new triggers are ignored until it completes
 
 ---
 
@@ -138,7 +142,8 @@ All content is localised via i18n keys — separate keys per mode (e.g. `restaur
 
 ## SEO & Meta
 - Full meta tags, Open Graph, Twitter Card
-- Canonical URL, hreflang (en + zh-TW)
+- Canonical URL: `https://rayantion26.github.io/webren/demo/`
+- Hreflang tags: `https://rayantion26.github.io/webren/demo/` (en) and `?lang=zh-TW` (zh-TW)
 - Schema.org JSON-LD (WebApplication type for the configurator)
 - sitemap.xml, robots.txt, .well-known/security.txt
 - Mobile responsive, semantic HTML
