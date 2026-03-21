@@ -1,0 +1,14 @@
+{
+  "mode": "company",
+  "theme": {
+    "primary": "#0D9488",
+    "accent": "#7C3AED",
+    "bg": "#0F1117",
+    "text": "#F9FAFB"
+  },
+  "fonts": {
+    "heading": "Playfair Display",
+    "body": "Inter"
+  },
+  "viewCounter": true
+}
