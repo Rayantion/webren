@@ -68,10 +68,14 @@ const I18N = (() => {
     }
   }
 
+  function detectLang() {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return tz && tz.includes('Taipei') ? 'zh-TW' : 'en';
+  }
+
   async function init() {
     const saved = localStorage.getItem('webren_lang');
-    // Default to zh-TW (Chinese Traditional)
-    const preferred = saved || 'zh-TW';
+    const preferred = saved || detectLang();
     await switchLanguage(preferred, false); // no animation on initial load
   }
 
