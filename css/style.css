@@ -1141,14 +1141,14 @@ footer {
   pointer-events: none;
   z-index: 9999;
   opacity: 0;
-  background: #ffffff;
+  background: transparent;
   transition: none;
 }
 
 #lang-overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-  animation: langDropdownFill 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  pointer-events: none;
+  animation: langDropdownFill 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes langDropdownFill {
