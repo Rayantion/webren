@@ -3,15 +3,493 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webren Demo — Website Configurator</title>
+  <title>Webren Demo — Website Configurator | Web人</title>
+  <meta name="description" content="Preview and customize your Option A website by Web人. Choose your business type, colors, and fonts, then send your preferences directly.">
+  <meta name="keywords" content="web design demo, website configurator, webren, Web人, business website preview">
+  <meta name="author" content="Web人">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://rayantion26.github.io/webren/demo/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rayantion26.github.io/webren/demo/">
+  <meta property="og:title" content="Webren Demo — Website Configurator">
+  <meta property="og:description" content="Preview and customize your Option A website. Configure colors, fonts, and business type, then send to Web人.">
+  <meta property="og:image" content="https://rayantion26.github.io/webren/demo/assets/images/og-image.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Webren Demo — Website Configurator">
+  <meta name="twitter:description" content="Preview and configure your Option A website by Web人.">
+
+  <!-- Hreflang -->
+  <link rel="alternate" hreflang="en" href="https://rayantion26.github.io/webren/demo/">
+  <link rel="alternate" hreflang="zh-TW" href="https://rayantion26.github.io/webren/demo/?lang=zh-TW">
+  <link rel="alternate" hreflang="x-default" href="https://rayantion26.github.io/webren/demo/">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Webren Website Configurator",
+    "url": "https://rayantion26.github.io/webren/demo/",
+    "description": "Interactive website configurator and demo for Web人 Option A clients",
+    "applicationCategory": "WebApplication",
+    "operatingSystem": "Any",
+    "inLanguage": ["en", "zh-TW"],
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TWD" },
+    "author": { "@type": "Organization", "name": "Web人", "url": "https://rayantion26.github.io/webren/" }
+  }
+  </script>
+
+  <!-- Fonts (defaults — JS will inject additional Google Fonts as needed) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+  <!-- Page transition overlay -->
   <div id="page-transition"></div>
-  <!-- nav, main, footer will be added in later tasks -->
+
+  <!-- ── Navbar ──────────────────────────────────────────────────────── -->
+  <header id="navbar">
+    <nav class="container nav-inner">
+      <a href="#" class="nav-brand">Web人 <span class="nav-brand-demo">Demo</span></a>
+      <div class="nav-right">
+        <div class="lang-toggle">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="zh-TW">中文</button>
+        </div>
+        <button id="menu-toggle" aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu">
+      <a href="#" data-i18n="nav.home"></a>
+    </div>
+    <div id="menu-overlay"></div>
+  </header>
+
+  <!-- ── Main content ────────────────────────────────────────────────── -->
+  <main id="main-content">
+
+    <!-- ── COMPANY MODE ────────────────────────────────────────────── -->
+    <div id="mode-company" class="mode-sections">
+
+      <section class="hero" id="home">
+        <div class="container hero-inner">
+          <div class="hero-content reveal">
+            <span class="badge" data-i18n="hero.badge"></span>
+            <h1><span data-i18n="hero.company.title"></span> <span class="highlight" data-i18n="hero.company.highlight"></span></h1>
+            <p data-i18n="hero.company.subtitle"></p>
+            <div class="hero-actions">
+              <button class="btn-primary" data-i18n="hero.cta_primary"></button>
+              <button class="btn-secondary" data-i18n="hero.cta_secondary"></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="badge" data-i18n="company.services.badge"></span>
+            <h2 data-i18n="company.services.title"></h2>
+            <p data-i18n="company.services.subtitle"></p>
+          </div>
+          <div class="card-grid">
+            <div class="card reveal">
+              <h3 data-i18n="company.services.item_1_title"></h3>
+              <p data-i18n="company.services.item_1_desc"></p>
+            </div>
+            <div class="card reveal">
+              <h3 data-i18n="company.services.item_2_title"></h3>
+              <p data-i18n="company.services.item_2_desc"></p>
+            </div>
+            <div class="card reveal">
+              <h3 data-i18n="company.services.item_3_title"></h3>
+              <p data-i18n="company.services.item_3_desc"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-alt">
+        <div class="container about-inner reveal">
+          <span class="badge" data-i18n="company.about.badge"></span>
+          <h2 data-i18n="company.about.title"></h2>
+          <p data-i18n="company.about.body"></p>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="badge" data-i18n="company.features.badge"></span>
+            <h2 data-i18n="company.features.title"></h2>
+          </div>
+          <div class="card-grid">
+            <div class="card reveal">
+              <h3 data-i18n="company.features.item_1_title"></h3>
+              <p data-i18n="company.features.item_1_desc"></p>
+            </div>
+            <div class="card reveal">
+              <h3 data-i18n="company.features.item_2_title"></h3>
+              <p data-i18n="company.features.item_2_desc"></p>
+            </div>
+            <div class="card reveal">
+              <h3 data-i18n="company.features.item_3_title"></h3>
+              <p data-i18n="company.features.item_3_desc"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-alt">
+        <div class="container contact-inner reveal">
+          <span class="badge" data-i18n="contact.badge"></span>
+          <h2 data-i18n="contact.title"></h2>
+          <p data-i18n="contact.subtitle"></p>
+        </div>
+      </section>
+
+    </div><!-- end #mode-company -->
+
+    <!-- ── RESTAURANT MODE ────────────────────────────────────────── -->
+    <div id="mode-restaurant" class="mode-sections">
+
+      <section class="hero">
+        <div class="container hero-inner">
+          <div class="hero-content reveal">
+            <span class="badge" data-i18n="hero.badge"></span>
+            <h1><span data-i18n="hero.restaurant.title"></span> <span class="highlight" data-i18n="hero.restaurant.highlight"></span></h1>
+            <p data-i18n="hero.restaurant.subtitle"></p>
+            <div class="hero-actions">
+              <button class="btn-primary" data-i18n="hero.cta_primary"></button>
+              <button class="btn-secondary" data-i18n="hero.cta_secondary"></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="badge" data-i18n="restaurant.menu.badge"></span>
+            <h2 data-i18n="restaurant.menu.title"></h2>
+            <p data-i18n="restaurant.menu.subtitle"></p>
+          </div>
+          <div class="menu-tabs">
+            <button class="menu-tab active" data-category="all">All</button>
+            <button class="menu-tab" data-category="starter" data-i18n="restaurant.menu.cat_1"></button>
+            <button class="menu-tab" data-category="main" data-i18n="restaurant.menu.cat_2"></button>
+            <button class="menu-tab" data-category="dessert" data-i18n="restaurant.menu.cat_3"></button>
+          </div>
+          <div class="menu-grid">
+            <div class="menu-item card reveal" data-category="starter">
+              <div class="menu-item-info">
+                <h3 data-i18n="restaurant.menu.item_1_name"></h3>
+                <p data-i18n="restaurant.menu.item_1_desc"></p>
+              </div>
+              <span class="menu-price" data-i18n="restaurant.menu.item_1_price"></span>
+            </div>
+            <div class="menu-item card reveal" data-category="starter">
+              <div class="menu-item-info">
+                <h3 data-i18n="restaurant.menu.item_2_name"></h3>
+                <p data-i18n="restaurant.menu.item_2_desc"></p>
+              </div>
+              <span class="menu-price" data-i18n="restaurant.menu.item_2_price"></span>
+            </div>
+            <div class="menu-item card reveal" data-category="main">
+              <div class="menu-item-info">
+                <h3 data-i18n="restaurant.menu.item_3_name"></h3>
+                <p data-i18n="restaurant.menu.item_3_desc"></p>
+              </div>
+              <span class="menu-price" data-i18n="restaurant.menu.item_3_price"></span>
+            </div>
+            <div class="menu-item card reveal" data-category="main">
+              <div class="menu-item-info">
+                <h3 data-i18n="restaurant.menu.item_4_name"></h3>
+                <p data-i18n="restaurant.menu.item_4_desc"></p>
+              </div>
+              <span class="menu-price" data-i18n="restaurant.menu.item_4_price"></span>
+            </div>
+            <div class="menu-item card reveal" data-category="dessert">
+              <div class="menu-item-info">
+                <h3 data-i18n="restaurant.menu.item_5_name"></h3>
+                <p data-i18n="restaurant.menu.item_5_desc"></p>
+              </div>
+              <span class="menu-price" data-i18n="restaurant.menu.item_5_price"></span>
+            </div>
+            <div class="menu-item card reveal" data-category="dessert">
+              <div class="menu-item-info">
+                <h3 data-i18n="restaurant.menu.item_6_name"></h3>
+                <p data-i18n="restaurant.menu.item_6_desc"></p>
+              </div>
+              <span class="menu-price" data-i18n="restaurant.menu.item_6_price"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-alt">
+        <div class="container about-inner reveal">
+          <span class="badge" data-i18n="restaurant.about.badge"></span>
+          <h2 data-i18n="restaurant.about.title"></h2>
+          <p data-i18n="restaurant.about.body"></p>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="badge" data-i18n="restaurant.hours.badge"></span>
+            <h2 data-i18n="restaurant.hours.title"></h2>
+          </div>
+          <div class="hours-grid">
+            <div class="card reveal">
+              <h3 data-i18n="restaurant.hours.mon_fri"></h3>
+              <p data-i18n="restaurant.hours.mon_fri_hours"></p>
+            </div>
+            <div class="card reveal">
+              <h3 data-i18n="restaurant.hours.sat_sun"></h3>
+              <p data-i18n="restaurant.hours.sat_sun_hours"></p>
+            </div>
+            <div class="card reveal">
+              <p data-i18n="restaurant.hours.address"></p>
+              <p data-i18n="restaurant.hours.phone"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-alt">
+        <div class="container contact-inner reveal">
+          <span class="badge" data-i18n="contact.badge"></span>
+          <h2 data-i18n="contact.title"></h2>
+          <p data-i18n="contact.subtitle"></p>
+        </div>
+      </section>
+
+    </div><!-- end #mode-restaurant -->
+
+    <!-- ── STORE MODE ──────────────────────────────────────────────── -->
+    <div id="mode-store" class="mode-sections">
+
+      <section class="hero">
+        <div class="container hero-inner">
+          <div class="hero-content reveal">
+            <span class="badge" data-i18n="hero.badge"></span>
+            <h1><span data-i18n="hero.store.title"></span> <span class="highlight" data-i18n="hero.store.highlight"></span></h1>
+            <p data-i18n="hero.store.subtitle"></p>
+            <div class="hero-actions">
+              <button class="btn-primary" data-i18n="hero.cta_primary"></button>
+              <button class="btn-secondary" data-i18n="hero.cta_secondary"></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="badge" data-i18n="store.featured.badge"></span>
+            <h2 data-i18n="store.featured.title"></h2>
+            <p data-i18n="store.featured.subtitle"></p>
+          </div>
+          <div class="card-grid">
+            <div class="product-card card reveal">
+              <div class="product-img" aria-hidden="true"></div>
+              <h3 data-i18n="store.featured.item_1_name"></h3>
+              <p data-i18n="store.featured.item_1_desc"></p>
+              <div class="product-footer">
+                <span class="product-price" data-i18n="store.featured.item_1_price"></span>
+                <button class="btn-primary btn-sm" data-i18n="store.featured.add_to_cart"></button>
+              </div>
+            </div>
+            <div class="product-card card reveal">
+              <div class="product-img" aria-hidden="true"></div>
+              <h3 data-i18n="store.featured.item_2_name"></h3>
+              <p data-i18n="store.featured.item_2_desc"></p>
+              <div class="product-footer">
+                <span class="product-price" data-i18n="store.featured.item_2_price"></span>
+                <button class="btn-primary btn-sm" data-i18n="store.featured.add_to_cart"></button>
+              </div>
+            </div>
+            <div class="product-card card reveal">
+              <div class="product-img" aria-hidden="true"></div>
+              <h3 data-i18n="store.featured.item_3_name"></h3>
+              <p data-i18n="store.featured.item_3_desc"></p>
+              <div class="product-footer">
+                <span class="product-price" data-i18n="store.featured.item_3_price"></span>
+                <button class="btn-primary btn-sm" data-i18n="store.featured.add_to_cart"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-alt">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="badge" data-i18n="store.categories.badge"></span>
+            <h2 data-i18n="store.categories.title"></h2>
+          </div>
+          <div class="cat-grid">
+            <div class="cat-card reveal" data-i18n="store.categories.cat_1"></div>
+            <div class="cat-card reveal" data-i18n="store.categories.cat_2"></div>
+            <div class="cat-card reveal" data-i18n="store.categories.cat_3"></div>
+            <div class="cat-card reveal" data-i18n="store.categories.cat_4"></div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container about-inner reveal">
+          <span class="badge" data-i18n="store.about.badge"></span>
+          <h2 data-i18n="store.about.title"></h2>
+          <p data-i18n="store.about.body"></p>
+        </div>
+      </section>
+
+      <section class="section-alt">
+        <div class="container contact-inner reveal">
+          <span class="badge" data-i18n="contact.badge"></span>
+          <h2 data-i18n="contact.title"></h2>
+          <p data-i18n="contact.subtitle"></p>
+        </div>
+      </section>
+
+    </div><!-- end #mode-store -->
+
+  </main>
+
+  <!-- ── Footer ──────────────────────────────────────────────────────── -->
+  <footer id="site-footer">
+    <div class="container footer-inner">
+      <p data-i18n="footer.tagline"></p>
+      <div id="view-counter" class="view-counter">
+        <span class="counter-item">
+          <span data-i18n="footer.counter_today"></span>: <strong data-count="47">0</strong>
+        </span>
+        <span class="counter-item">
+          <span data-i18n="footer.counter_yesterday"></span>: <strong data-count="83">0</strong>
+        </span>
+        <span class="counter-item">
+          <span data-i18n="footer.counter_lastmonth"></span>: <strong data-count="1240">0</strong>
+        </span>
+        <span class="counter-item">
+          <span data-i18n="footer.counter_total"></span>: <strong data-count="8600">0</strong>
+        </span>
+      </div>
+      <p class="footer-copy" data-i18n="footer.copyright"></p>
+    </div>
+  </footer>
+
+  <!-- ── Config Drawer ────────────────────────────────────────────────── -->
+  <button id="config-toggle" aria-label="Customize">
+    ⚙ <span data-i18n="configurator.button"></span>
+  </button>
+
+  <div id="config-backdrop"></div>
+
+  <aside id="config-drawer" role="dialog" aria-label="Site Configurator">
+    <div class="drawer-header">
+      <h2 data-i18n="configurator.title"></h2>
+      <button id="config-close" aria-label="Close">✕</button>
+    </div>
+    <div class="drawer-body">
+
+      <div class="drawer-section">
+        <label data-i18n="configurator.mode_label"></label>
+        <div class="mode-btns">
+          <button class="mode-btn active" data-mode="company" data-i18n="configurator.mode_company"></button>
+          <button class="mode-btn" data-mode="restaurant" data-i18n="configurator.mode_restaurant"></button>
+          <button class="mode-btn" data-mode="store" data-i18n="configurator.mode_store"></button>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <label data-i18n="configurator.theme_label"></label>
+        <div class="color-row">
+          <div class="color-item">
+            <span data-i18n="configurator.color_primary"></span>
+            <div class="color-input-wrap">
+              <input type="color" id="cp-primary" value="#0D9488">
+              <input type="text" class="hex-input" id="hex-primary" value="#0D9488" maxlength="7">
+            </div>
+          </div>
+          <div class="color-item">
+            <span data-i18n="configurator.color_accent"></span>
+            <div class="color-input-wrap">
+              <input type="color" id="cp-accent" value="#7C3AED">
+              <input type="text" class="hex-input" id="hex-accent" value="#7C3AED" maxlength="7">
+            </div>
+          </div>
+          <div class="color-item">
+            <span data-i18n="configurator.color_bg"></span>
+            <div class="color-input-wrap">
+              <input type="color" id="cp-bg" value="#0F1117">
+              <input type="text" class="hex-input" id="hex-bg" value="#0F1117" maxlength="7">
+            </div>
+          </div>
+          <div class="color-item">
+            <span data-i18n="configurator.color_text"></span>
+            <div class="color-input-wrap">
+              <input type="color" id="cp-text" value="#F9FAFB">
+              <input type="text" class="hex-input" id="hex-text" value="#F9FAFB" maxlength="7">
+            </div>
+          </div>
+        </div>
+        <button class="btn-auto-theme" id="btn-auto-theme" data-i18n="configurator.auto_theme"></button>
+      </div>
+
+      <div class="drawer-section">
+        <label data-i18n="configurator.fonts_label"></label>
+        <div class="font-row">
+          <div class="font-item">
+            <span data-i18n="configurator.font_heading"></span>
+            <select id="sel-heading-font"></select>
+          </div>
+          <div class="font-item">
+            <span data-i18n="configurator.font_body"></span>
+            <select id="sel-body-font"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <label data-i18n="configurator.lang_label"></label>
+        <div class="lang-toggle">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="zh-TW">中文</button>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <label data-i18n="configurator.contact_label"></label>
+        <input type="text" id="contact-name" data-i18n-placeholder="configurator.name_placeholder" placeholder="Full Name">
+        <input type="email" id="contact-email" data-i18n-placeholder="configurator.email_placeholder" placeholder="Email Address">
+        <input type="tel" id="contact-phone" data-i18n-placeholder="configurator.phone_placeholder" placeholder="Phone Number">
+        <div id="form-errors" class="form-errors"></div>
+      </div>
+
+      <button id="btn-send" class="btn-primary btn-send" data-i18n="configurator.send"></button>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+  <!-- ── Scripts (order matters: i18n → app → configurator) ──────────── -->
   <script src="https://cdn.jsdelivr.net/npm/i18next@23/i18next.min.js" defer></script>
   <script src="js/i18n.js" defer></script>
   <script src="js/app.js" defer></script>
   <script src="js/configurator.js" defer></script>
+
 </body>
 </html>
