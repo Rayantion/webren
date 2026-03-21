@@ -1039,7 +1039,7 @@ footer {
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .btn-cta-sm.desktop-only { display: none; }
-  #menu-toggle { display: flex; }
+  #menu-toggle { display: flex; pointer-events: auto; position: relative; z-index: 1001; }
   #mobile-menu { display: flex; }
   #menu-overlay { display: block; }
 
