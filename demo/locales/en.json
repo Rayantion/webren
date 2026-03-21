@@ -1,1 +1,174 @@
-{}
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "menu": "Menu",
+    "products": "Products",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Powered by Web人",
+    "company": {
+      "title": "Build a Brand That",
+      "highlight": "Stands Out",
+      "subtitle": "Professional web presence engineered for growth, SEO, and global audiences."
+    },
+    "restaurant": {
+      "title": "Taste the Difference",
+      "highlight": "Every Visit",
+      "subtitle": "A warm, modern restaurant experience — reservations, menu, and your story, all in one place."
+    },
+    "store": {
+      "title": "Shop the Latest",
+      "highlight": "Collections",
+      "subtitle": "Discover our curated selection of products with fast delivery and exceptional service."
+    },
+    "cta_primary": "Get Started",
+    "cta_secondary": "Learn More"
+  },
+  "company": {
+    "services": {
+      "badge": "What We Do",
+      "title": "Our Services",
+      "subtitle": "Everything your business needs to thrive online.",
+      "item_1_title": "Web Design",
+      "item_1_desc": "Modern, responsive websites crafted for your brand.",
+      "item_2_title": "SEO Optimization",
+      "item_2_desc": "Rank higher, attract more visitors, grow faster.",
+      "item_3_title": "Digital Marketing",
+      "item_3_desc": "Reach the right audience at the right time."
+    },
+    "about": {
+      "badge": "Our Story",
+      "title": "Who We Are",
+      "body": "We are a passionate team dedicated to delivering exceptional digital experiences. With years of expertise, we help businesses of all sizes establish a powerful online presence."
+    },
+    "features": {
+      "badge": "Why Choose Us",
+      "title": "Built Different",
+      "item_1_title": "Fast & Reliable",
+      "item_1_desc": "Optimized for performance and 99.9% uptime.",
+      "item_2_title": "Mobile First",
+      "item_2_desc": "Looks great on every screen, every device.",
+      "item_3_title": "SEO Ready",
+      "item_3_desc": "Built for search engines from the ground up."
+    }
+  },
+  "restaurant": {
+    "menu": {
+      "badge": "Our Menu",
+      "title": "Today's Selections",
+      "subtitle": "Fresh ingredients, crafted with care.",
+      "cat_1": "Starters",
+      "cat_2": "Mains",
+      "cat_3": "Desserts",
+      "item_1_name": "Garden Salad",
+      "item_1_desc": "Fresh seasonal greens, cherry tomatoes, house dressing",
+      "item_1_price": "NT$180",
+      "item_2_name": "Crispy Calamari",
+      "item_2_desc": "Lightly breaded, served with lemon aioli",
+      "item_2_price": "NT$240",
+      "item_3_name": "Grilled Salmon",
+      "item_3_desc": "Atlantic salmon, roasted vegetables, herb butter",
+      "item_3_price": "NT$480",
+      "item_4_name": "Beef Tenderloin",
+      "item_4_desc": "200g, medium rare, red wine reduction",
+      "item_4_price": "NT$680",
+      "item_5_name": "Chocolate Lava",
+      "item_5_desc": "Warm chocolate cake, vanilla ice cream",
+      "item_5_price": "NT$160",
+      "item_6_name": "Crème Brûlée",
+      "item_6_desc": "Classic French custard, caramelized sugar top",
+      "item_6_price": "NT$150"
+    },
+    "about": {
+      "badge": "Our Story",
+      "title": "A Tradition of Flavour",
+      "body": "Founded in 2018, we have been serving the community with passion and dedication. Every dish tells a story of carefully sourced ingredients and time-honoured recipes."
+    },
+    "hours": {
+      "badge": "Find Us",
+      "title": "Hours & Location",
+      "mon_fri": "Monday – Friday",
+      "mon_fri_hours": "11:30 AM – 10:00 PM",
+      "sat_sun": "Saturday – Sunday",
+      "sat_sun_hours": "10:00 AM – 11:00 PM",
+      "address": "123 Demo Street, Taipei City",
+      "phone": "+886 2 1234 5678"
+    }
+  },
+  "store": {
+    "featured": {
+      "badge": "New Arrivals",
+      "title": "Featured Products",
+      "subtitle": "Hand-picked selections, just for you.",
+      "item_1_name": "Classic Tee",
+      "item_1_desc": "100% organic cotton, available in 8 colours",
+      "item_1_price": "NT$590",
+      "item_2_name": "Canvas Tote",
+      "item_2_desc": "Durable, spacious, and stylish",
+      "item_2_price": "NT$380",
+      "item_3_name": "Ceramic Mug",
+      "item_3_desc": "Hand-thrown, dishwasher safe, 350ml",
+      "item_3_price": "NT$320",
+      "add_to_cart": "Add to Cart"
+    },
+    "categories": {
+      "badge": "Shop By",
+      "title": "Categories",
+      "cat_1": "Apparel",
+      "cat_2": "Accessories",
+      "cat_3": "Home & Living",
+      "cat_4": "Gifts"
+    },
+    "about": {
+      "badge": "Our Brand",
+      "title": "Made with Purpose",
+      "body": "Every product in our store is thoughtfully designed and sustainably sourced. We believe in quality over quantity — each item is built to last and brings genuine joy."
+    }
+  },
+  "contact": {
+    "badge": "Get in Touch",
+    "title": "Ready to Start?",
+    "subtitle": "Reach out and we'll get back to you within 24 hours.",
+    "name_label": "Full Name",
+    "email_label": "Email Address",
+    "message_label": "Message",
+    "submit": "Send Message"
+  },
+  "footer": {
+    "tagline": "This is a demo website by Web人.",
+    "copyright": "© 2025 Web人. All rights reserved.",
+    "counter_today": "Today",
+    "counter_yesterday": "Yesterday",
+    "counter_lastmonth": "Last Month",
+    "counter_total": "Total"
+  },
+  "configurator": {
+    "button": "Customize",
+    "title": "Customize Your Site",
+    "mode_label": "Business Type",
+    "mode_company": "Company",
+    "mode_restaurant": "Restaurant",
+    "mode_store": "Store",
+    "theme_label": "Theme Colors",
+    "color_primary": "Primary",
+    "color_accent": "Accent",
+    "color_bg": "Background",
+    "color_text": "Text",
+    "auto_theme": "Auto Theme",
+    "fonts_label": "Fonts",
+    "font_heading": "Heading Font",
+    "font_body": "Body Font",
+    "lang_label": "Language",
+    "contact_label": "Your Details",
+    "name_placeholder": "Full Name",
+    "email_placeholder": "Email Address",
+    "phone_placeholder": "Phone Number",
+    "send": "Send to Web人",
+    "sending": "Sending...",
+    "success": "Sent! We'll be in touch soon.",
+    "error": "Something went wrong. Please try again."
+  }
+}

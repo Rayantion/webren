@@ -1,1 +1,174 @@
-{}
+{
+  "nav": {
+    "home": "首頁",
+    "services": "服務",
+    "menu": "菜單",
+    "products": "商品",
+    "about": "關於",
+    "contact": "聯絡"
+  },
+  "hero": {
+    "badge": "由 Web人 驅動",
+    "company": {
+      "title": "打造令人",
+      "highlight": "印象深刻的品牌",
+      "subtitle": "專業網路形象，為成長、SEO 與全球受眾而生。"
+    },
+    "restaurant": {
+      "title": "每次造訪",
+      "highlight": "都是美味體驗",
+      "subtitle": "溫馨現代的餐廳體驗——訂位、菜單與品牌故事，盡在一處。"
+    },
+    "store": {
+      "title": "探索最新",
+      "highlight": "精選系列",
+      "subtitle": "發現我們精心策劃的商品，快速配送，服務卓越。"
+    },
+    "cta_primary": "立即開始",
+    "cta_secondary": "了解更多"
+  },
+  "company": {
+    "services": {
+      "badge": "我們的服務",
+      "title": "服務項目",
+      "subtitle": "您的企業線上成功所需的一切。",
+      "item_1_title": "網頁設計",
+      "item_1_desc": "為您的品牌量身打造現代響應式網站。",
+      "item_2_title": "SEO 優化",
+      "item_2_desc": "提高排名、吸引更多訪客、加速成長。",
+      "item_3_title": "數位行銷",
+      "item_3_desc": "在正確的時間觸及正確的受眾。"
+    },
+    "about": {
+      "badge": "我們的故事",
+      "title": "關於我們",
+      "body": "我們是一支充滿熱情的團隊，致力於提供卓越的數位體驗。憑藉多年專業，我們協助各規模企業建立強大的線上形象。"
+    },
+    "features": {
+      "badge": "為何選擇我們",
+      "title": "與眾不同",
+      "item_1_title": "快速可靠",
+      "item_1_desc": "效能優化，99.9% 正常運行時間。",
+      "item_2_title": "行動優先",
+      "item_2_desc": "在每個螢幕、每台設備上都完美呈現。",
+      "item_3_title": "SEO 就緒",
+      "item_3_desc": "從底層為搜尋引擎而建。"
+    }
+  },
+  "restaurant": {
+    "menu": {
+      "badge": "我們的菜單",
+      "title": "今日精選",
+      "subtitle": "新鮮食材，用心烹製。",
+      "cat_1": "前菜",
+      "cat_2": "主餐",
+      "cat_3": "甜點",
+      "item_1_name": "田園沙拉",
+      "item_1_desc": "時令新鮮蔬菜、小番茄、特製醬汁",
+      "item_1_price": "NT$180",
+      "item_2_name": "酥炸魷魚",
+      "item_2_desc": "輕盈裹粉，佐檸檬蒜泥醬",
+      "item_2_price": "NT$240",
+      "item_3_name": "香煎鮭魚",
+      "item_3_desc": "大西洋鮭魚、烤蔬菜、香草奶油",
+      "item_3_price": "NT$480",
+      "item_4_name": "菲力牛排",
+      "item_4_desc": "200g，三分熟，紅酒醬汁",
+      "item_4_price": "NT$680",
+      "item_5_name": "巧克力熔岩",
+      "item_5_desc": "溫熱巧克力蛋糕，搭配香草冰淇淋",
+      "item_5_price": "NT$160",
+      "item_6_name": "法式焦糖布丁",
+      "item_6_desc": "經典法式卡士達，焦糖脆頂",
+      "item_6_price": "NT$150"
+    },
+    "about": {
+      "badge": "我們的故事",
+      "title": "風味傳承",
+      "body": "創立於 2018 年，我們以熱情與奉獻服務社區。每道菜都訴說著精心挑選食材與傳統食譜的故事。"
+    },
+    "hours": {
+      "badge": "找到我們",
+      "title": "營業時間與地址",
+      "mon_fri": "週一 至 週五",
+      "mon_fri_hours": "上午 11:30 – 晚上 10:00",
+      "sat_sun": "週六 至 週日",
+      "sat_sun_hours": "上午 10:00 – 晚上 11:00",
+      "address": "台北市範例街 123 號",
+      "phone": "+886 2 1234 5678"
+    }
+  },
+  "store": {
+    "featured": {
+      "badge": "新品上市",
+      "title": "精選商品",
+      "subtitle": "為您精心挑選。",
+      "item_1_name": "經典 T 恤",
+      "item_1_desc": "100% 有機棉，提供 8 種顏色",
+      "item_1_price": "NT$590",
+      "item_2_name": "帆布托特包",
+      "item_2_desc": "耐用、寬敞、時尚",
+      "item_2_price": "NT$380",
+      "item_3_name": "陶瓷馬克杯",
+      "item_3_desc": "手工拉坯，可洗碗機清洗，350ml",
+      "item_3_price": "NT$320",
+      "add_to_cart": "加入購物車"
+    },
+    "categories": {
+      "badge": "分類瀏覽",
+      "title": "商品分類",
+      "cat_1": "服飾",
+      "cat_2": "配件",
+      "cat_3": "居家生活",
+      "cat_4": "禮品"
+    },
+    "about": {
+      "badge": "品牌理念",
+      "title": "有意義的創作",
+      "body": "我們商店中的每件商品都經過精心設計，以永續方式採購。我們相信質量勝於數量——每件商品都經久耐用，帶來真正的喜悅。"
+    }
+  },
+  "contact": {
+    "badge": "聯絡我們",
+    "title": "準備好開始了嗎？",
+    "subtitle": "聯繫我們，我們將在 24 小時內回覆。",
+    "name_label": "姓名",
+    "email_label": "電子郵件",
+    "message_label": "訊息",
+    "submit": "發送訊息"
+  },
+  "footer": {
+    "tagline": "這是一個由 Web人 製作的示範網站。",
+    "copyright": "© 2025 Web人。保留所有權利。",
+    "counter_today": "今日",
+    "counter_yesterday": "昨日",
+    "counter_lastmonth": "上月",
+    "counter_total": "總計"
+  },
+  "configurator": {
+    "button": "自訂",
+    "title": "自訂您的網站",
+    "mode_label": "商業類型",
+    "mode_company": "公司",
+    "mode_restaurant": "餐廳",
+    "mode_store": "商店",
+    "theme_label": "主題顏色",
+    "color_primary": "主色",
+    "color_accent": "強調色",
+    "color_bg": "背景色",
+    "color_text": "文字色",
+    "auto_theme": "自動配色",
+    "fonts_label": "字型",
+    "font_heading": "標題字型",
+    "font_body": "內文字型",
+    "lang_label": "語言",
+    "contact_label": "您的資料",
+    "name_placeholder": "姓名",
+    "email_placeholder": "電子郵件",
+    "phone_placeholder": "電話號碼",
+    "send": "傳送給 Web人",
+    "sending": "傳送中...",
+    "success": "已傳送！我們將盡快與您聯絡。",
+    "error": "發生錯誤，請重試。"
+  }
+}
