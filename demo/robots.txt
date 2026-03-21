@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rayantion26.github.io/webren/demo/sitemap.xml

@@ -1,0 +1,3 @@
+Contact: mailto:security@webren.dev
+Preferred-Languages: en, zh-TW
+Canonical: https://rayantion26.github.io/webren/demo/.well-known/security.txt
