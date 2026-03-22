@@ -99,6 +99,7 @@
     .btn-wa:hover { opacity: 0.88; }
     @media (max-width: 768px) {
       .nav-links { display: none; }
+      .desktop-only { display: none; }
       #menu-toggle { display: flex; }
     }
     #menu-toggle {
@@ -887,6 +888,7 @@ const urlLang = new URLSearchParams(location.search).get('lang');
 applyStrings(urlLang === 'zh-TW' ? 'zh-TW' : 'en');
 document.addEventListener('DOMContentLoaded', initReveal);
 
+</script>
 <script>
 // ── Mobile menu (hamburger + swipe) ──────────────────────────────────
 (function() {

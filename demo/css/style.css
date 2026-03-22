@@ -236,6 +236,7 @@ section { padding: 5rem 0; }
 .about-inner, .contact-inner { max-width: 680px; margin: 0 auto; text-align: center; }
 .about-inner h2, .contact-inner h2 { margin: 0.5rem 0 1rem; }
 .about-inner p, .contact-inner p { color: var(--color-text-muted); }
+.about-split { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }.about-img { width: 100%; border-radius: 1rem; object-fit: cover; aspect-ratio: 3/2; }.about-split .about-inner { text-align: left; margin: 0; max-width: none; }@media (max-width: 768px) { .about-split { grid-template-columns: 1fr; } }
 
 /* ── Mode sections (hidden by default except active) ─────────────────── */
 .mode-sections { display: none; }
@@ -261,7 +262,7 @@ section { padding: 5rem 0; }
 }
 .nav-logo span { color: #0D9488; }
 .logo-dot { width: 7px; height: 7px; border-radius: 50%; background: #0D9488; flex-shrink: 0; }
-.main-nav-links { display: flex; gap: 1.75rem; list-style: none; }
+.main-nav-links { display: flex; gap: 1.75rem; list-style: none; padding: 0; margin: 0; }
 .main-nav-links a { color: #6b7280; font-weight: 500; font-size: 0.9rem; transition: color 0.2s; }
 .main-nav-links a:hover { color: #111827; }
 .nav-right { display: flex; align-items: center; gap: 0.75rem; }
@@ -385,12 +386,13 @@ section { padding: 5rem 0; }
 .product-card { display: flex; flex-direction: column; gap: 0.6rem; }
 .product-img {
   width: 100%; aspect-ratio: 4/3; border-radius: 0.5rem;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
-  opacity: 0.3;
+  object-fit: cover; display: block;
+  background: var(--color-surface);
 }
 .product-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
 .product-price { font-weight: 700; color: var(--color-primary); }
 .btn-sm { padding: 0.5rem 1rem; font-size: 0.85rem; min-height: 40px; }
+.restaurant-feature { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }.restaurant-img { width: 100%; border-radius: 1rem; object-fit: cover; aspect-ratio: 16/9; }.restaurant-feature-text { text-align: left; }.restaurant-feature-text h2 { margin: 0.5rem 0 1rem; }.restaurant-feature-text p { color: var(--color-text-muted); }@media (max-width: 768px) { .restaurant-feature { grid-template-columns: 1fr; } }
 
 /* ── Categories ───────────────────────────────────────────────────────── */
 .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }

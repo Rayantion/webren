@@ -1,6 +1,6 @@
 // app.js — Mode switching, transitions, view counter, scroll reveal, Three.js, init
 
-const STORAGE_KEY_CONFIG = 'webren_demo_config';
+const STORAGE_KEY_CONFIG = 'webren_demo_v2';
 let isTransitioning = false;
 let currentConfig = {};
 
