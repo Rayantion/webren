@@ -146,6 +146,9 @@
     "counter_lastmonth": "Last Month",
     "counter_total": "Total"
   },
+  "demo_nav": {
+    "brand": "YourBrand"
+  },
   "demo_bar": {
     "company": "Company",
     "restaurant": "Restaurant",

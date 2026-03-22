@@ -1,0 +1,184 @@
+/* ── Shared Nav + Footer (matches main webren site) ────────────────── */
+
+:root {
+  --nav-teal:    #0D9488;
+  --nav-violet:  #7C3AED;
+  --nav-text:    #0F172A;
+  --nav-text-2:  #475569;
+  --nav-bg-soft: #F8FAFC;
+  --nav-border:  #E2E8F0;
+  --nav-shadow:  0 16px 64px rgba(0,0,0,0.12);
+  --nav-transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── Navbar ── */
+#shared-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 900;
+  padding: 18px 0;
+  transition: background var(--nav-transition), box-shadow var(--nav-transition),
+              transform var(--nav-transition), padding var(--nav-transition);
+}
+#shared-nav.scrolled {
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 var(--nav-border);
+  padding: 12px 0;
+}
+#shared-nav .nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
+}
+#shared-nav .nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.4rem; font-weight: 700;
+  text-decoration: none; color: var(--nav-text);
+  display: flex; align-items: center; gap: 8px;
+}
+#shared-nav .nav-logo span {
+  background: linear-gradient(135deg, var(--nav-teal), var(--nav-violet));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+#shared-nav .logo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--nav-teal), var(--nav-violet));
+  flex-shrink: 0;
+}
+#shared-nav .nav-links {
+  display: flex; align-items: center; gap: 4px; list-style: none;
+  padding: 0; margin: 0;
+}
+#shared-nav .nav-links a {
+  padding: 8px 14px; border-radius: 8px;
+  text-decoration: none; color: var(--nav-text-2);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 500;
+  transition: color var(--nav-transition), background var(--nav-transition);
+}
+#shared-nav .nav-links a:hover, #shared-nav .nav-links a.active {
+  color: var(--nav-text); background: var(--nav-bg-soft);
+}
+#shared-nav .nav-right {
+  display: flex; align-items: center; gap: 12px;
+}
+#shared-nav .lang-toggle {
+  display: flex; align-items: center;
+  background: var(--nav-bg-soft); border: 1px solid var(--nav-border);
+  border-radius: 100px; padding: 3px; gap: 2px;
+}
+#shared-nav .lang-btn {
+  padding: 5px 12px; border: none; border-radius: 100px;
+  background: transparent; font-size: 12px; font-weight: 600;
+  color: var(--nav-text-2); cursor: pointer;
+  transition: all 0.25s ease; white-space: nowrap;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+#shared-nav .lang-btn.active {
+  background: var(--nav-text); color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+#shared-nav .btn-cta-sm {
+  padding: 9px 20px;
+  background: linear-gradient(135deg, var(--nav-teal), var(--nav-violet));
+  color: #fff; border: none; border-radius: 100px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; text-decoration: none;
+  transition: opacity var(--nav-transition), transform var(--nav-transition);
+}
+#shared-nav .btn-cta-sm:hover { opacity: 0.9; transform: translateY(-1px); }
+#shared-nav #shared-menu-toggle {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 8px;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+#shared-nav #shared-menu-toggle span {
+  display: block; width: 22px; height: 2px;
+  background: var(--nav-text); border-radius: 2px; transition: all 0.3s ease;
+}
+
+/* Spacer so fixed nav doesn't overlap content */
+#nav-spacer { height: 70px; }
+
+/* ── Mobile Menu ── */
+#shared-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0; right: -100%;
+  width: min(320px, 82vw); height: 100vh;
+  background: #fff;
+  box-shadow: var(--nav-shadow);
+  z-index: 950;
+  transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+  padding: 80px 24px 32px;
+  flex-direction: column; gap: 4px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+#shared-mobile-menu.open { right: 0; }
+#shared-mobile-menu a {
+  display: block; padding: 14px 16px;
+  text-decoration: none; color: var(--nav-text);
+  font-weight: 500; border-radius: 10px;
+  transition: background var(--nav-transition);
+}
+#shared-mobile-menu a:hover { background: var(--nav-bg-soft); }
+#shared-mobile-menu a.active { color: var(--nav-teal); background: var(--nav-bg-soft); }
+.mobile-menu-lang {
+  display: flex; gap: 8px; margin-top: 12px; padding-top: 16px;
+  border-top: 1px solid var(--nav-border);
+}
+.mobile-menu-lang .lang-btn {
+  flex: 1; padding: 10px; text-align: center; border-radius: 8px;
+  border: 1px solid var(--nav-border); background: transparent;
+  font-weight: 600; font-size: 0.85rem; cursor: pointer;
+  color: var(--nav-text-2); transition: all 0.2s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.mobile-menu-lang .lang-btn.active {
+  background: var(--nav-text); color: #fff; border-color: var(--nav-text);
+}
+
+#shared-menu-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.4); z-index: 940;
+  transition: opacity 0.3s ease;
+}
+#shared-menu-overlay.open { display: block; }
+
+/* Hide/show on scroll */
+#shared-nav.hidden-nav { transform: translateY(-100%); }
+#shared-nav.visible-nav { transform: translateY(0); }
+
+/* ── Shared Footer ── */
+#shared-footer {
+  background: #F8FAFC; border-top: 1px solid var(--nav-border);
+  padding: 2rem 0; text-align: center;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+#shared-footer .footer-inner {
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
+}
+#shared-footer .footer-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem; font-weight: 700;
+  color: var(--nav-text); text-decoration: none;
+}
+#shared-footer .footer-logo span {
+  background: linear-gradient(135deg, var(--nav-teal), var(--nav-violet));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+#shared-footer .footer-tagline { color: var(--nav-text-2); font-size: 0.88rem; }
+#shared-footer .footer-copy { color: #94A3B8; font-size: 0.8rem; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  #shared-nav .nav-links { display: none; }
+  #shared-nav #shared-menu-toggle { display: flex; }
+  #shared-nav .btn-cta-sm { display: none; }
+  #shared-mobile-menu { display: flex; }
+}

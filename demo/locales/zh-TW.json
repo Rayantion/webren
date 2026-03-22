@@ -146,6 +146,9 @@
     "counter_lastmonth": "上月",
     "counter_total": "總計"
   },
+  "demo_nav": {
+    "brand": "您的品牌"
+  },
   "demo_bar": {
     "company": "公司",
     "restaurant": "餐廳",

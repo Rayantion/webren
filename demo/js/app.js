@@ -85,6 +85,13 @@ function showMode(mode, withTransition = true) {
       el.classList.remove('revealed');
       el.style.transitionDelay = '';
     });
+    // Update inner demo nav middle link for current mode
+    const serviceLink = document.getElementById('demo-nav-services');
+    if (serviceLink && window.i18next) {
+      const linkKey = { company: 'nav.services', restaurant: 'nav.menu', store: 'nav.products' }[mode] || 'nav.services';
+      serviceLink.dataset.i18n = linkKey;
+      serviceLink.textContent = window.i18next.t(linkKey);
+    }
     initScrollReveal();
   };
 
@@ -144,43 +151,6 @@ function initCounter() {
 }
 
 // ── Navbar scroll ─────────────────────────────────────────────────────────────
-function initNav() {
-  const nav = document.getElementById('main-nav');
-  if (!nav) return;
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-  }, { passive: true });
-}
-
-// ── Mobile menu ───────────────────────────────────────────────────────────────
-function initMobileMenu() {
-  const toggle = document.getElementById('menu-toggle');
-  const menu = document.getElementById('mobile-menu');
-  const overlay = document.getElementById('menu-overlay');
-
-  const openMenu = () => {
-    menu.classList.add('open');
-    overlay?.classList.add('open');
-    toggle?.setAttribute('aria-expanded', 'true');
-  };
-  const closeMenu = () => {
-    menu.classList.remove('open');
-    overlay?.classList.remove('open');
-    toggle?.setAttribute('aria-expanded', 'false');
-  };
-
-  toggle?.addEventListener('click', () => menu.classList.contains('open') ? closeMenu() : openMenu());
-  overlay?.addEventListener('click', closeMenu);
-
-  // Swipe left to open, swipe right to close
-  let touchStartX = 0;
-  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-  document.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (dx < -50 && !menu.classList.contains('open')) openMenu();
-    if (dx > 50 && menu.classList.contains('open')) closeMenu();
-  }, { passive: true });
-}
 
 // ── Language toggle ───────────────────────────────────────────────────────────
 function initLangToggle() {
@@ -190,6 +160,12 @@ function initLangToggle() {
       runTransition(async () => {
         await I18N.switchLanguage(btn.dataset.lang);
       });
+    });
+  });
+  // Also respond to lang:nav event dispatched by shared-nav.js outer nav
+  document.addEventListener('nav:lang', e => {
+    runTransition(async () => {
+      await I18N.switchLanguage(e.detail);
     });
   });
 }
@@ -332,8 +308,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   applyFonts(currentConfig.fonts);
   await I18N.init();
   showMode(currentConfig.mode || 'company', false);
-  initNav();
-  initMobileMenu();
   initLangToggle();
   initCounter();
   initMenuTabs();

@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — Web人 | Website Plans &amp; Packages</title>
+  <meta name="description" content="Transparent pricing for Web人 web development services. Choose from Option A (ready-made) or Option B (fully custom). Includes SEO, i18n, and modern design.">
+  <meta name="keywords" content="web design pricing, website packages, web development cost, webren pricing, Web人 價格">
+  <meta name="author" content="Web人">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://rayantion.me/webren/pricing/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rayantion.me/webren/pricing/">
+  <meta property="og:title" content="Pricing — Web人">
+  <meta property="og:description" content="Simple, transparent pricing. Option A starts at NT$3,000/mo. Option B for fully custom websites.">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pricing — Web人">
+  <meta name="twitter:description" content="Simple, transparent pricing for professional websites.">
+
+  <link rel="alternate" hreflang="en" href="https://rayantion.me/webren/pricing/">
+  <link rel="alternate" hreflang="zh-TW" href="https://rayantion.me/webren/pricing/?lang=zh-TW">
+  <link rel="alternate" hreflang="x-default" href="https://rayantion.me/webren/pricing/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Web人 Pricing",
+    "url": "https://rayantion.me/webren/pricing/",
+    "description": "Pricing plans for Web人 web development services",
+    "provider": { "@type": "Organization", "name": "Web人", "url": "https://rayantion.me/webren/" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/shared-nav.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --teal: #0D9488; --teal-dark: #0A7B72;
+      --violet: #7C3AED;
+      --bg: #FFFFFF; --bg-soft: #F8FAFC; --bg-card: #FFFFFF;
+      --border: #E2E8F0;
+      --text: #0F172A; --text-2: #475569; --text-3: #94A3B8;
+      --radius: 14px; --radius-lg: 24px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.07);
+      --shadow-lg: 0 16px 64px rgba(0,0,0,0.10);
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; line-height: 1.7;
+      color: var(--text); background: var(--bg);
+      overflow-x: hidden;
+    }
+    body.lang-zh { font-family: 'Noto Sans TC', 'Plus Jakarta Sans', sans-serif; }
+    h1,h2,h3,h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+    a { color: var(--teal); text-decoration: none; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+
+    /* ── Page transition ── */
+    #page-transition {
+      position: fixed; inset: 0; background: var(--teal);
+      transform: scaleY(0); transform-origin: top;
+      z-index: 9999; pointer-events: none;
+      transition: transform 0.4s ease-in-out;
+    }
+    #page-transition.active { transform: scaleY(1); pointer-events: all; }
+
+    /* ── Hero ── */
+    .pricing-hero {
+      padding: 6rem 0 4rem; text-align: center;
+      background: linear-gradient(180deg, #F0FDF9 0%, #fff 100%);
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 14px; border-radius: 100px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.07em;
+      text-transform: uppercase; margin-bottom: 1.25rem;
+    }
+    .badge-teal { background: rgba(13,148,136,0.1); color: var(--teal); border: 1px solid rgba(13,148,136,0.2); }
+    .badge-violet { background: rgba(124,58,237,0.08); color: var(--violet); border: 1px solid rgba(124,58,237,0.15); }
+    .pricing-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1rem; }
+    .pricing-hero p { color: var(--text-2); font-size: 1.1rem; max-width: 560px; margin: 0 auto 2rem; }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--teal); color: #fff; border: none;
+      padding: 0.85rem 1.75rem; border-radius: 10px; cursor: pointer;
+      font-size: 1rem; font-weight: 600; font-family: inherit;
+      transition: all var(--transition); display: inline-flex; align-items: center; gap: 8px;
+      min-height: 50px; text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,148,136,0.3); }
+    .btn-secondary {
+      background: transparent; color: var(--text); border: 2px solid var(--border);
+      padding: 0.85rem 1.75rem; border-radius: 10px; cursor: pointer;
+      font-size: 1rem; font-weight: 600; font-family: inherit;
+      transition: all var(--transition); display: inline-flex; align-items: center; gap: 8px;
+      min-height: 50px; text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-secondary:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+
+    /* ── Sections ── */
+    .section { padding: 5rem 0; }
+    .section-alt { background: var(--bg-soft); }
+    .section-header { text-align: center; max-width: 620px; margin: 0 auto 3.5rem; }
+    .section-header h2 { margin: 0.5rem 0 0.75rem; }
+    .section-header p { color: var(--text-2); }
+
+    /* ── Option A Cards ── */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; align-items: start;
+    }
+    .pricing-card {
+      background: var(--bg-card); border: 2px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2rem;
+      transition: all var(--transition); position: relative; overflow: hidden;
+    }
+    .pricing-card:hover {
+      border-color: var(--teal);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+    .pricing-card.featured {
+      border-color: var(--teal);
+      background: linear-gradient(135deg, #F0FDF9 0%, #fff 100%);
+      box-shadow: var(--shadow-lg);
+    }
+    .featured-badge {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--teal); color: #fff;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 100px;
+    }
+    .card-tier {
+      font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text-3); margin-bottom: 0.5rem;
+    }
+    .card-name {
+      font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700;
+      color: var(--text); margin-bottom: 1rem;
+    }
+    .card-price { margin-bottom: 1.25rem; }
+    .price-amount {
+      font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 700;
+      color: var(--teal);
+    }
+    .price-period { color: var(--text-3); font-size: 0.95rem; margin-left: 4px; }
+    .card-desc { color: var(--text-2); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6; }
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 2rem; }
+    .feature-list li {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      font-size: 0.9rem; color: var(--text-2);
+    }
+    .feature-list li::before {
+      content: ''; width: 18px; height: 18px; border-radius: 50%;
+      background: rgba(13,148,136,0.12); flex-shrink: 0; margin-top: 2px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%230D9488'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
+      background-size: contain; background-repeat: no-repeat;
+    }
+    .feature-note {
+      font-size: 0.82rem; color: var(--text-3); margin-top: auto;
+      padding-top: 1rem; border-top: 1px solid var(--border);
+    }
+    .card-cta { width: 100%; justify-content: center; font-size: 0.95rem; }
+
+    /* ── Option A toggle tabs ── */
+    .plan-tabs {
+      display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .plan-tab {
+      padding: 0.5rem 1.25rem; border-radius: 100px;
+      background: var(--bg-soft); border: 1px solid var(--border);
+      color: var(--text-2); cursor: pointer; font-size: 0.9rem; font-weight: 500;
+      transition: all var(--transition); font-family: inherit;
+      min-height: 40px; -webkit-tap-highlight-color: transparent;
+    }
+    .plan-tab.active, .plan-tab:hover { background: var(--teal); border-color: var(--teal); color: #fff; }
+
+    /* ── Option B ── */
+    .optionb-card {
+      background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%);
+      border-radius: var(--radius-lg); padding: 3rem;
+      color: #F9FAFB; position: relative; overflow: hidden;
+    }
+    .optionb-card::before {
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%);
+    }
+    .optionb-card::after {
+      content: ''; position: absolute; bottom: -60px; left: -60px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(13,148,136,0.15) 0%, transparent 70%);
+    }
+    .optionb-inner { position: relative; z-index: 1; }
+    .optionb-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+    }
+    .optionb-badge { display: inline-block; }
+    .optionb-badge span {
+      background: rgba(124,58,237,0.25); color: #C4B5FD;
+      border: 1px solid rgba(124,58,237,0.3);
+      padding: 4px 14px; border-radius: 100px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+    }
+    .optionb-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0.75rem 0 1rem; color: #F9FAFB;
+    }
+    .optionb-desc { color: rgba(249,250,251,0.7); margin-bottom: 1.5rem; }
+    .optionb-price-block { margin-bottom: 2rem; }
+    .optionb-price {
+      font-family: 'Space Grotesk', sans-serif; font-size: 2.8rem; font-weight: 700;
+      color: #A78BFA;
+    }
+    .optionb-price-note { color: rgba(249,250,251,0.5); font-size: 0.9rem; margin-top: 0.25rem; }
+    .optionb-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .optionb-features li {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      color: rgba(249,250,251,0.8); font-size: 0.95rem;
+    }
+    .optionb-features li::before {
+      content: '✦'; color: #A78BFA; flex-shrink: 0; font-size: 0.75rem; margin-top: 3px;
+    }
+    .optionb-cta {
+      background: linear-gradient(135deg, var(--violet) 0%, #9333EA 100%);
+      color: #fff; border: none; padding: 1rem 2rem; border-radius: 12px;
+      font-size: 1rem; font-weight: 700; font-family: inherit; cursor: pointer;
+      transition: all var(--transition); min-height: 52px;
+      display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .optionb-cta:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(124,58,237,0.4); }
+    @media (max-width: 768px) {
+      .optionb-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .optionb-card { padding: 2rem; }
+    }
+
+    /* ── FAQ ── */
+    .faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+    .faq-item {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; text-align: left; padding: 1.1rem 1.5rem;
+      background: var(--bg-card); border: none; cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600;
+      color: var(--text); display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem; transition: background var(--transition);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .faq-q:hover { background: var(--bg-soft); }
+    .faq-q .arrow { flex-shrink: 0; transition: transform var(--transition); }
+    .faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s ease, padding var(--transition);
+      padding: 0 1.5rem;
+      color: var(--text-2); font-size: 0.95rem; line-height: 1.7;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding: 0 1.5rem 1.25rem; }
+
+    /* ── CTA footer ── */
+    .cta-footer { padding: 5rem 0; background: linear-gradient(135deg, #0F172A 0%, #0D9488 100%); text-align: center; }
+    .cta-footer h2 { color: #fff; font-size: clamp(1.5rem, 3vw, 2.2rem); margin-bottom: 1rem; }
+    .cta-footer p { color: rgba(255,255,255,0.7); margin-bottom: 2rem; }
+    .btn-white {
+      background: #fff; color: var(--text); border: none;
+      padding: 0.9rem 2rem; border-radius: 10px; cursor: pointer;
+      font-size: 1rem; font-weight: 700; font-family: inherit;
+      transition: all var(--transition); display: inline-flex; align-items: center; gap: 8px;
+      min-height: 52px; text-decoration: none; -webkit-tap-highlight-color: transparent;
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+    /* ── Footer ── */
+    footer {
+      background: #0F172A; color: rgba(255,255,255,0.5);
+      text-align: center; padding: 2rem; font-size: 0.85rem;
+    }
+    footer a { color: var(--teal); }
+
+    /* ── Reveal ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.revealed { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<div id="page-transition"></div>
+
+
+<!-- HERO -->
+<section class="pricing-hero">
+  <div class="container">
+    <div class="badge badge-teal reveal" data-i18n="pricing.badge">Transparent Pricing</div>
+    <h1 class="reveal" data-i18n="pricing.title">Simple, Honest Pricing</h1>
+    <p class="reveal" data-i18n="pricing.subtitle">No surprises. Choose the plan that fits your business — start with a ready-made template or go fully custom.</p>
+    <div class="hero-actions reveal">
+      <a href="../demo/" class="btn-primary" data-i18n="pricing.try_demo">Demo &amp; Make Now</a>
+      <a href="https://wa.me/6285183005811" class="btn-secondary" target="_blank" rel="noopener" data-i18n="pricing.ask_question">Ask a Question</a>
+    </div>
+  </div>
+</section>
+
+<!-- OPTION A -->
+<section class="section" id="option-a">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="badge badge-teal" data-i18n="pricing.optiona.badge">Option A</div>
+      <h2 data-i18n="pricing.optiona.title">Ready-Made Websites</h2>
+      <p data-i18n="pricing.optiona.subtitle">Template-based websites with your branding, colors, fonts, and content. Live in days, not weeks.</p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- A1: Basic -->
+      <div class="pricing-card reveal">
+        <div class="card-tier" data-i18n="pricing.optiona.a1.tier">Option A — Basic</div>
+        <div class="card-name" data-i18n="pricing.optiona.a1.name">Starter</div>
+        <div class="card-price">
+          <span class="price-amount">NT$3,000</span>
+          <span class="price-period" data-i18n="pricing.per_month">/month</span>
+        </div>
+        <div class="card-desc" data-i18n="pricing.optiona.a1.desc">
+          A professional, clean website with your branding. Perfect for small businesses getting online.
+        </div>
+        <ul class="feature-list">
+          <li data-i18n="pricing.feature.pages">Up to 5 pages</li>
+          <li data-i18n="pricing.feature.responsive">Mobile responsive design</li>
+          <li data-i18n="pricing.feature.seo">Full SEO &amp; schema markup</li>
+          <li data-i18n="pricing.feature.i18n">English + Traditional Chinese</li>
+          <li data-i18n="pricing.feature.domain">Domain &amp; hosting guide</li>
+          <li data-i18n="pricing.feature.customizer">Color &amp; font customizer</li>
+        </ul>
+        <a href="../demo/" class="btn-primary card-cta" data-i18n="pricing.cta_demo">Try Demo</a>
+      </div>
+
+      <!-- A2: With Email -->
+      <div class="pricing-card featured reveal">
+        <div class="featured-badge" data-i18n="pricing.popular">Most Popular</div>
+        <div class="card-tier" data-i18n="pricing.optiona.a2.tier">Option A — With Email</div>
+        <div class="card-name" data-i18n="pricing.optiona.a2.name">Professional</div>
+        <div class="card-price">
+          <span class="price-amount">NT$4,500</span>
+          <span class="price-period" data-i18n="pricing.per_month">/month</span>
+        </div>
+        <div class="card-desc" data-i18n="pricing.optiona.a2.desc">
+          Everything in Starter, plus professional Gmail email setup — send &amp; receive from your own domain.
+        </div>
+        <ul class="feature-list">
+          <li data-i18n="pricing.feature.everything_starter">Everything in Starter</li>
+          <li data-i18n="pricing.feature.gmail">Gmail business email setup</li>
+          <li data-i18n="pricing.feature.custom_email">Send from your domain (you@yourdomain.com)</li>
+          <li data-i18n="pricing.feature.form_reply">Contact form auto-reply</li>
+          <li data-i18n="pricing.feature.sheets">Form data → Google Sheets</li>
+        </ul>
+        <a href="../demo/" class="btn-primary card-cta" data-i18n="pricing.cta_demo">Try Demo</a>
+      </div>
+
+      <!-- A3: Premium -->
+      <div class="pricing-card reveal">
+        <div class="card-tier" data-i18n="pricing.optiona.a3.tier">Option A — Premium</div>
+        <div class="card-name" data-i18n="pricing.optiona.a3.name">Premium</div>
+        <div class="card-price">
+          <span class="price-amount">NT$5,000</span>
+          <span class="price-period" data-i18n="pricing.per_month">/month</span>
+        </div>
+        <div class="card-desc" data-i18n="pricing.optiona.a3.desc">
+          Our most complete ready-made package. Includes live visitor counter — Today, Yesterday, Last Month, Total.
+        </div>
+        <ul class="feature-list">
+          <li data-i18n="pricing.feature.everything_pro">Everything in Professional</li>
+          <li data-i18n="pricing.feature.viewcount">Live visitor counter (Today / Yesterday / Last Month / Total)</li>
+          <li data-i18n="pricing.feature.analytics">Site analytics integration</li>
+          <li data-i18n="pricing.feature.priority">Priority support</li>
+        </ul>
+        <a href="../demo/" class="btn-primary card-cta" data-i18n="pricing.cta_demo">Try Demo</a>
+      </div>
+
+    </div>
+
+    <p class="feature-note" style="text-align:center; margin-top:2rem; color: var(--text-3); font-size:0.9rem;" data-i18n="pricing.optiona.note">
+      All Option A plans include a one-time setup fee. Domain renewal billed separately.
+    </p>
+  </div>
+</section>
+
+<!-- OPTION B -->
+<section class="section section-alt" id="option-b">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="badge badge-violet" data-i18n="pricing.optionb.badge">Option B</div>
+      <h2 data-i18n="pricing.optionb.title">Fully Custom Websites</h2>
+      <p data-i18n="pricing.optionb.subtitle">Built from scratch to your exact vision. No templates — pure craftsmanship.</p>
+    </div>
+
+    <div class="optionb-card reveal">
+      <div class="optionb-inner">
+        <div class="optionb-grid">
+          <div>
+            <div class="optionb-badge"><span data-i18n="pricing.optionb.badge_inner">Custom Build</span></div>
+            <h2 class="optionb-title" data-i18n="pricing.optionb.card_title">Your Website, Your Rules</h2>
+            <p class="optionb-desc" data-i18n="pricing.optionb.desc">
+              Option B is a fully custom website designed and built by Aaron to your exact preferences — layout, interactions, animations, branding. Nothing off-the-shelf.
+            </p>
+            <div class="optionb-price-block">
+              <div class="optionb-price">NT$12,000<span style="font-size:1.4rem; color: rgba(167,139,250,0.7)">++</span></div>
+              <div class="optionb-price-note" data-i18n="pricing.optionb.price_note">One-time build fee + NT$3,000/year maintenance + domain renewal</div>
+            </div>
+            <a href="https://wa.me/6285183005811" class="optionb-cta" target="_blank" rel="noopener" data-i18n="pricing.optionb.cta">
+              Get a Custom Quote ↗
+            </a>
+          </div>
+          <div>
+            <ul class="optionb-features">
+              <li data-i18n="pricing.optionb.f1">Fully bespoke design — no templates</li>
+              <li data-i18n="pricing.optionb.f2">Custom animations &amp; interactions</li>
+              <li data-i18n="pricing.optionb.f3">Unique layout tailored to your brand</li>
+              <li data-i18n="pricing.optionb.f4">All Option A features included</li>
+              <li data-i18n="pricing.optionb.f5">Priority WhatsApp support</li>
+              <li data-i18n="pricing.optionb.f6">NT$3,000/year ongoing maintenance</li>
+              <li data-i18n="pricing.optionb.f7">Domain renewal assistance</li>
+              <li data-i18n="pricing.optionb.f8">Dedicated project consultation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE TABLE -->
+<section class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 data-i18n="pricing.compare.title">Compare Plans</h2>
+    </div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+        <thead>
+          <tr>
+            <th style="text-align:left; padding:1rem; border-bottom:2px solid var(--border); color:var(--text-2); font-size:0.8rem; text-transform:uppercase; letter-spacing:.06em;" data-i18n="pricing.compare.feature">Feature</th>
+            <th style="text-align:center; padding:1rem; border-bottom:2px solid var(--border); color:var(--teal);">A1<br><small>NT$3,000/mo</small></th>
+            <th style="text-align:center; padding:1rem; border-bottom:2px solid var(--teal); color:var(--teal); background:rgba(13,148,136,0.04);">A2<br><small>NT$4,500/mo</small></th>
+            <th style="text-align:center; padding:1rem; border-bottom:2px solid var(--border); color:var(--teal);">A3<br><small>NT$5,000/mo</small></th>
+            <th style="text-align:center; padding:1rem; border-bottom:2px solid var(--border); color:var(--violet);">B<br><small>NT$12,000++</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:.85rem 1rem; border-bottom:1px solid var(--border);" data-i18n="pricing.compare.pages">Up to 5 pages</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border);">✓</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border); background:rgba(13,148,136,0.03);">✓</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border);">✓</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border);">✓</td>
+          </tr>
+          <tr>
+            <td style="padding:.85rem 1rem; border-bottom:1px solid var(--border);" data-i18n="pricing.compare.seo">SEO + Schema</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border);">✓</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border); background:rgba(13,148,136,0.03);">✓</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border);">✓</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border);">✓</td>
+          </tr>
+          <tr>
+            <td style="padding:.85rem 1rem; border-bottom:1px solid var(--border);" data-i18n="pricing.compare.i18n">EN + 中文 (i18n)</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border);">✓</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border); background:rgba(13,148,136,0.03);">✓</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border);">✓</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border);">✓</td>
+          </tr>
+          <tr>
+            <td style="padding:.85rem 1rem; border-bottom:1px solid var(--border);" data-i18n="pricing.compare.email">Gmail business email</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border); color:var(--text-3);">—</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border); background:rgba(13,148,136,0.03);">✓</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border);">✓</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border);">✓</td>
+          </tr>
+          <tr>
+            <td style="padding:.85rem 1rem; border-bottom:1px solid var(--border);" data-i18n="pricing.compare.viewcount">Live visitor counter</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border); color:var(--text-3);">—</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border); color:var(--text-3); background:rgba(13,148,136,0.03);">—</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border);">✓</td>
+            <td style="text-align:center; padding:.85rem; border-bottom:1px solid var(--border);">✓</td>
+          </tr>
+          <tr>
+            <td style="padding:.85rem 1rem;" data-i18n="pricing.compare.custom">Custom design</td>
+            <td style="text-align:center; padding:.85rem; color:var(--text-3);">—</td>
+            <td style="text-align:center; padding:.85rem; color:var(--text-3); background:rgba(13,148,136,0.03);">—</td>
+            <td style="text-align:center; padding:.85rem; color:var(--text-3);">—</td>
+            <td style="text-align:center; padding:.85rem;">✓</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 data-i18n="pricing.faq.title">Frequently Asked</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="pricing.faq.q1">What's the difference between Option A and Option B?</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a" data-i18n="pricing.faq.a1">Option A uses pre-built templates customised with your branding, colors, and content — fast and affordable. Option B is a fully bespoke website designed from scratch to your exact vision, with complete creative freedom.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="pricing.faq.q2">Can I try before I buy?</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a" data-i18n="pricing.faq.a2">Yes! Use the live Demo to preview and customise your Option A website. Pick colors, fonts, and business type, then send your preferences directly to us.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="pricing.faq.q3">Is the monthly fee ongoing?</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a" data-i18n="pricing.faq.a3">Option A is a monthly subscription that covers hosting, maintenance, and support. Option B has a one-time build fee plus NT$3,000/year for ongoing maintenance and updates.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="pricing.faq.q4">Does the price include a domain?</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a" data-i18n="pricing.faq.a4">Domain registration and renewal are billed separately as they depend on your chosen domain name. We will guide you through the process and help you pick the right domain.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="pricing.faq.q5">How fast can my site go live?</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a" data-i18n="pricing.faq.a5">Option A sites typically go live within 3–7 business days after we receive your content. Option B timelines depend on complexity — usually 2–4 weeks.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FOOTER -->
+<section class="cta-footer">
+  <div class="container">
+    <h2 class="reveal" data-i18n="pricing.cta_footer.title">Ready to Get Started?</h2>
+    <p class="reveal" data-i18n="pricing.cta_footer.subtitle">Try the demo and send us your preferences, or chat on WhatsApp for a free consultation.</p>
+    <div class="hero-actions reveal">
+      <a href="../demo/" class="btn-white" data-i18n="pricing.try_demo">Demo &amp; Make Now</a>
+      <a href="https://wa.me/6285183005811" class="btn-primary" target="_blank" rel="noopener" data-i18n="pricing.whatsapp">Chat on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+
+<script>
+// ── i18n strings ───────────────────────────────────────────────────────
+const STRINGS = {
+  en: {
+    "nav.home": "Home", "nav.services": "Services", "nav.pricing": "Pricing",
+    "nav.demo": "Demo", "nav.contact": "Contact",
+    "pricing.badge": "Transparent Pricing",
+    "pricing.title": "Simple, Honest Pricing",
+    "pricing.subtitle": "No surprises. Choose the plan that fits your business — start with a ready-made template or go fully custom.",
+    "pricing.try_demo": "Demo &amp; Make Now",
+    "pricing.ask_question": "Ask a Question",
+    "pricing.per_month": "/month",
+    "pricing.popular": "Most Popular",
+    "pricing.cta_demo": "Try Demo",
+    "pricing.optiona.badge": "Option A",
+    "pricing.optiona.title": "Ready-Made Websites",
+    "pricing.optiona.subtitle": "Template-based websites with your branding, colors, fonts, and content. Live in days, not weeks.",
+    "pricing.optiona.note": "All Option A plans include a one-time setup fee. Domain renewal billed separately.",
+    "pricing.optiona.a1.tier": "Option A — Basic",
+    "pricing.optiona.a1.name": "Starter",
+    "pricing.optiona.a1.desc": "A professional, clean website with your branding. Perfect for small businesses getting online.",
+    "pricing.optiona.a2.tier": "Option A — With Email",
+    "pricing.optiona.a2.name": "Professional",
+    "pricing.optiona.a2.desc": "Everything in Starter, plus professional Gmail email setup — send &amp; receive from your own domain.",
+    "pricing.optiona.a3.tier": "Option A — Premium",
+    "pricing.optiona.a3.name": "Premium",
+    "pricing.optiona.a3.desc": "Our most complete ready-made package. Includes live visitor counter — Today, Yesterday, Last Month, Total.",
+    "pricing.feature.pages": "Up to 5 pages",
+    "pricing.feature.responsive": "Mobile responsive design",
+    "pricing.feature.seo": "Full SEO &amp; schema markup",
+    "pricing.feature.i18n": "English + Traditional Chinese",
+    "pricing.feature.domain": "Domain &amp; hosting guide",
+    "pricing.feature.customizer": "Color &amp; font customizer",
+    "pricing.feature.everything_starter": "Everything in Starter",
+    "pricing.feature.gmail": "Gmail business email setup",
+    "pricing.feature.custom_email": "Send from your domain (you@yourdomain.com)",
+    "pricing.feature.form_reply": "Contact form auto-reply",
+    "pricing.feature.sheets": "Form data → Google Sheets",
+    "pricing.feature.everything_pro": "Everything in Professional",
+    "pricing.feature.viewcount": "Live visitor counter (Today / Yesterday / Last Month / Total)",
+    "pricing.feature.analytics": "Site analytics integration",
+    "pricing.feature.priority": "Priority support",
+    "pricing.optionb.badge": "Option B",
+    "pricing.optionb.badge_inner": "Custom Build",
+    "pricing.optionb.title": "Fully Custom Websites",
+    "pricing.optionb.subtitle": "Built from scratch to your exact vision. No templates — pure craftsmanship.",
+    "pricing.optionb.card_title": "Your Website, Your Rules",
+    "pricing.optionb.desc": "Option B is a fully custom website designed and built by Aaron to your exact preferences — layout, interactions, animations, branding. Nothing off-the-shelf.",
+    "pricing.optionb.price_note": "One-time build fee + NT$3,000/year maintenance + domain renewal",
+    "pricing.optionb.cta": "Get a Custom Quote ↗",
+    "pricing.optionb.f1": "Fully bespoke design — no templates",
+    "pricing.optionb.f2": "Custom animations &amp; interactions",
+    "pricing.optionb.f3": "Unique layout tailored to your brand",
+    "pricing.optionb.f4": "All Option A features included",
+    "pricing.optionb.f5": "Priority WhatsApp support",
+    "pricing.optionb.f6": "NT$3,000/year ongoing maintenance",
+    "pricing.optionb.f7": "Domain renewal assistance",
+    "pricing.optionb.f8": "Dedicated project consultation",
+    "pricing.compare.title": "Compare Plans",
+    "pricing.compare.feature": "Feature",
+    "pricing.compare.pages": "Up to 5 pages",
+    "pricing.compare.seo": "SEO + Schema",
+    "pricing.compare.i18n": "EN + 中文 (i18n)",
+    "pricing.compare.email": "Gmail business email",
+    "pricing.compare.viewcount": "Live visitor counter",
+    "pricing.compare.custom": "Custom design",
+    "pricing.faq.title": "Frequently Asked",
+    "pricing.faq.q1": "What's the difference between Option A and Option B?",
+    "pricing.faq.a1": "Option A uses pre-built templates customised with your branding, colors, and content — fast and affordable. Option B is a fully bespoke website designed from scratch to your exact vision, with complete creative freedom.",
+    "pricing.faq.q2": "Can I try before I buy?",
+    "pricing.faq.a2": "Yes! Use the live Demo to preview and customise your Option A website. Pick colors, fonts, and business type, then send your preferences directly to us.",
+    "pricing.faq.q3": "Is the monthly fee ongoing?",
+    "pricing.faq.a3": "Option A is a monthly subscription that covers hosting, maintenance, and support. Option B has a one-time build fee plus NT$3,000/year for ongoing maintenance and updates.",
+    "pricing.faq.q4": "Does the price include a domain?",
+    "pricing.faq.a4": "Domain registration and renewal are billed separately as they depend on your chosen domain name. We will guide you through the process and help you pick the right domain.",
+    "pricing.faq.q5": "How fast can my site go live?",
+    "pricing.faq.a5": "Option A sites typically go live within 3–7 business days after we receive your content. Option B timelines depend on complexity — usually 2–4 weeks.",
+    "pricing.cta_footer.title": "Ready to Get Started?",
+    "pricing.cta_footer.subtitle": "Try the demo and send us your preferences, or chat on WhatsApp for a free consultation.",
+    "pricing.whatsapp": "Chat on WhatsApp",
+    "footer.copyright": "© 2025 Web人. All rights reserved."
+  },
+  "zh-TW": {
+    "nav.home": "首頁", "nav.services": "服務", "nav.pricing": "定價",
+    "nav.demo": "試用", "nav.contact": "聯絡",
+    "pricing.badge": "透明定價",
+    "pricing.title": "簡單、誠實的定價",
+    "pricing.subtitle": "沒有隱藏費用。選擇適合您業務的方案——從現成範本開始，或選擇完全客製化。",
+    "pricing.try_demo": "試用 &amp; 立即製作",
+    "pricing.ask_question": "詢問問題",
+    "pricing.per_month": "/月",
+    "pricing.popular": "最受歡迎",
+    "pricing.cta_demo": "試用 Demo",
+    "pricing.optiona.badge": "方案 A",
+    "pricing.optiona.title": "現成網站方案",
+    "pricing.optiona.subtitle": "以範本為基礎，套用您的品牌、顏色、字體與內容。數天內上線，無需數週等待。",
+    "pricing.optiona.note": "所有方案 A 均含一次性設定費。網域續費另計。",
+    "pricing.optiona.a1.tier": "方案 A — 基礎版",
+    "pricing.optiona.a1.name": "入門版",
+    "pricing.optiona.a1.desc": "專業簡潔的網站，搭配您的品牌識別。適合剛起步的小型企業。",
+    "pricing.optiona.a2.tier": "方案 A — 含電子郵件",
+    "pricing.optiona.a2.name": "專業版",
+    "pricing.optiona.a2.desc": "包含入門版所有功能，另加 Gmail 企業信箱設定——可用您的網域收發郵件。",
+    "pricing.optiona.a3.tier": "方案 A — 進階版",
+    "pricing.optiona.a3.name": "進階版",
+    "pricing.optiona.a3.desc": "我們最完整的現成方案。包含即時訪客計數器——今日、昨日、上月、總計。",
+    "pricing.feature.pages": "最多 5 頁",
+    "pricing.feature.responsive": "手機響應式設計",
+    "pricing.feature.seo": "完整 SEO 與結構化資料",
+    "pricing.feature.i18n": "英文 + 繁體中文",
+    "pricing.feature.domain": "網域與主機指引",
+    "pricing.feature.customizer": "顏色與字體自訂",
+    "pricing.feature.everything_starter": "入門版所有功能",
+    "pricing.feature.gmail": "Gmail 企業信箱設定",
+    "pricing.feature.custom_email": "以您的網域收發信 (您@yourdomain.com)",
+    "pricing.feature.form_reply": "聯絡表單自動回覆",
+    "pricing.feature.sheets": "表單資料匯入 Google 試算表",
+    "pricing.feature.everything_pro": "專業版所有功能",
+    "pricing.feature.viewcount": "即時訪客計數器（今日 / 昨日 / 上月 / 總計）",
+    "pricing.feature.analytics": "網站數據整合",
+    "pricing.feature.priority": "優先客服支援",
+    "pricing.optionb.badge": "方案 B",
+    "pricing.optionb.badge_inner": "完全客製化",
+    "pricing.optionb.title": "完全客製化網站",
+    "pricing.optionb.subtitle": "從零開始打造，完全符合您的願景。無範本——純粹匠心。",
+    "pricing.optionb.card_title": "您的網站，您的規則",
+    "pricing.optionb.desc": "方案 B 是由 Aaron 根據您的確切偏好設計建立的完全客製化網站——版面、互動、動畫、品牌識別。無任何現成元素。",
+    "pricing.optionb.price_note": "一次性建置費 + NT$3,000/年維護費 + 網域續費",
+    "pricing.optionb.cta": "取得客製報價 ↗",
+    "pricing.optionb.f1": "完全客製設計——無範本",
+    "pricing.optionb.f2": "客製動畫與互動效果",
+    "pricing.optionb.f3": "專屬於您品牌的獨特版面",
+    "pricing.optionb.f4": "包含方案 A 所有功能",
+    "pricing.optionb.f5": "優先 WhatsApp 支援",
+    "pricing.optionb.f6": "NT$3,000/年持續維護",
+    "pricing.optionb.f7": "網域續費協助",
+    "pricing.optionb.f8": "專屬專案諮詢",
+    "pricing.compare.title": "方案比較",
+    "pricing.compare.feature": "功能",
+    "pricing.compare.pages": "最多 5 頁",
+    "pricing.compare.seo": "SEO + 結構化資料",
+    "pricing.compare.i18n": "EN + 中文",
+    "pricing.compare.email": "Gmail 企業信箱",
+    "pricing.compare.viewcount": "即時訪客計數器",
+    "pricing.compare.custom": "客製設計",
+    "pricing.faq.title": "常見問題",
+    "pricing.faq.q1": "方案 A 與方案 B 有何不同？",
+    "pricing.faq.a1": "方案 A 使用預建範本，套用您的品牌識別、顏色與內容——快速且實惠。方案 B 是從零開始設計的完全客製網站，具備完整的創意自由度。",
+    "pricing.faq.q2": "可以先試用再購買嗎？",
+    "pricing.faq.a2": "可以！使用即時 Demo 預覽並自訂您的方案 A 網站。選擇顏色、字體與商業類型，然後直接傳送您的偏好給我們。",
+    "pricing.faq.q3": "月費是持續收取的嗎？",
+    "pricing.faq.a3": "方案 A 是月費訂閱制，涵蓋主機、維護與支援。方案 B 為一次性建置費，加上每年 NT$3,000 的維護與更新費用。",
+    "pricing.faq.q4": "費用包含網域嗎？",
+    "pricing.faq.a4": "網域註冊與續費依您選擇的網域名稱另計。我們將全程指引並協助您選擇合適的網域。",
+    "pricing.faq.q5": "網站多快能上線？",
+    "pricing.faq.a5": "方案 A 網站通常在我們收到您的內容後 3–7 個工作天內上線。方案 B 時程視複雜度而定，通常為 2–4 週。",
+    "pricing.cta_footer.title": "準備好開始了嗎？",
+    "pricing.cta_footer.subtitle": "試用 Demo 並傳送您的偏好，或透過 WhatsApp 免費諮詢。",
+    "pricing.whatsapp": "WhatsApp 聯絡",
+    "footer.copyright": "© 2025 Web人。保留所有權利。"
+  }
+};
+
+let currentLang = 'en';
+
+function applyStrings(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang === 'zh-TW' ? 'zh-TW' : 'en';
+  document.body.classList.toggle('lang-zh', lang === 'zh-TW');
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = STRINGS[lang]?.[key];
+    if (val !== undefined) el.innerHTML = val;
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+  });
+}
+
+function switchLang(lang) {
+  const overlay = document.getElementById('page-transition');
+  overlay.classList.add('active');
+  setTimeout(() => {
+    applyStrings(lang);
+    overlay.classList.remove('active');
+  }, 300);
+}
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+// Scroll reveal
+function initReveal() {
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  els.forEach((el, i) => { el.style.transitionDelay = `${(i % 4) * 60}ms`; io.observe(el); });
+}
+
+// Init
+const urlLang = new URLSearchParams(location.search).get('lang');
+const savedLang = localStorage.getItem('webren_lang') || (urlLang === 'zh-TW' ? 'zh-TW' : 'en');
+applyStrings(savedLang);
+document.addEventListener('DOMContentLoaded', initReveal);
+// Handle lang switch from shared outer nav
+document.addEventListener('nav:lang', function(e) { switchLang(e.detail); });
+
+</script>
+<script src="../js/shared-nav.js"></script>
+
+</body>
+</html>
