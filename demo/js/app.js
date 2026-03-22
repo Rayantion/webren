@@ -193,6 +193,41 @@ function initLangToggle() {
   });
 }
 
+// ── Contact forms ─────────────────────────────────────────────────────────────
+function initContactForms() {
+  document.querySelectorAll('.demo-contact-form').forEach(form => {
+    // Wire i18n placeholders
+    form.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      if (window.i18next) el.placeholder = window.i18next.t(el.dataset.i18nPlaceholder);
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = form.querySelector('.cf-submit');
+      const name = form.querySelector('[name="name"]').value.trim();
+      const email = form.querySelector('[name="email"]').value.trim();
+      const msg = form.querySelector('[name="message"]').value.trim();
+      if (!name || !email || !msg) return;
+
+      // Demo: show inline success state
+      btn.disabled = true;
+      btn.textContent = window.i18next ? window.i18next.t('configurator.sending') : 'Sending...';
+      setTimeout(() => {
+        form.reset();
+        btn.disabled = false;
+        if (window.i18next) btn.textContent = window.i18next.t('contact.submit');
+        // Show toast
+        const toast = document.getElementById('toast');
+        if (toast) {
+          toast.textContent = window.i18next ? window.i18next.t('contact.success') : 'Message sent! We\'ll be in touch soon.';
+          toast.classList.add('show');
+          setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+      }, 900);
+    });
+  });
+}
+
 // ── Hero CTA buttons ──────────────────────────────────────────────────────────
 function initHeroCTAs() {
   const preview = document.getElementById('demo-preview');
@@ -626,12 +661,27 @@ function initDemoNav() {
   if (overlay) overlay.addEventListener('click', closeDemoMenu);
   menu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeDemoMenu));
 
-  // Fix C: close sub-pages before navigating to anchor sections
-  function handleNavAnchorClick() {
-    closeSubPage();
-  }
+  // Intercept anchor nav clicks — scroll to section within the ACTIVE mode only
+  // (multiple modes share the same IDs; browser would find the first, which may be hidden)
   document.querySelectorAll('#demo-site-nav a[href^="#"], #demo-mobile-menu a[href^="#"]')
-    .forEach(link => link.addEventListener('click', handleNavAnchorClick));
+    .forEach(link => {
+      link.addEventListener('click', e => {
+        const hash = link.getAttribute('href');
+        if (!hash || hash === '#') return;
+        const id = hash.slice(1);
+        const mode = currentConfig.mode || 'company';
+        const modeEl = document.getElementById(`mode-${mode}`);
+        const target = modeEl && modeEl.querySelector(`#${id}`);
+        if (target) {
+          e.preventDefault();
+          closeSubPage();
+          closeDemoMenu();
+          target.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          closeSubPage();
+        }
+      });
+    });
 }
 
 // ── Catalog data ──────────────────────────────────────────────────────────────
@@ -972,6 +1022,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initLangToggle();
   initCounter();
   initMenuTabs();
+  initContactForms();
   initHeroCTAs();
   initDemoNavControls();
   initDemoNavScroll();

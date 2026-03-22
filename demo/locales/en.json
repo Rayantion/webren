@@ -169,7 +169,8 @@
     "name_label": "Full Name",
     "email_label": "Email Address",
     "message_label": "Message",
-    "submit": "Send Message"
+    "submit": "Send Message",
+    "success": "Message sent! We'll be in touch soon."
   },
   "footer": {
     "tagline": "This is a demo website by Web人.",
