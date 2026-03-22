@@ -542,6 +542,30 @@ section { padding: 5rem 0; }
 .lang-btn.active, .lang-btn:hover { background: #0D9488; border-color: #0D9488; color: #fff; }
 
 /* Demo indicator bar */
+/* Demo page: shared nav always solid (not transparent at top) */
+#shared-nav.demo-nav-solid {
+  background: rgba(255,255,255,0.97) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 1px 0 #e2e8f0 !important;
+  padding: 12px 0 !important;
+}
+
+/* Demo controls in shared nav */
+.demo-nav-controls {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding-right: 0.5rem;
+  border-right: 1px solid #e2e8f0;
+  margin-right: 0.25rem;
+}
+.demo-nav-controls .demo-badge {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+  background: #0D9488; color: #fff;
+  padding: 2px 7px; border-radius: 4px;
+  text-transform: uppercase; flex-shrink: 0;
+  white-space: nowrap;
+}
+
 #demo-bar {
   position: sticky; top: 70px; z-index: 190;
   background: #f9fafb; border-bottom: 1px solid #e5e7eb;

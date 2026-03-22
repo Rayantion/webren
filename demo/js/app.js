@@ -889,6 +889,29 @@ function initDemoBarSwitcher() {
   updateSwitcherUI(currentConfig.mode || 'company');
 }
 
+// ── Move demo controls into shared nav + force solid background ───────────────
+function initDemoNavControls() {
+  const navRight = document.querySelector('#shared-nav .nav-right');
+  const sharedNav = document.getElementById('shared-nav');
+  const demoBar = document.getElementById('demo-bar');
+  if (!navRight || !sharedNav) return;
+
+  // Force nav to always show solid background on the demo page
+  sharedNav.classList.add('demo-nav-solid');
+
+  const badge = document.querySelector('#demo-bar .demo-badge');
+  const switcher = document.getElementById('mode-switcher-wrap');
+  if (!badge || !switcher) return;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'demo-nav-controls';
+  wrap.appendChild(badge);
+  wrap.appendChild(switcher);
+  navRight.insertBefore(wrap, navRight.firstChild);
+
+  if (demoBar) demoBar.style.display = 'none';
+}
+
 // ── Boot ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await loadConfig();
@@ -899,6 +922,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initLangToggle();
   initCounter();
   initMenuTabs();
+  initDemoNavControls();
   initDemoNavScroll();
   initDemoNav();
   initSubPages();
