@@ -5,7 +5,8 @@
     "menu": "Menu",
     "products": "Products",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "back_to_main": "← Back to Website"
   },
   "hero": {
     "badge": "Powered by Web人",
@@ -144,6 +145,16 @@
     "counter_yesterday": "Yesterday",
     "counter_lastmonth": "Last Month",
     "counter_total": "Total"
+  },
+  "marquee": {
+    "item1": "Custom Websites",
+    "item2": "Fast Delivery",
+    "item3": "Mobile Friendly",
+    "item4": "SEO Ready",
+    "item5": "Bilingual Support",
+    "item6": "Google Forms Integration",
+    "item7": "Live View Counter",
+    "item8": "Business Email"
   },
   "configurator": {
     "preset_label": "Quick Themes",
