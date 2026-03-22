@@ -48,8 +48,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../css/shared-nav.css?v=5">
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="../css/shared-nav.css?v=6">
+  <link rel="stylesheet" href="css/style.css?v=6">
 </head>
 <body>
 
@@ -60,7 +60,29 @@
   <div id="demo-bar">
     <div class="container demo-bar-inner">
       <span class="demo-badge">DEMO PREVIEW</span>
-      <div class="mode-btns">
+      <div class="mode-switcher-wrap" id="mode-switcher-wrap">
+        <button class="mode-switcher-current" id="mode-switcher-btn" aria-expanded="false" aria-haspopup="listbox">
+          <span class="mode-switcher-icon" id="mode-switcher-icon">🏢</span>
+          <span class="mode-switcher-label" id="mode-switcher-label" data-i18n="demo_bar.company">Company</span>
+          <svg class="mode-switcher-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        </button>
+        <ul class="mode-switcher-dropdown" id="mode-switcher-dropdown" role="listbox">
+          <li class="mode-switcher-option active" data-mode="company" role="option">
+            <span class="mode-option-icon">🏢</span>
+            <span data-i18n="demo_bar.company">Company</span>
+          </li>
+          <li class="mode-switcher-option" data-mode="restaurant" role="option">
+            <span class="mode-option-icon">🍽️</span>
+            <span data-i18n="demo_bar.restaurant">Restaurant</span>
+          </li>
+          <li class="mode-switcher-option" data-mode="store" role="option">
+            <span class="mode-option-icon">🛍️</span>
+            <span data-i18n="demo_bar.store">Store</span>
+          </li>
+        </ul>
+      </div>
+      <!-- Keep configurator-targeted mode-btns hidden (used by configurator.js drawer) -->
+      <div class="mode-btns" style="display:none">
         <button class="mode-btn active" data-mode="company" data-i18n="demo_bar.company">Company</button>
         <button class="mode-btn" data-mode="restaurant" data-i18n="demo_bar.restaurant">Restaurant</button>
         <button class="mode-btn" data-mode="store" data-i18n="demo_bar.store">Store</button>
@@ -357,11 +379,17 @@
               <button class="filter-tab" data-subcategory="mifen" data-i18n="restaurant.full_menu.sub_mifen">Rice Noodle</button>
             </div>
             <div class="catalog-sort-row">
-              <select id="menu-sort" class="catalog-sort">
-                <option value="relevance" data-i18n="catalog.sort_relevance">Relevance</option>
-                <option value="price_asc" data-i18n="catalog.sort_price_asc">Price: Low to High</option>
-                <option value="price_desc" data-i18n="catalog.sort_price_desc">Price: High to Low</option>
-              </select>
+              <div class="custom-sort" id="menu-sort-ui" data-value="relevance">
+                <button class="custom-sort-btn" type="button" aria-expanded="false" aria-haspopup="listbox">
+                  <span class="custom-sort-label" data-i18n="catalog.sort_relevance">Relevance</span>
+                  <svg class="custom-sort-arrow" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+                </button>
+                <ul class="custom-sort-menu" role="listbox">
+                  <li class="custom-sort-option active" data-value="relevance" role="option" data-i18n="catalog.sort_relevance">Relevance</li>
+                  <li class="custom-sort-option" data-value="price_asc" role="option" data-i18n="catalog.sort_price_asc">Price: Low to High</li>
+                  <li class="custom-sort-option" data-value="price_desc" role="option" data-i18n="catalog.sort_price_desc">Price: High to Low</li>
+                </ul>
+              </div>
             </div>
           </div>
           <div id="menu-results-count" class="results-count"></div>
@@ -480,11 +508,17 @@
               <button class="filter-tab" data-category="gifts" data-i18n="store.full_products.cat_gifts">Gifts</button>
             </div>
             <div class="catalog-sort-row">
-              <select id="products-sort" class="catalog-sort">
-                <option value="relevance" data-i18n="catalog.sort_relevance">Relevance</option>
-                <option value="price_asc" data-i18n="catalog.sort_price_asc">Price: Low to High</option>
-                <option value="price_desc" data-i18n="catalog.sort_price_desc">Price: High to Low</option>
-              </select>
+              <div class="custom-sort" id="products-sort-ui" data-value="relevance">
+                <button class="custom-sort-btn" type="button" aria-expanded="false" aria-haspopup="listbox">
+                  <span class="custom-sort-label" data-i18n="catalog.sort_relevance">Relevance</span>
+                  <svg class="custom-sort-arrow" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+                </button>
+                <ul class="custom-sort-menu" role="listbox">
+                  <li class="custom-sort-option active" data-value="relevance" role="option" data-i18n="catalog.sort_relevance">Relevance</li>
+                  <li class="custom-sort-option" data-value="price_asc" role="option" data-i18n="catalog.sort_price_asc">Price: Low to High</li>
+                  <li class="custom-sort-option" data-value="price_desc" role="option" data-i18n="catalog.sort_price_desc">Price: High to Low</li>
+                </ul>
+              </div>
             </div>
           </div>
           <div id="products-results-count" class="results-count"></div>
@@ -620,10 +654,10 @@
   <!-- ââ Scripts (order matters: i18n â app â configurator) ââââââââââââ -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/i18next@23/i18next.min.js" defer></script>
-  <script src="js/i18n.js?v=5" defer></script>
-  <script src="js/app.js?v=5" defer></script>
-  <script src="js/configurator.js?v=5" defer></script>
-  <script src="../js/shared-nav.js?v=5"></script>
+  <script src="js/i18n.js?v=6" defer></script>
+  <script src="js/app.js?v=6" defer></script>
+  <script src="js/configurator.js?v=6" defer></script>
+  <script src="../js/shared-nav.js?v=6"></script>
 
 </body>
 </html>

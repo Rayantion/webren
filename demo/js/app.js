@@ -105,6 +105,7 @@ function showMode(mode, withTransition = true) {
       });
     }
     initScrollReveal();
+    if (window._updateModeSwitcher) window._updateModeSwitcher(mode);
   };
 
   if (withTransition) {
@@ -377,22 +378,64 @@ const STORE_PRODUCTS = [
   { name: 'Custom Tote Bag',       desc: 'Personalized with your name or message',            category: 'gifts',       price: 580,  img: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=300&h=225&fit=crop&q=80' },
 ];
 
-// ── Generic catalog (search + sort + filter) ──────────────────────────────────
-function initCatalog({ data, gridId, searchId, categoryTabsId, subcategoryTabsId, sortId, countId, renderItem }) {
-  const grid = document.getElementById(gridId);
-  if (!grid) return;
-  const searchEl  = document.getElementById(searchId);
-  const sortEl    = document.getElementById(sortId);
-  const countEl   = document.getElementById(countId);
-  const catTabs   = document.getElementById(categoryTabsId);
-  const subTabs   = subcategoryTabsId ? document.getElementById(subcategoryTabsId) : null;
+// ── Current language helper ───────────────────────────────────────────────────
+function getCurrentLang() {
+  return (window.i18next?.language || 'en').startsWith('zh') ? 'zh' : 'en';
+}
 
-  let activeCat = 'all';
-  let activeSub = 'all';
+// ── Custom sort dropdown ──────────────────────────────────────────────────────
+function initCustomSort(uiId, onchange) {
+  const wrap = document.getElementById(uiId);
+  if (!wrap) return () => 'relevance';
+
+  const btn   = wrap.querySelector('.custom-sort-btn');
+  const label = wrap.querySelector('.custom-sort-label');
+  const menu  = wrap.querySelector('.custom-sort-menu');
+
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const isOpen = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+  });
+
+  wrap.querySelectorAll('.custom-sort-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      wrap.querySelectorAll('.custom-sort-option').forEach(o => o.classList.remove('active'));
+      opt.classList.add('active');
+      wrap.dataset.value = opt.dataset.value;
+      label.textContent = opt.textContent;
+      wrap.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      onchange(opt.dataset.value);
+    });
+  });
+
+  document.addEventListener('click', () => {
+    wrap.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  });
+
+  return () => wrap.dataset.value || 'relevance';
+}
+
+// ── Generic catalog (search + sort + filter) ──────────────────────────────────
+function initCatalog({ data, gridId, searchId, categoryTabsId, subcategoryTabsId, sortUiId, countId, renderItem }) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return () => {};
+  const searchEl = document.getElementById(searchId);
+  const countEl  = document.getElementById(countId);
+  const catTabs  = document.getElementById(categoryTabsId);
+  const subTabs  = subcategoryTabsId ? document.getElementById(subcategoryTabsId) : null;
+
+  let activeCat  = 'all';
+  let activeSub  = 'all';
+  let activeSort = 'relevance';
+
+  const getSort  = initCustomSort(sortUiId, val => { activeSort = val; render(); });
 
   function render() {
+    activeSort = getSort();
     const q = searchEl ? searchEl.value.toLowerCase().trim() : '';
-    const sort = sortEl ? sortEl.value : 'relevance';
 
     let items = data.filter(item => {
       const matchCat = activeCat === 'all' || item.category === activeCat;
@@ -403,8 +446,8 @@ function initCatalog({ data, gridId, searchId, categoryTabsId, subcategoryTabsId
       return matchCat && matchSub && matchQ;
     });
 
-    if (sort === 'price_asc')  items.sort((a, b) => a.price - b.price);
-    if (sort === 'price_desc') items.sort((a, b) => b.price - a.price);
+    if (activeSort === 'price_asc')  items.sort((a, b) => a.price - b.price);
+    if (activeSort === 'price_desc') items.sort((a, b) => b.price - a.price);
 
     grid.innerHTML = items.map(renderItem).join('');
     if (countEl) countEl.textContent = items.length + ' item' + (items.length !== 1 ? 's' : '');
@@ -437,9 +480,9 @@ function initCatalog({ data, gridId, searchId, categoryTabsId, subcategoryTabsId
   }
 
   if (searchEl) searchEl.addEventListener('input', render);
-  if (sortEl)   sortEl.addEventListener('change', render);
 
   render();
+  return render; // expose re-render for language changes
 }
 
 // ── Sub-page open / close ─────────────────────────────────────────────────────
@@ -466,34 +509,32 @@ function initSubPages() {
   const preview = document.getElementById('demo-preview');
   if (!preview) return;
 
-  preview.addEventListener('click', e => {
+  // Use both click and touchend to fix mobile tap issues
+  function handleCatalogNav(e) {
     const trigger = e.target.closest('[data-show-subpage]');
     if (trigger) { e.preventDefault(); showSubPage(trigger.dataset.showSubpage); return; }
     const back = e.target.closest('[data-close-subpage]');
-    if (back) closeSubPage();
-  });
+    if (back) { e.preventDefault(); closeSubPage(); }
+  }
+  preview.addEventListener('click', handleCatalogNav);
 
-  initCatalog({
-    data: RESTAURANT_MENU,
-    gridId: 'menu-grid', searchId: 'menu-search',
-    categoryTabsId: 'menu-category-tabs', subcategoryTabsId: 'menu-subcategory-tabs',
-    sortId: 'menu-sort', countId: 'menu-results-count',
-    renderItem: item => `
+  function menuRenderItem(item) {
+    const lang = getCurrentLang();
+    const primary   = lang === 'zh' ? item.nameZh : item.name;
+    const secondary = lang === 'zh' ? item.name   : item.nameZh;
+    return `
       <div class="menu-catalog-item">
         <div class="catalog-item-info">
-          <h3 class="catalog-item-name">${item.nameZh}<span class="item-name-en">${item.name}</span></h3>
+          <h3 class="catalog-item-name">${primary}<span class="item-name-en">${secondary}</span></h3>
           <p class="catalog-item-desc">${item.desc}</p>
         </div>
         <span class="catalog-item-price">NT$${item.price}</span>
-      </div>`
-  });
+      </div>`;
+  }
 
-  initCatalog({
-    data: STORE_PRODUCTS,
-    gridId: 'products-grid', searchId: 'products-search',
-    categoryTabsId: 'products-category-tabs', subcategoryTabsId: null,
-    sortId: 'products-sort', countId: 'products-results-count',
-    renderItem: item => `
+  function productRenderItem(item) {
+    const addToCart = window.i18next ? window.i18next.t('store.featured.add_to_cart') : 'Add to Cart';
+    return `
       <div class="product-catalog-item">
         <img class="catalog-item-img" src="${item.img}" alt="${item.name}" loading="lazy">
         <div class="catalog-item-body">
@@ -501,11 +542,83 @@ function initSubPages() {
           <p class="catalog-item-desc">${item.desc}</p>
           <div class="catalog-item-footer">
             <span class="catalog-item-price">NT$${item.price.toLocaleString()}</span>
-            <button class="btn-primary btn-sm" data-i18n="store.featured.add_to_cart">Add to Cart</button>
+            <button class="btn-primary btn-sm">${addToCart}</button>
           </div>
         </div>
-      </div>`
+      </div>`;
+  }
+
+  const rerenderMenu = initCatalog({
+    data: RESTAURANT_MENU,
+    gridId: 'menu-grid', searchId: 'menu-search',
+    categoryTabsId: 'menu-category-tabs', subcategoryTabsId: 'menu-subcategory-tabs',
+    sortUiId: 'menu-sort-ui', countId: 'menu-results-count',
+    renderItem: menuRenderItem
   });
+
+  const rerenderProducts = initCatalog({
+    data: STORE_PRODUCTS,
+    gridId: 'products-grid', searchId: 'products-search',
+    categoryTabsId: 'products-category-tabs', subcategoryTabsId: null,
+    sortUiId: 'products-sort-ui', countId: 'products-results-count',
+    renderItem: productRenderItem
+  });
+
+  // Re-render catalogs when language changes
+  document.addEventListener('nav:lang', () => {
+    if (rerenderMenu) rerenderMenu();
+    if (rerenderProducts) rerenderProducts();
+  });
+}
+
+// ── Demo bar mode switcher ────────────────────────────────────────────────────
+const MODE_META = {
+  company:    { icon: '🏢', i18nKey: 'demo_bar.company' },
+  restaurant: { icon: '🍽️', i18nKey: 'demo_bar.restaurant' },
+  store:      { icon: '🛍️', i18nKey: 'demo_bar.store' },
+};
+
+function initDemoBarSwitcher() {
+  const btn      = document.getElementById('mode-switcher-btn');
+  const dropdown = document.getElementById('mode-switcher-dropdown');
+  const iconEl   = document.getElementById('mode-switcher-icon');
+  const labelEl  = document.getElementById('mode-switcher-label');
+  if (!btn || !dropdown) return;
+
+  function updateSwitcherUI(mode) {
+    const meta = MODE_META[mode] || MODE_META.company;
+    iconEl.textContent = meta.icon;
+    labelEl.textContent = window.i18next ? window.i18next.t(meta.i18nKey) : mode;
+    dropdown.querySelectorAll('.mode-switcher-option').forEach(opt => {
+      opt.classList.toggle('active', opt.dataset.mode === mode);
+    });
+  }
+
+  function closeDropdown() {
+    dropdown.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const isOpen = dropdown.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+  });
+
+  dropdown.querySelectorAll('.mode-switcher-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      AppState.showMode(opt.dataset.mode);
+      updateSwitcherUI(opt.dataset.mode);
+      closeDropdown();
+    });
+  });
+
+  document.addEventListener('click', closeDropdown);
+
+  // Sync when mode changes externally (e.g. from configurator drawer)
+  window._updateModeSwitcher = updateSwitcherUI;
+
+  updateSwitcherUI(currentConfig.mode || 'company');
 }
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
@@ -520,6 +633,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initMenuTabs();
   initDemoNav();
   initSubPages();
+  initDemoBarSwitcher();
   // Three.js init — runs after THREE is available (loaded via defer)
   if (typeof THREE !== 'undefined') {
     initThreeJS();

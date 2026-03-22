@@ -478,24 +478,99 @@ section { padding: 5rem 0; }
   padding: 3px 8px; border-radius: 4px;
   text-transform: uppercase; flex-shrink: 0;
 }
-#demo-bar .mode-btns { display: flex; gap: 0.35rem; }
-#demo-bar .mode-btn {
-  padding: 0.3rem 0.85rem; border-radius: 6px; min-height: 32px;
-  background: transparent; border: 1px solid #d1d5db;
-  color: #6b7280; font-size: 0.82rem; font-weight: 600; cursor: pointer;
-  transition: all 0.2s; touch-action: manipulation;
+/* Mode switcher dropdown */
+.mode-switcher-wrap { position: relative; }
+.mode-switcher-current {
+  display: flex; align-items: center; gap: 0.45rem;
+  padding: 0.35rem 0.75rem; border-radius: 8px; min-height: 36px;
+  background: #fff; border: 1px solid #d1d5db;
+  color: #374151; font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
-#demo-bar .mode-btn.active, #demo-bar .mode-btn:hover {
-  background: #0D9488; border-color: #0D9488; color: #fff;
+.mode-switcher-current:hover { border-color: #0D9488; }
+.mode-switcher-icon { font-size: 1rem; line-height: 1; }
+.mode-switcher-chevron {
+  width: 16px; height: 16px; color: #9ca3af;
+  transition: transform 0.25s; flex-shrink: 0;
 }
+.mode-switcher-current[aria-expanded="true"] .mode-switcher-chevron { transform: rotate(180deg); }
+.mode-switcher-dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0;
+  min-width: 170px;
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  list-style: none; padding: 0.4rem; margin: 0;
+  z-index: 300;
+  opacity: 0; transform: translateY(-8px) scale(0.97);
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.mode-switcher-dropdown.open {
+  opacity: 1; transform: translateY(0) scale(1); pointer-events: auto;
+}
+.mode-switcher-option {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.55rem 0.75rem; border-radius: 7px;
+  cursor: pointer; font-size: 0.875rem; font-weight: 500; color: #374151;
+  transition: background 0.15s;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+.mode-switcher-option:hover { background: #f3f4f6; }
+.mode-switcher-option.active { background: #f0fdfa; color: #0D9488; font-weight: 700; }
+.mode-option-icon { font-size: 1.1rem; line-height: 1; }
+
+/* Legacy hidden mode-btns (used by configurator.js via AppState) */
+#demo-bar .mode-btns { display: none !important; }
+
 .demo-hint { font-size: 0.75rem; color: #9ca3af; flex-shrink: 0; }
+
+/* Custom sort dropdown */
+.custom-sort { position: relative; }
+.custom-sort-btn {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.4rem 0.75rem; border-radius: 8px;
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  color: var(--color-text); font-size: 0.85rem; font-family: var(--font-body);
+  cursor: pointer; transition: border-color 0.2s;
+  white-space: nowrap;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+.custom-sort-btn:hover { border-color: var(--color-primary); }
+.custom-sort-arrow {
+  width: 16px; height: 16px; color: var(--color-text-muted);
+  transition: transform 0.2s; flex-shrink: 0;
+}
+.custom-sort[aria-expanded="true"] .custom-sort-arrow,
+.custom-sort.open .custom-sort-arrow { transform: rotate(180deg); }
+.custom-sort-menu {
+  position: absolute; right: 0; top: calc(100% + 4px);
+  min-width: 180px;
+  background: var(--color-bg); border: 1px solid var(--color-border);
+  border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  list-style: none; padding: 0.35rem; margin: 0;
+  z-index: 300;
+  opacity: 0; transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.18s, transform 0.18s;
+}
+.custom-sort.open .custom-sort-menu {
+  opacity: 1; transform: translateY(0); pointer-events: auto;
+}
+.custom-sort-option {
+  padding: 0.5rem 0.75rem; border-radius: 6px;
+  font-size: 0.85rem; color: var(--color-text); cursor: pointer;
+  transition: background 0.15s;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+.custom-sort-option:hover { background: var(--color-surface); }
+.custom-sort-option.active { color: var(--color-primary); font-weight: 600; }
 
 @media (max-width: 768px) {
   .demo-nav-links { display: none; }
   .demo-nav-cta { display: none; }
   .demo-hint { display: none; }
-  #demo-bar .mode-btns { gap: 0.25rem; }
-  #demo-bar .mode-btn { padding: 0.3rem 0.6rem; font-size: 0.78rem; }
 }
 
 /* ── Footer ──────────────────────────────────────────────────────────── */
