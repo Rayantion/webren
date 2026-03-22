@@ -810,7 +810,6 @@ function initSubPages() {
   }
 
   function productRenderItem(item) {
-    const addToCart = window.i18next ? window.i18next.t('store.featured.add_to_cart') : 'Add to Cart';
     return `
       <div class="product-catalog-item">
         <img class="catalog-item-img" src="${item.img}" alt="${item.name}" loading="lazy">
@@ -819,7 +818,6 @@ function initSubPages() {
           <p class="catalog-item-desc">${item.desc}</p>
           <div class="catalog-item-footer">
             <span class="catalog-item-price">NT$${item.price.toLocaleString()}</span>
-            <button class="btn-primary btn-sm">${addToCart}</button>
           </div>
         </div>
       </div>`;
