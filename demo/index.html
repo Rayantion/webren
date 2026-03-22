@@ -8,6 +8,7 @@
   <meta name="keywords" content="web design demo, website configurator, webren, Webäºº, business website preview">
   <meta name="author" content="Webäºº">
   <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="canonical" href="https://rayantion26.github.io/webren/demo/">
 
   <!-- Open Graph -->
@@ -48,8 +49,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../css/shared-nav.css?v=22">
-  <link rel="stylesheet" href="css/style.css?v=22">
+  <link rel="stylesheet" href="../css/shared-nav.css?v=23">
+  <link rel="stylesheet" href="css/style.css?v=23">
 </head>
 <body>
 
@@ -675,11 +676,23 @@
         <div class="font-row">
           <div class="font-item">
             <span data-i18n="configurator.font_heading"></span>
-            <select id="sel-heading-font"></select>
+            <div class="custom-font-select" id="sel-heading-font" data-value="">
+              <button class="custom-font-btn" type="button" aria-expanded="false" aria-haspopup="listbox">
+                <span class="custom-font-label">Playfair Display</span>
+                <svg class="custom-font-arrow" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+              </button>
+              <ul class="custom-font-list" role="listbox"></ul>
+            </div>
           </div>
           <div class="font-item">
             <span data-i18n="configurator.font_body"></span>
-            <select id="sel-body-font"></select>
+            <div class="custom-font-select" id="sel-body-font" data-value="">
+              <button class="custom-font-btn" type="button" aria-expanded="false" aria-haspopup="listbox">
+                <span class="custom-font-label">Inter</span>
+                <svg class="custom-font-arrow" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+              </button>
+              <ul class="custom-font-list" role="listbox"></ul>
+            </div>
           </div>
         </div>
       </div>
@@ -758,10 +771,10 @@
 
   <!-- ââ Scripts (order matters: i18n â app â configurator) ââââââââââââ -->
   <script src="https://cdn.jsdelivr.net/npm/i18next@23/i18next.min.js" defer></script>
-  <script src="js/i18n.js?v=22" defer></script>
-  <script src="js/app.js?v=22" defer></script>
-  <script src="js/configurator.js?v=22" defer></script>
-  <script src="../js/shared-nav.js?v=22"></script>
+  <script src="js/i18n.js?v=23" defer></script>
+  <script src="js/app.js?v=23" defer></script>
+  <script src="js/configurator.js?v=23" defer></script>
+  <script src="../js/shared-nav.js?v=23"></script>
 
 </body>
 </html>

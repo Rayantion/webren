@@ -206,43 +206,84 @@ function loadGoogleFont(fontName) {
   document.head.appendChild(link);
 }
 
-function populateFontSelects() {
-  ['sel-heading-font','sel-body-font'].forEach(id => {
-    const sel = document.getElementById(id);
-    GOOGLE_FONTS.forEach(font => {
-      const opt = document.createElement('option');
-      opt.value = opt.textContent = font;
-      sel.appendChild(opt);
+function initCustomFontSelect(id, onSelect) {
+  const wrap = document.getElementById(id);
+  if (!wrap) return;
+  const btn   = wrap.querySelector('.custom-font-btn');
+  const label = wrap.querySelector('.custom-font-label');
+  const list  = wrap.querySelector('.custom-font-list');
+
+  // Populate list
+  GOOGLE_FONTS.forEach(font => {
+    const li = document.createElement('li');
+    li.className = 'custom-font-option';
+    li.textContent = font;
+    li.style.fontFamily = `'${font}', sans-serif`;
+    li.dataset.value = font;
+    li.setAttribute('role', 'option');
+    li.addEventListener('click', () => {
+      list.querySelectorAll('.custom-font-option').forEach(o => o.classList.remove('active'));
+      li.classList.add('active');
+      label.textContent = font;
+      wrap.dataset.value = font;
+      wrap.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      onSelect(font);
     });
+    list.appendChild(li);
   });
 
-  const config = AppState.get();
-  document.getElementById('sel-heading-font').value = config.fonts.heading;
-  document.getElementById('sel-body-font').value = config.fonts.body;
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const isOpen = wrap.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+    // Scroll active option into view
+    if (isOpen) {
+      const active = list.querySelector('.custom-font-option.active');
+      if (active) active.scrollIntoView({ block: 'nearest' });
+    }
+  });
+
+  document.addEventListener('click', () => {
+    wrap.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  });
+
+  // Expose value setter
+  wrap._setValue = font => {
+    label.textContent = font;
+    wrap.dataset.value = font;
+    list.querySelectorAll('.custom-font-option').forEach(o => {
+      o.classList.toggle('active', o.dataset.value === font);
+    });
+  };
 }
 
 function initFontSelectors() {
-  populateFontSelects();
+  const config = AppState.get();
 
-  document.getElementById('sel-heading-font').addEventListener('change', e => {
-    const font = e.target.value;
+  initCustomFontSelect('sel-heading-font', font => {
     loadGoogleFont(font);
     AppState.get().fonts.heading = font;
     AppState.applyFonts(AppState.get().fonts);
     AppState.saveConfig();
   });
 
-  document.getElementById('sel-body-font').addEventListener('change', e => {
-    const font = e.target.value;
+  initCustomFontSelect('sel-body-font', font => {
     loadGoogleFont(font);
     AppState.get().fonts.body = font;
     AppState.applyFonts(AppState.get().fonts);
     AppState.saveConfig();
   });
 
-  const f = AppState.get().fonts;
-  loadGoogleFont(f.heading);
-  loadGoogleFont(f.body);
+  // Set initial values
+  const headingEl = document.getElementById('sel-heading-font');
+  const bodyEl    = document.getElementById('sel-body-font');
+  if (headingEl?._setValue) headingEl._setValue(config.fonts.heading);
+  if (bodyEl?._setValue)    bodyEl._setValue(config.fonts.body);
+
+  loadGoogleFont(config.fonts.heading);
+  loadGoogleFont(config.fonts.body);
 }
 
 // ── Background style selector ─────────────────────────────────────────────────
