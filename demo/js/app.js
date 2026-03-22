@@ -315,6 +315,28 @@ function initThreeJS() {
   };
 }
 
+// ── Inner demo nav scroll hide/show ──────────────────────────────────────────
+function initDemoNavScroll() {
+  const nav = document.getElementById('demo-site-nav');
+  if (!nav) return;
+  let lastY = 0;
+  let scrollTimer = null;
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > lastY + 4 && y > 80) {
+      nav.classList.add('demo-nav-hidden');
+    }
+    lastY = y;
+
+    // Reappear when user stops scrolling
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      nav.classList.remove('demo-nav-hidden');
+    }, 150);
+  }, { passive: true });
+}
+
 // ── Inner demo nav hamburger (slide-in, same behaviour as outer shared nav) ───
 function initDemoNav() {
   const toggle  = document.getElementById('demo-menu-toggle');
@@ -510,12 +532,20 @@ function initSubPages() {
   const preview = document.getElementById('demo-preview');
   if (!preview) return;
 
-  // Use both click and touchend to fix mobile tap issues
   function handleCatalogNav(e) {
     const trigger = e.target.closest('[data-show-subpage]');
-    if (trigger) { e.preventDefault(); showSubPage(trigger.dataset.showSubpage); return; }
+    if (trigger) {
+      e.preventDefault();
+      e.stopPropagation(); // prevent click reaching mode-switch listeners
+      showSubPage(trigger.dataset.showSubpage);
+      return;
+    }
     const back = e.target.closest('[data-close-subpage]');
-    if (back) { e.preventDefault(); closeSubPage(); }
+    if (back) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeSubPage();
+    }
   }
   preview.addEventListener('click', handleCatalogNav);
 
@@ -632,6 +662,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initLangToggle();
   initCounter();
   initMenuTabs();
+  initDemoNavScroll();
   initDemoNav();
   initSubPages();
   initDemoBarSwitcher();
