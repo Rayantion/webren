@@ -242,6 +242,17 @@ section { padding: 5rem 0; }
 .mode-sections { display: none; }
 .mode-sections.active { display: block; }
 
+/* Dropdown slide-in animation when switching modes in the demo */
+@keyframes modeDrop {
+  0%   { opacity: 0; transform: translateY(-28px) scaleY(0.97); }
+  60%  { opacity: 1; transform: translateY(4px) scaleY(1.005); }
+  100% { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+.mode-sections.dropping-in {
+  animation: modeDrop 0.42s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform-origin: top center;
+}
+
 /* ── Demo preview wrapper (subtle frame to show it's a preview) ───────── */
 #demo-preview {
   position: relative;

@@ -74,45 +74,46 @@ async function runTransition(callback) {
 function showMode(mode, withTransition = true) {
   if (isTransitioning) return;
 
-  const doSwitch = () => {
-    closeSubPage();
-    document.querySelectorAll('.mode-sections').forEach(el => el.classList.remove('active'));
-    const target = document.getElementById(`mode-${mode}`);
-    if (target) target.classList.add('active');
-    currentConfig.mode = mode;
-    localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(currentConfig));
-    window.scrollTo({ top: 0, behavior: 'auto' });
-    target && target.querySelectorAll('.reveal').forEach(el => {
-      el.classList.remove('revealed');
-      el.style.transitionDelay = '';
-    });
-    // Update inner demo nav middle link for current mode (desktop + mobile)
-    if (window.i18next) {
-      const linkKey = { company: 'nav.services', restaurant: 'nav.menu', store: 'nav.products' }[mode] || 'nav.services';
-      const subpageMap = { restaurant: 'restaurant-menu-page', store: 'store-products-page' };
-      ['demo-nav-services', 'demo-mobile-services'].forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.dataset.i18n = linkKey;
-        el.textContent = window.i18next.t(linkKey);
-        if (subpageMap[mode]) {
-          el.href = '#';
-          el.dataset.showSubpage = subpageMap[mode];
-        } else {
-          el.href = '#services';
-          delete el.dataset.showSubpage;
-        }
+  closeSubPage();
+  document.querySelectorAll('.mode-sections').forEach(el => el.classList.remove('active', 'dropping-in'));
+  const target = document.getElementById(`mode-${mode}`);
+  if (target) {
+    target.classList.add('active');
+    if (withTransition) {
+      // Dropdown slide-in animation — only inside the demo preview, no full-page overlay
+      requestAnimationFrame(() => {
+        target.classList.add('dropping-in');
+        target.addEventListener('animationend', () => target.classList.remove('dropping-in'), { once: true });
       });
     }
-    initScrollReveal();
-    if (window._updateModeSwitcher) window._updateModeSwitcher(mode);
-  };
-
-  if (withTransition) {
-    runTransition(doSwitch);
-  } else {
-    doSwitch();
   }
+  currentConfig.mode = mode;
+  localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(currentConfig));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+  target && target.querySelectorAll('.reveal').forEach(el => {
+    el.classList.remove('revealed');
+    el.style.transitionDelay = '';
+  });
+  // Update inner demo nav middle link for current mode (desktop + mobile)
+  if (window.i18next) {
+    const linkKey = { company: 'nav.services', restaurant: 'nav.menu', store: 'nav.products' }[mode] || 'nav.services';
+    const subpageMap = { restaurant: 'restaurant-menu-page', store: 'store-products-page' };
+    ['demo-nav-services', 'demo-mobile-services'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.dataset.i18n = linkKey;
+      el.textContent = window.i18next.t(linkKey);
+      if (subpageMap[mode]) {
+        el.href = '#';
+        el.dataset.showSubpage = subpageMap[mode];
+      } else {
+        el.href = '#services';
+        delete el.dataset.showSubpage;
+      }
+    });
+  }
+  initScrollReveal();
+  if (window._updateModeSwitcher) window._updateModeSwitcher(mode);
 }
 
 // ── Scroll reveal ─────────────────────────────────────────────────────────────
