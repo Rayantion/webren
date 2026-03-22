@@ -128,9 +128,12 @@ function hslToHex(h, s, l) {
 function autoTheme(primaryHex) {
   const [h, s, l] = hexToHsl(primaryHex);
   const accent = hslToHex((h + 150) % 360, Math.min(s + 10, 100), Math.max(l - 5, 20));
-  const bg = hslToHex(h, 10, 8);
-  const [,,bgL] = hexToHsl(bg);
-  const text = bgL < 40 ? '#F9FAFB' : '#111827';
+  // Toggle between dark and light based on current background
+  const currentBgHex = AppState.get().theme.bg;
+  const [,,currentBgL] = hexToHsl(currentBgHex);
+  const goLight = currentBgL < 50; // if currently dark, switch to light
+  const bg = goLight ? hslToHex(h, 15, 97) : hslToHex(h, 10, 8);
+  const text = goLight ? '#111827' : '#F9FAFB';
   return { primary: primaryHex, accent, bg, text };
 }
 
