@@ -1072,6 +1072,18 @@ function initDemoNavControls() {
   if (demoBar) demoBar.style.display = 'none';
 }
 
+// ── Customize button: hide while scrolling ────────────────────────────────────
+function initScrollHideToggle() {
+  const btn = document.getElementById('config-toggle');
+  if (!btn) return;
+  let scrollTimer;
+  window.addEventListener('scroll', () => {
+    btn.classList.add('scroll-hidden');
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => btn.classList.remove('scroll-hidden'), 600);
+  }, { passive: true });
+}
+
 // ── Boot ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await loadConfig();
@@ -1090,6 +1102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initDemoNav();
   initSubPages();
   initDemoBarSwitcher();
+  initScrollHideToggle();
   initHeroBackgrounds();
   // initScrollReveal() is called inside showMode()
 });
