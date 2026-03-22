@@ -32,6 +32,12 @@ function hexToRgb(hex) {
 }
 
 // ── Apply theme ───────────────────────────────────────────────────────────────
+function getLuminance(hex) {
+  const { r, g, b } = hexToRgb(hex);
+  const toLinear = c => { const v = c / 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+  return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+}
+
 function applyTheme(theme) {
   const root = document.documentElement;
   root.style.setProperty('--color-primary', theme.primary);
@@ -47,7 +53,10 @@ function applyTheme(theme) {
   root.style.setProperty('--color-text-muted', `rgba(${t.str},0.60)`);
   root.style.setProperty('--color-nav-bg',     `rgba(${b.str},0.90)`);
 
-  // Update Three.js particle color
+  // Auto-contrast: dark text on bright primary, white text on dark primary
+  const onPrimary = getLuminance(theme.primary) > 0.179 ? '#111827' : '#ffffff';
+  root.style.setProperty('--color-on-primary', onPrimary);
+
   if (window._threeUpdate) window._threeUpdate(theme.primary);
 }
 
