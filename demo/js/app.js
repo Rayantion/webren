@@ -1,4 +1,4 @@
-// app.js — Mode switching, transitions, view counter, scroll reveal, init
+// app.js — Mode switching, transitions, view counter, scroll reveal, Three.js, init
 
 const STORAGE_KEY_CONFIG = 'webren_demo_config';
 let isTransitioning = false;
@@ -16,11 +16,19 @@ async function loadConfig() {
   } catch(e) {
     currentConfig = {
       mode: 'company',
-      theme: { primary: '#0D9488', accent: '#7C3AED', bg: '#0F1117', text: '#F9FAFB' },
+      theme: { primary: '#0D9488', accent: '#7C3AED', bg: '#FAFAFA', text: '#111827' },
       fonts: { heading: 'Playfair Display', body: 'Inter' },
       viewCounter: true
     };
   }
+}
+
+// ── Hex helpers ───────────────────────────────────────────────────────────────
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return { r, g, b, str: `${r},${g},${b}` };
 }
 
 // ── Apply theme ───────────────────────────────────────────────────────────────
@@ -30,6 +38,17 @@ function applyTheme(theme) {
   root.style.setProperty('--color-accent', theme.accent);
   root.style.setProperty('--color-bg', theme.bg);
   root.style.setProperty('--color-text', theme.text);
+
+  // Derive surface/border/muted from text color so they work on any bg
+  const t = hexToRgb(theme.text);
+  const b = hexToRgb(theme.bg);
+  root.style.setProperty('--color-surface',    `rgba(${t.str},0.05)`);
+  root.style.setProperty('--color-border',     `rgba(${t.str},0.10)`);
+  root.style.setProperty('--color-text-muted', `rgba(${t.str},0.60)`);
+  root.style.setProperty('--color-nav-bg',     `rgba(${b.str},0.90)`);
+
+  // Update Three.js particle color
+  if (window._threeUpdate) window._threeUpdate(theme.primary);
 }
 
 // ── Apply fonts ───────────────────────────────────────────────────────────────
@@ -44,10 +63,10 @@ async function runTransition(callback) {
   isTransitioning = true;
   const overlay = document.getElementById('page-transition');
   overlay.classList.add('active');
-  await new Promise(r => setTimeout(r, 400)); // wait for overlay to fully cover
-  await callback();                            // swap content while covered
+  await new Promise(r => setTimeout(r, 400));
+  await callback();
   overlay.classList.remove('active');
-  await new Promise(r => setTimeout(r, 400)); // wait for overlay to clear
+  await new Promise(r => setTimeout(r, 400));
   isTransitioning = false;
 }
 
@@ -62,7 +81,6 @@ function showMode(mode, withTransition = true) {
     currentConfig.mode = mode;
     localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(currentConfig));
     window.scrollTo({ top: 0, behavior: 'auto' });
-    // Reset all reveal elements in the newly shown mode so they animate in
     target && target.querySelectorAll('.reveal').forEach(el => {
       el.classList.remove('revealed');
       el.style.transitionDelay = '';
@@ -175,6 +193,123 @@ function initMenuTabs() {
   });
 }
 
+// ── Three.js particles ────────────────────────────────────────────────────────
+function initThreeJS() {
+  if (typeof THREE === 'undefined') return;
+
+  const canvas = document.getElementById('threejs-canvas');
+  if (!canvas) return;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
+  camera.position.z = 80;
+
+  // Particles
+  const COUNT = 80;
+  const positions = new Float32Array(COUNT * 3);
+  const velocities = [];
+
+  for (let i = 0; i < COUNT; i++) {
+    positions[i*3]   = (Math.random() - 0.5) * 160;
+    positions[i*3+1] = (Math.random() - 0.5) * 100;
+    positions[i*3+2] = (Math.random() - 0.5) * 40;
+    velocities.push({
+      x: (Math.random() - 0.5) * 0.06,
+      y: (Math.random() - 0.5) * 0.04,
+    });
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+  let primaryColor = new THREE.Color(currentConfig.theme?.primary || '#0D9488');
+
+  const mat = new THREE.PointsMaterial({
+    color: primaryColor,
+    size: 1.5,
+    transparent: true,
+    opacity: 0.6,
+    sizeAttenuation: true,
+  });
+
+  const points = new THREE.Points(geo, mat);
+  scene.add(points);
+
+  // Lines between close particles
+  const lineMat = new THREE.LineBasicMaterial({ color: primaryColor, transparent: true, opacity: 0.15 });
+  let linesMesh = null;
+
+  function buildLines() {
+    if (linesMesh) scene.remove(linesMesh);
+    const linePositions = [];
+    const threshold = 28;
+    for (let i = 0; i < COUNT; i++) {
+      for (let j = i+1; j < COUNT; j++) {
+        const dx = positions[i*3] - positions[j*3];
+        const dy = positions[i*3+1] - positions[j*3+1];
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < threshold) {
+          linePositions.push(
+            positions[i*3], positions[i*3+1], positions[i*3+2],
+            positions[j*3], positions[j*3+1], positions[j*3+2]
+          );
+        }
+      }
+    }
+    const lineGeo = new THREE.BufferGeometry();
+    lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linePositions), 3));
+    linesMesh = new THREE.LineSegments(lineGeo, lineMat);
+    scene.add(linesMesh);
+  }
+
+  function resize() {
+    const hero = canvas.parentElement;
+    if (!hero) return;
+    const w = hero.clientWidth;
+    const h = hero.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  let frame = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+
+    for (let i = 0; i < COUNT; i++) {
+      positions[i*3]   += velocities[i].x;
+      positions[i*3+1] += velocities[i].y;
+      // Wrap around edges
+      if (positions[i*3] > 85)   positions[i*3] = -85;
+      if (positions[i*3] < -85)  positions[i*3] = 85;
+      if (positions[i*3+1] > 55) positions[i*3+1] = -55;
+      if (positions[i*3+1] < -55) positions[i*3+1] = 55;
+    }
+
+    geo.attributes.position.needsUpdate = true;
+    frame++;
+    if (frame % 4 === 0) buildLines(); // rebuild lines every 4 frames for perf
+
+    renderer.render(scene, camera);
+  }
+
+  buildLines();
+  animate();
+
+  // Expose color update
+  window._threeUpdate = (hex) => {
+    const c = new THREE.Color(hex);
+    mat.color.set(c);
+    lineMat.color.set(c);
+  };
+}
+
 // ── Boot ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await loadConfig();
@@ -187,6 +322,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   initLangToggle();
   initCounter();
   initMenuTabs();
+  // Three.js init — runs after THREE is available (loaded via defer)
+  if (typeof THREE !== 'undefined') {
+    initThreeJS();
+  } else {
+    window.addEventListener('load', initThreeJS);
+  }
   // initScrollReveal() is called inside showMode()
 });
 

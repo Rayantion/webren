@@ -146,6 +146,7 @@
     "counter_total": "Total"
   },
   "configurator": {
+    "preset_label": "Quick Themes",
     "button": "Customize",
     "title": "Customize Your Site",
     "mode_label": "Business Type",

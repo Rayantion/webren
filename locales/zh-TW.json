@@ -5,7 +5,9 @@
     "portfolio": "作品集",
     "features": "特色",
     "contact": "聯絡",
-    "cta": "取得報價"
+    "cta": "取得報價",
+    "pricing": "定價",
+    "demo": "試用"
   },
   "hero": {
     "badge": "現代網站開發",
@@ -14,6 +16,8 @@
     "subtitle": "專業網站體驗，針對搜尋引擎、AI探索及全球受眾優化。讓您的品牌脫穎而出。",
     "cta_primary": "開始您的專案",
     "cta_secondary": "查看服務",
+    "cta_pricing": "查看定價",
+    "cta_demo": "試用 & 立即製作",
     "stat_1_label": "完成專案",
     "stat_2_label": "支援語言",
     "stat_3_label": "正常運行保證"

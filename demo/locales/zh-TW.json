@@ -146,6 +146,7 @@
     "counter_total": "總計"
   },
   "configurator": {
+    "preset_label": "快速主題",
     "button": "自訂",
     "title": "自訂您的網站",
     "mode_label": "商業類型",

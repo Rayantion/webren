@@ -3,8 +3,8 @@
   "theme": {
     "primary": "#0D9488",
     "accent": "#7C3AED",
-    "bg": "#0F1117",
-    "text": "#F9FAFB"
+    "bg": "#FAFAFA",
+    "text": "#111827"
   },
   "fonts": {
     "heading": "Playfair Display",

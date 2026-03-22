@@ -82,6 +82,7 @@
     <div id="mode-company" class="mode-sections">
 
       <section class="hero" id="home">
+        <canvas id="threejs-canvas" aria-hidden="true"></canvas>
         <div class="container hero-inner">
           <div class="hero-content reveal">
             <span class="badge" data-i18n="hero.badge"></span>
@@ -415,6 +416,11 @@
       </div>
 
       <div class="drawer-section">
+        <label data-i18n="configurator.preset_label"></label>
+        <div class="preset-grid" id="preset-grid"></div>
+      </div>
+
+      <div class="drawer-section">
         <label data-i18n="configurator.theme_label"></label>
         <div class="color-row">
           <div class="color-item">
@@ -434,15 +440,15 @@
           <div class="color-item">
             <span data-i18n="configurator.color_bg"></span>
             <div class="color-input-wrap">
-              <input type="color" id="cp-bg" value="#0F1117">
-              <input type="text" class="hex-input" id="hex-bg" value="#0F1117" maxlength="7">
+              <input type="color" id="cp-bg" value="#FAFAFA">
+              <input type="text" class="hex-input" id="hex-bg" value="#FAFAFA" maxlength="7">
             </div>
           </div>
           <div class="color-item">
             <span data-i18n="configurator.color_text"></span>
             <div class="color-input-wrap">
-              <input type="color" id="cp-text" value="#F9FAFB">
-              <input type="text" class="hex-input" id="hex-text" value="#F9FAFB" maxlength="7">
+              <input type="color" id="cp-text" value="#111827">
+              <input type="text" class="hex-input" id="hex-text" value="#111827" maxlength="7">
             </div>
           </div>
         </div>
@@ -486,6 +492,7 @@
   <div id="toast" class="toast" role="alert" aria-live="polite"></div>
 
   <!-- ── Scripts (order matters: i18n → app → configurator) ──────────── -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/i18next@23/i18next.min.js" defer></script>
   <script src="js/i18n.js" defer></script>
   <script src="js/app.js" defer></script>

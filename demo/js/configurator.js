@@ -1,4 +1,4 @@
-// configurator.js — Config drawer: color picker, auto-theme, fonts, form, n8n POST
+// configurator.js — Config drawer: presets, color picker, auto-theme, fonts, form, n8n POST
 
 const N8N_WEBHOOK_URL = 'https://YOUR_N8N_WEBHOOK_URL_HERE';
 
@@ -8,6 +8,20 @@ const GOOGLE_FONTS = [
   'Playfair Display', 'Lora', 'Merriweather', 'Cormorant Garamond',
   'EB Garamond', 'Libre Baskerville', 'Crimson Text', 'Source Serif 4',
   'Josefin Sans', 'Montserrat'
+];
+
+// ── 10 Preset Themes ─────────────────────────────────────────────────────────
+const PRESET_THEMES = [
+  { id: 'ivory',     name: 'Ivory',     primary: '#0D9488', accent: '#7C3AED', bg: '#FAFAFA', text: '#111827' },
+  { id: 'midnight',  name: 'Midnight',  primary: '#38BDF8', accent: '#818CF8', bg: '#0D1117', text: '#F9FAFB' },
+  { id: 'ocean',     name: 'Ocean',     primary: '#06B6D4', accent: '#38BDF8', bg: '#0F1F3D', text: '#E0F2FE' },
+  { id: 'forest',    name: 'Forest',    primary: '#10B981', accent: '#FCD34D', bg: '#0F2318', text: '#D1FAE5' },
+  { id: 'sunset',    name: 'Sunset',    primary: '#F97316', accent: '#EF4444', bg: '#1C0A00', text: '#FEF3C7' },
+  { id: 'rose',      name: 'Rose',      primary: '#EC4899', accent: '#8B5CF6', bg: '#FFF1F5', text: '#1F0010' },
+  { id: 'arctic',    name: 'Arctic',    primary: '#0284C7', accent: '#6366F1', bg: '#F0F9FF', text: '#0C4A6E' },
+  { id: 'obsidian',  name: 'Obsidian',  primary: '#A1A1AA', accent: '#71717A', bg: '#09090B', text: '#FAFAFA'  },
+  { id: 'amethyst',  name: 'Amethyst', primary: '#A855F7', accent: '#EC4899', bg: '#1A0A2E', text: '#EDE9FE' },
+  { id: 'marigold',  name: 'Marigold', primary: '#D97706', accent: '#EF4444', bg: '#FFFBEB', text: '#422006' },
 ];
 
 // ── Drawer open / close ───────────────────────────────────────────────────────
@@ -20,13 +34,64 @@ function initDrawer(onOpen) {
   const open = () => {
     drawer.classList.add('open');
     backdrop.classList.add('open');
-    if (onOpen) onOpen(); // sync pickers from current config on every open
+    if (onOpen) onOpen();
   };
   const closeDrawer = () => { drawer.classList.remove('open'); backdrop.classList.remove('open'); };
 
   toggle.addEventListener('click', open);
   close.addEventListener('click', closeDrawer);
   backdrop.addEventListener('click', closeDrawer);
+}
+
+// ── Preset themes ─────────────────────────────────────────────────────────────
+function getActivePresetId(theme) {
+  return PRESET_THEMES.find(p =>
+    p.primary === theme.primary &&
+    p.accent  === theme.accent  &&
+    p.bg      === theme.bg      &&
+    p.text    === theme.text
+  )?.id || null;
+}
+
+function renderPresets() {
+  const grid = document.getElementById('preset-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  const activeName = getActivePresetId(AppState.get().theme);
+
+  PRESET_THEMES.forEach(preset => {
+    const wrap = document.createElement('div');
+    wrap.className = 'preset-swatch-wrap';
+
+    const swatch = document.createElement('div');
+    swatch.className = `preset-swatch${preset.id === activeName ? ' active' : ''}`;
+    swatch.title = preset.name;
+    swatch.setAttribute('aria-label', preset.name);
+    swatch.innerHTML = `
+      <div class="preset-swatch-inner">
+        <div class="preset-swatch-bg" style="background:${preset.bg}"></div>
+        <div class="preset-swatch-bar" style="background:${preset.primary}"></div>
+      </div>
+    `;
+    swatch.addEventListener('click', () => {
+      applyAndSaveTheme(preset);
+      document.querySelectorAll('.preset-swatch').forEach(s => s.classList.remove('active'));
+      swatch.classList.add('active');
+    });
+
+    const label = document.createElement('div');
+    label.className = 'preset-name';
+    label.textContent = preset.name;
+
+    wrap.appendChild(swatch);
+    wrap.appendChild(label);
+    grid.appendChild(wrap);
+  });
+}
+
+function initPresetThemes() {
+  renderPresets();
 }
 
 // ── Color helpers (HSL math) ──────────────────────────────────────────────────
@@ -89,16 +154,17 @@ function syncColorPair(pickerId, hexId, onchange) {
 
 // ── Apply and persist a full theme ────────────────────────────────────────────
 function applyAndSaveTheme(theme) {
-  AppState.get().theme = theme;
+  AppState.get().theme = { ...theme };
   AppState.applyTheme(theme);
   AppState.saveConfig();
-  // Sync pickers
   ['primary','accent','bg','text'].forEach(key => {
     const pick = document.getElementById(`cp-${key}`);
     const hex = document.getElementById(`hex-${key}`);
     if (pick) pick.value = theme[key];
     if (hex) hex.value = theme[key];
   });
+  // Refresh preset active state
+  renderPresets();
 }
 
 function initColorPickers() {
@@ -107,6 +173,7 @@ function initColorPickers() {
       AppState.get().theme[key] = val;
       AppState.applyTheme(AppState.get().theme);
       AppState.saveConfig();
+      renderPresets(); // deselect preset if custom color chosen
     });
   });
 
@@ -120,7 +187,7 @@ function initColorPickers() {
 // ── Font loader ───────────────────────────────────────────────────────────────
 function loadGoogleFont(fontName) {
   const href = `https://fonts.googleapis.com/css2?family=${fontName.replace(/ /g,'+')}:wght@400;600;700&display=swap`;
-  if (document.querySelector(`link[href="${href}"]`)) return; // already loaded
+  if (document.querySelector(`link[href="${href}"]`)) return;
   const link = document.createElement('link');
   link.rel = 'stylesheet'; link.href = href;
   document.head.appendChild(link);
@@ -160,7 +227,6 @@ function initFontSelectors() {
     AppState.saveConfig();
   });
 
-  // Preload current fonts
   const f = AppState.get().fonts;
   loadGoogleFont(f.heading);
   loadGoogleFont(f.body);
@@ -176,7 +242,6 @@ function initModeButtons() {
     });
   });
 
-  // Sync button state with current mode
   const mode = AppState.get().mode || 'company';
   document.querySelectorAll('.mode-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.mode === mode);
@@ -258,13 +323,13 @@ function syncPickersFromConfig() {
     if (pick && theme[key]) pick.value = theme[key];
     if (hex && theme[key]) hex.value = theme[key];
   });
+  renderPresets();
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
-// app.js loads before configurator.js (script order: i18n → app → configurator)
-// so AppState is defined by the time this DOMContentLoaded fires.
 document.addEventListener('DOMContentLoaded', () => {
-  initDrawer(syncPickersFromConfig); // pass sync fn to call on open
+  initDrawer(syncPickersFromConfig);
+  initPresetThemes();
   initColorPickers();
   initFontSelectors();
   initModeButtons();

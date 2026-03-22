@@ -5,7 +5,9 @@
     "portfolio": "Portfolio",
     "features": "Features",
     "contact": "Contact",
-    "cta": "Get a Quote"
+    "cta": "Get a Quote",
+    "pricing": "Pricing",
+    "demo": "Demo"
   },
   "hero": {
     "badge": "Modern Web Development",
@@ -14,6 +16,8 @@
     "subtitle": "Premium web experiences engineered for search engines, AI discovery, and global audiences. Your brand, elevated.",
     "cta_primary": "Start Your Project",
     "cta_secondary": "View Services",
+    "cta_pricing": "View Pricing",
+    "cta_demo": "Demo & Make Now",
     "stat_1_label": "Sites Delivered",
     "stat_2_label": "Languages Supported",
     "stat_3_label": "Uptime SLA"
