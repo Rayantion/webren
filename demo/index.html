@@ -48,8 +48,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../css/shared-nav.css?v=4">
-  <link rel="stylesheet" href="css/style.css?v=4">
+  <link rel="stylesheet" href="../css/shared-nav.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
 
@@ -93,13 +93,14 @@
     </div>
   </header>
 
-  <!-- Inner demo mobile menu (inline dropdown) -->
+  <!-- Inner demo mobile menu (slide-in from right) -->
   <nav id="demo-mobile-menu" aria-label="Demo site navigation">
     <a href="#home" data-i18n="nav.home">Home</a>
     <a href="#services" id="demo-mobile-services" data-i18n="nav.services">Services</a>
     <a href="#about" data-i18n="nav.about">About</a>
     <a href="#contact" data-i18n="nav.contact">Contact</a>
   </nav>
+  <div id="demo-mobile-overlay"></div>
 
   <main id="main-content">
 
@@ -286,6 +287,9 @@
               <span class="menu-price" data-i18n="restaurant.menu.item_6_price"></span>
             </div>
           </div>
+          <div class="view-all-wrap reveal">
+            <button class="btn-primary" data-show-subpage="restaurant-menu-page" data-i18n="restaurant.full_menu.view_all">View Full Menu →</button>
+          </div>
         </div>
       </section>
 
@@ -328,6 +332,42 @@
         </div>
       </section>
 
+
+      <!-- Full Menu Sub-page -->
+      <div id="restaurant-menu-page" class="sub-page">
+        <div class="sub-page-header">
+          <div class="container">
+            <button class="sub-page-back" data-close-subpage data-i18n="nav.back_to_main">Back</button>
+            <h1 data-i18n="restaurant.full_menu.title">Full Menu</h1>
+          </div>
+        </div>
+        <div class="container">
+          <div class="catalog-controls">
+            <input type="search" id="menu-search" class="catalog-search" placeholder="Search dishes...">
+            <div class="filter-tabs" id="menu-category-tabs">
+              <button class="filter-tab active" data-category="all" data-i18n="restaurant.full_menu.cat_all">All</button>
+              <button class="filter-tab" data-category="main" data-i18n="restaurant.full_menu.cat_main">Main</button>
+              <button class="filter-tab" data-category="dessert" data-i18n="restaurant.full_menu.cat_dessert">Dessert</button>
+              <button class="filter-tab" data-category="sides" data-i18n="restaurant.full_menu.cat_sides">Side Dishes</button>
+            </div>
+            <div id="menu-subcategory-tabs" class="sub-category-tabs">
+              <button class="filter-tab active" data-subcategory="all" data-i18n="restaurant.full_menu.sub_all">All</button>
+              <button class="filter-tab" data-subcategory="rice" data-i18n="restaurant.full_menu.sub_rice">Rice</button>
+              <button class="filter-tab" data-subcategory="noodle" data-i18n="restaurant.full_menu.sub_noodle">Noodle</button>
+              <button class="filter-tab" data-subcategory="mifen" data-i18n="restaurant.full_menu.sub_mifen">Rice Noodle</button>
+            </div>
+            <div class="catalog-sort-row">
+              <select id="menu-sort" class="catalog-sort">
+                <option value="relevance" data-i18n="catalog.sort_relevance">Relevance</option>
+                <option value="price_asc" data-i18n="catalog.sort_price_asc">Price: Low to High</option>
+                <option value="price_desc" data-i18n="catalog.sort_price_desc">Price: High to Low</option>
+              </select>
+            </div>
+          </div>
+          <div id="menu-results-count" class="results-count"></div>
+          <div id="menu-grid"></div>
+        </div>
+      </div>
     </div><!-- end #mode-restaurant -->
 
     <!-- ââ STORE MODE ââââââââââââââââââââââââââââââââââââââââââââââââ -->
@@ -383,6 +423,9 @@
               </div>
             </div>
           </div>
+          <div class="view-all-wrap reveal">
+            <button class="btn-primary" data-show-subpage="store-products-page" data-i18n="store.full_products.view_all">View All Products →</button>
+          </div>
         </div>
       </section>
 
@@ -417,6 +460,37 @@
         </div>
       </section>
 
+
+      <!-- Full Products Sub-page -->
+      <div id="store-products-page" class="sub-page">
+        <div class="sub-page-header">
+          <div class="container">
+            <button class="sub-page-back" data-close-subpage data-i18n="nav.back_to_main">Back</button>
+            <h1 data-i18n="store.full_products.title">All Products</h1>
+          </div>
+        </div>
+        <div class="container">
+          <div class="catalog-controls">
+            <input type="search" id="products-search" class="catalog-search" placeholder="Search products...">
+            <div class="filter-tabs" id="products-category-tabs">
+              <button class="filter-tab active" data-category="all" data-i18n="store.full_products.cat_all">All</button>
+              <button class="filter-tab" data-category="apparel" data-i18n="store.full_products.cat_apparel">Apparel</button>
+              <button class="filter-tab" data-category="accessories" data-i18n="store.full_products.cat_accessories">Accessories</button>
+              <button class="filter-tab" data-category="home" data-i18n="store.full_products.cat_home">Home &amp; Living</button>
+              <button class="filter-tab" data-category="gifts" data-i18n="store.full_products.cat_gifts">Gifts</button>
+            </div>
+            <div class="catalog-sort-row">
+              <select id="products-sort" class="catalog-sort">
+                <option value="relevance" data-i18n="catalog.sort_relevance">Relevance</option>
+                <option value="price_asc" data-i18n="catalog.sort_price_asc">Price: Low to High</option>
+                <option value="price_desc" data-i18n="catalog.sort_price_desc">Price: High to Low</option>
+              </select>
+            </div>
+          </div>
+          <div id="products-results-count" class="results-count"></div>
+          <div id="products-grid"></div>
+        </div>
+      </div>
     </div><!-- end #mode-store -->
 
   </main>
@@ -546,10 +620,10 @@
   <!-- ââ Scripts (order matters: i18n â app â configurator) ââââââââââââ -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/i18next@23/i18next.min.js" defer></script>
-  <script src="js/i18n.js?v=4" defer></script>
-  <script src="js/app.js?v=4" defer></script>
-  <script src="js/configurator.js?v=4" defer></script>
-  <script src="../js/shared-nav.js?v=4"></script>
+  <script src="js/i18n.js?v=5" defer></script>
+  <script src="js/app.js?v=5" defer></script>
+  <script src="js/configurator.js?v=5" defer></script>
+  <script src="../js/shared-nav.js?v=5"></script>
 
 </body>
 </html>

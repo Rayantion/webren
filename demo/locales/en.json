@@ -56,7 +56,25 @@
       "item_3_desc": "Built for search engines from the ground up."
     }
   },
+  "catalog": {
+    "sort_relevance": "Relevance",
+    "sort_price_asc": "Price: Low to High",
+    "sort_price_desc": "Price: High to Low"
+  },
   "restaurant": {
+    "full_menu": {
+      "title": "Full Menu",
+      "view_all": "View Full Menu →",
+      "search_placeholder": "Search dishes…",
+      "cat_all": "All",
+      "cat_main": "Main",
+      "cat_dessert": "Dessert",
+      "cat_sides": "小菜",
+      "sub_all": "All",
+      "sub_rice": "Rice",
+      "sub_noodle": "Noodle",
+      "sub_mifen": "米粉"
+    },
     "menu": {
       "badge": "Our Menu",
       "title": "Today's Selections",
@@ -100,6 +118,16 @@
     }
   },
   "store": {
+    "full_products": {
+      "title": "All Products",
+      "view_all": "View All Products →",
+      "search_placeholder": "Search products…",
+      "cat_all": "All",
+      "cat_apparel": "Apparel",
+      "cat_accessories": "Accessories",
+      "cat_home": "Home & Living",
+      "cat_gifts": "Gifts"
+    },
     "featured": {
       "badge": "New Arrivals",
       "title": "Featured Products",

@@ -56,7 +56,25 @@
       "item_3_desc": "從底層為搜尋引擎而建。"
     }
   },
+  "catalog": {
+    "sort_relevance": "相關性",
+    "sort_price_asc": "價格：由低至高",
+    "sort_price_desc": "價格：由高至低"
+  },
   "restaurant": {
+    "full_menu": {
+      "title": "完整菜單",
+      "view_all": "查看完整菜單 →",
+      "search_placeholder": "搜尋菜色…",
+      "cat_all": "全部",
+      "cat_main": "主食",
+      "cat_dessert": "甜點",
+      "cat_sides": "小菜",
+      "sub_all": "全部",
+      "sub_rice": "飯類",
+      "sub_noodle": "麵類",
+      "sub_mifen": "米粉"
+    },
     "menu": {
       "badge": "我們的菜單",
       "title": "今日精選",
@@ -100,6 +118,16 @@
     }
   },
   "store": {
+    "full_products": {
+      "title": "所有商品",
+      "view_all": "查看所有商品 →",
+      "search_placeholder": "搜尋商品…",
+      "cat_all": "全部",
+      "cat_apparel": "服飾",
+      "cat_accessories": "配件",
+      "cat_home": "居家生活",
+      "cat_gifts": "禮品"
+    },
     "featured": {
       "badge": "新品上市",
       "title": "精選商品",
