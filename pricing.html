@@ -99,7 +99,38 @@
     .btn-wa:hover { opacity: 0.88; }
     @media (max-width: 768px) {
       .nav-links { display: none; }
+      #menu-toggle { display: flex; }
     }
+    #menu-toggle {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 8px;
+      min-height: 44px; min-width: 44px; align-items: center; justify-content: center;
+    }
+    #menu-toggle span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text); border-radius: 2px; transition: all 0.3s;
+    }
+    #mobile-menu {
+      display: none; flex-direction: column;
+      background: #fff; border-bottom: 1px solid var(--border);
+      position: sticky; top: 64px; z-index: 99;
+    }
+    #mobile-menu.open { display: flex; }
+    #mobile-menu a {
+      padding: 1rem 1.5rem; color: var(--text); font-weight: 500;
+      border-top: 1px solid var(--border); font-size: 0.95rem;
+    }
+    #mobile-menu a:hover, #mobile-menu a.active { color: var(--teal); }
+    #mobile-menu .lang-row {
+      display: flex; gap: 8px; padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    #mobile-menu .lang-row .lang-btn { flex: 1; padding: 10px; text-align: center; }
+    #menu-overlay {
+      display: none; position: fixed; inset: 0; z-index: 90;
+      background: rgba(0,0,0,0.3);
+    }
+    #menu-overlay.open { display: block; }
 
     /* ── Page transition ── */
     #page-transition {
@@ -351,12 +382,31 @@
     <div class="nav-right">
       <button class="lang-btn active" data-lang="en" onclick="switchLang('en')">EN</button>
       <button class="lang-btn" data-lang="zh-TW" onclick="switchLang('zh-TW')">中文</button>
-      <a href="https://wa.me/6285183005811" class="btn-wa" target="_blank" rel="noopener">
+      <a href="https://wa.me/6285183005811" class="btn-wa desktop-only" target="_blank" rel="noopener">
         WhatsApp ↗
       </a>
+      <button id="menu-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </nav>
+
+<!-- Mobile menu -->
+<nav id="mobile-menu" aria-label="Mobile navigation">
+  <a href="./index.html" data-i18n="nav.home">Home</a>
+  <a href="pricing.html" class="active" data-i18n="nav.pricing">Pricing</a>
+  <a href="./index.html#portfolio" data-i18n="nav.portfolio">Portfolio</a>
+  <a href="./index.html#services" data-i18n="nav.services">Services</a>
+  <a href="./index.html#features" data-i18n="nav.features">Features</a>
+  <a href="./index.html#contact" data-i18n="nav.contact">Contact</a>
+  <a href="./demo/" data-i18n="nav.demo">Demo</a>
+  <div class="lang-row">
+    <button class="lang-btn active" data-lang="en" onclick="switchLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh-TW" onclick="switchLang('zh-TW')">中文</button>
+  </div>
+</nav>
+<div id="menu-overlay"></div>
 
 <!-- HERO -->
 <section class="pricing-hero">
@@ -836,6 +886,41 @@ function initReveal() {
 const urlLang = new URLSearchParams(location.search).get('lang');
 applyStrings(urlLang === 'zh-TW' ? 'zh-TW' : 'en');
 document.addEventListener('DOMContentLoaded', initReveal);
+
+<script>
+// ── Mobile menu (hamburger + swipe) ──────────────────────────────────
+(function() {
+  var toggle = document.getElementById('menu-toggle');
+  var menu = document.getElementById('mobile-menu');
+  var overlay = document.getElementById('menu-overlay');
+  if (!toggle || !menu) return;
+
+  function openMenu() {
+    menu.classList.add('open');
+    if (overlay) overlay.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+  }
+  function closeMenu() {
+    menu.classList.remove('open');
+    if (overlay) overlay.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  toggle.addEventListener('click', function() {
+    menu.classList.contains('open') ? closeMenu() : openMenu();
+  });
+  if (overlay) overlay.addEventListener('click', closeMenu);
+
+  var touchStartX = 0;
+  document.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if (dx < -50 && !menu.classList.contains('open')) openMenu();
+    if (dx > 50 && menu.classList.contains('open')) closeMenu();
+  }, { passive: true });
+}());
 </script>
 
 </body>

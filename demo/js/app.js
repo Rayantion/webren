@@ -145,7 +145,8 @@ function initCounter() {
 
 // ── Navbar scroll ─────────────────────────────────────────────────────────────
 function initNav() {
-  const nav = document.getElementById('navbar');
+  const nav = document.getElementById('main-nav');
+  if (!nav) return;
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
   }, { passive: true });
@@ -156,15 +157,29 @@ function initMobileMenu() {
   const toggle = document.getElementById('menu-toggle');
   const menu = document.getElementById('mobile-menu');
   const overlay = document.getElementById('menu-overlay');
-  toggle?.addEventListener('click', () => {
-    const open = menu.classList.toggle('open');
-    overlay.classList.toggle('open', open);
-    toggle.setAttribute('aria-expanded', open);
-  });
-  overlay?.addEventListener('click', () => {
+
+  const openMenu = () => {
+    menu.classList.add('open');
+    overlay?.classList.add('open');
+    toggle?.setAttribute('aria-expanded', 'true');
+  };
+  const closeMenu = () => {
     menu.classList.remove('open');
-    overlay.classList.remove('open');
-  });
+    overlay?.classList.remove('open');
+    toggle?.setAttribute('aria-expanded', 'false');
+  };
+
+  toggle?.addEventListener('click', () => menu.classList.contains('open') ? closeMenu() : openMenu());
+  overlay?.addEventListener('click', closeMenu);
+
+  // Swipe left to open, swipe right to close
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (dx < -50 && !menu.classList.contains('open')) openMenu();
+    if (dx > 50 && menu.classList.contains('open')) closeMenu();
+  }, { passive: true });
 }
 
 // ── Language toggle ───────────────────────────────────────────────────────────

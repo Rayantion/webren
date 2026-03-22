@@ -146,6 +146,12 @@
     "counter_lastmonth": "Last Month",
     "counter_total": "Total"
   },
+  "demo_bar": {
+    "company": "Company",
+    "restaurant": "Restaurant",
+    "store": "Store",
+    "hint": "Tap ✨ below to customize"
+  },
   "marquee": {
     "item1": "Custom Websites",
     "item2": "Fast Delivery",

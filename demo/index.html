@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webren Demo — Website Configurator | Web人</title>
-  <meta name="description" content="Preview and customize your Option A website by Web人. Choose your business type, colors, and fonts, then send your preferences directly.">
-  <meta name="keywords" content="web design demo, website configurator, webren, Web人, business website preview">
-  <meta name="author" content="Web人">
+  <title>Webren Demo â Website Configurator | Webäºº</title>
+  <meta name="description" content="Preview and customize your Option A website by Webäºº. Choose your business type, colors, and fonts, then send your preferences directly.">
+  <meta name="keywords" content="web design demo, website configurator, webren, Webäºº, business website preview">
+  <meta name="author" content="Webäºº">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://rayantion26.github.io/webren/demo/">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://rayantion26.github.io/webren/demo/">
-  <meta property="og:title" content="Webren Demo — Website Configurator">
-  <meta property="og:description" content="Preview and customize your Option A website. Configure colors, fonts, and business type, then send to Web人.">
+  <meta property="og:title" content="Webren Demo â Website Configurator">
+  <meta property="og:description" content="Preview and customize your Option A website. Configure colors, fonts, and business type, then send to Webäºº.">
   <meta property="og:image" content="https://rayantion26.github.io/webren/demo/assets/images/og-image.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Webren Demo — Website Configurator">
-  <meta name="twitter:description" content="Preview and configure your Option A website by Web人.">
+  <meta name="twitter:title" content="Webren Demo â Website Configurator">
+  <meta name="twitter:description" content="Preview and configure your Option A website by Webäºº.">
 
   <!-- Hreflang -->
   <link rel="alternate" hreflang="en" href="https://rayantion26.github.io/webren/demo/">
@@ -34,16 +34,16 @@
     "@type": "WebApplication",
     "name": "Webren Website Configurator",
     "url": "https://rayantion26.github.io/webren/demo/",
-    "description": "Interactive website configurator and demo for Web人 Option A clients",
+    "description": "Interactive website configurator and demo for Webäºº Option A clients",
     "applicationCategory": "WebApplication",
     "operatingSystem": "Any",
     "inLanguage": ["en", "zh-TW"],
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TWD" },
-    "author": { "@type": "Organization", "name": "Web人", "url": "https://rayantion26.github.io/webren/" }
+    "author": { "@type": "Organization", "name": "Webäºº", "url": "https://rayantion26.github.io/webren/" }
   }
   </script>
 
-  <!-- Fonts (defaults — JS will inject additional Google Fonts as needed) -->
+  <!-- Fonts (defaults â JS will inject additional Google Fonts as needed) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -55,11 +55,21 @@
   <!-- Page transition overlay -->
   <div id="page-transition"></div>
 
-  <!-- ── Navbar ──────────────────────────────────────────────────────── -->
-  <header id="navbar">
-    <nav class="container nav-inner">
-      <a href="../index.html" class="nav-back" data-i18n="nav.back_to_main">Web人</a>
-      <a href="#" class="nav-brand">Web人 <span class="nav-brand-demo">Demo</span></a>
+  <!-- Main site nav (hardcoded - not affected by demo theme) -->
+  <nav id="main-nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="nav-logo">
+        <div class="logo-dot"></div>
+        Web<span>人</span>
+      </a>
+      <ul class="main-nav-links">
+        <li><a href="../index.html" data-i18n="nav.home">Home</a></li>
+        <li><a href="../pricing.html" data-i18n="nav.pricing">Pricing</a></li>
+        <li><a href="../index.html#portfolio" data-i18n="nav.portfolio">Portfolio</a></li>
+        <li><a href="../index.html#services" data-i18n="nav.services">Services</a></li>
+        <li><a href="../index.html#features" data-i18n="nav.features">Features</a></li>
+        <li><a href="../index.html#contact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
       <div class="nav-right">
         <div class="lang-toggle">
           <button class="lang-btn active" data-lang="en">EN</button>
@@ -69,17 +79,37 @@
           <span></span><span></span><span></span>
         </button>
       </div>
-    </nav>
-    <div id="mobile-menu">
-      <a href="#" data-i18n="nav.home"></a>
     </div>
-    <div id="menu-overlay"></div>
-  </header>
+  </nav>
 
-  <!-- ── Main content ────────────────────────────────────────────────── -->
+  <!-- Demo indicator bar -->
+  <div id="demo-bar">
+    <div class="container demo-bar-inner">
+      <span class="demo-badge">DEMO PREVIEW</span>
+      <div class="mode-btns">
+        <button class="mode-btn active" data-mode="company" data-i18n="demo_bar.company">Company</button>
+        <button class="mode-btn" data-mode="restaurant" data-i18n="demo_bar.restaurant">Restaurant</button>
+        <button class="mode-btn" data-mode="store" data-i18n="demo_bar.store">Store</button>
+      </div>
+      <span class="demo-hint" data-i18n="demo_bar.hint">Tap ✨ below to customize</span>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <nav id="mobile-menu">
+    <a href="../index.html" data-i18n="nav.home">Home</a>
+    <a href="../pricing.html" data-i18n="nav.pricing">Pricing</a>
+    <a href="../index.html#portfolio" data-i18n="nav.portfolio">Portfolio</a>
+    <a href="../index.html#services" data-i18n="nav.services">Services</a>
+    <a href="../index.html#features" data-i18n="nav.features">Features</a>
+    <a href="../index.html#contact" data-i18n="nav.contact">Contact</a>
+  </nav>
+  <div id="menu-overlay"></div>
+
+  <!-- ââ Main content ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
   <main id="main-content">
 
-    <!-- ── COMPANY MODE ────────────────────────────────────────────── -->
+    <!-- ââ COMPANY MODE ââââââââââââââââââââââââââââââââââââââââââââââ -->
     <div id="mode-company" class="mode-sections">
 
       <section class="hero" id="home">
@@ -97,26 +127,26 @@
         </div>
       </section>
 
-      <!-- ── Marquee strip ──────────────────────────────────────── -->
+      <!-- ââ Marquee strip ââââââââââââââââââââââââââââââââââââââââ -->
       <div class="marquee-section" aria-hidden="true">
         <div class="marquee-track">
-          <span data-i18n="marquee.item1">Custom Websites</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item2">Fast Delivery</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item3">Mobile Friendly</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item4">SEO Ready</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item5">Bilingual Support</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item6">Google Forms Integration</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item7">Live View Counter</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item8">Business Email</span><span class="dot">✦</span>
+          <span data-i18n="marquee.item1">Custom Websites</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item2">Fast Delivery</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item3">Mobile Friendly</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item4">SEO Ready</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item5">Bilingual Support</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item6">Google Forms Integration</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item7">Live View Counter</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item8">Business Email</span><span class="dot">â¦</span>
           <!-- duplicate for seamless loop -->
-          <span data-i18n="marquee.item1">Custom Websites</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item2">Fast Delivery</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item3">Mobile Friendly</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item4">SEO Ready</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item5">Bilingual Support</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item6">Google Forms Integration</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item7">Live View Counter</span><span class="dot">✦</span>
-          <span data-i18n="marquee.item8">Business Email</span><span class="dot">✦</span>
+          <span data-i18n="marquee.item1">Custom Websites</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item2">Fast Delivery</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item3">Mobile Friendly</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item4">SEO Ready</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item5">Bilingual Support</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item6">Google Forms Integration</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item7">Live View Counter</span><span class="dot">â¦</span>
+          <span data-i18n="marquee.item8">Business Email</span><span class="dot">â¦</span>
         </div>
       </div>
       <section id="services">
@@ -184,7 +214,7 @@
 
     </div><!-- end #mode-company -->
 
-    <!-- ── RESTAURANT MODE ────────────────────────────────────────── -->
+    <!-- ââ RESTAURANT MODE ââââââââââââââââââââââââââââââââââââââââââ -->
     <div id="mode-restaurant" class="mode-sections">
 
       <section class="hero">
@@ -302,7 +332,7 @@
 
     </div><!-- end #mode-restaurant -->
 
-    <!-- ── STORE MODE ──────────────────────────────────────────────── -->
+    <!-- ââ STORE MODE ââââââââââââââââââââââââââââââââââââââââââââââââ -->
     <div id="mode-store" class="mode-sections">
 
       <section class="hero">
@@ -393,7 +423,7 @@
 
   </main>
 
-  <!-- ── Footer ──────────────────────────────────────────────────────── -->
+  <!-- ââ Footer ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
   <footer id="site-footer">
     <div class="container footer-inner">
       <p data-i18n="footer.tagline"></p>
@@ -415,9 +445,9 @@
     </div>
   </footer>
 
-  <!-- ── Config Drawer ────────────────────────────────────────────────── -->
+  <!-- ââ Config Drawer ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
   <button id="config-toggle" aria-label="Customize">
-    ⚙ <span data-i18n="configurator.button"></span>
+    â <span data-i18n="configurator.button"></span>
   </button>
 
   <div id="config-backdrop"></div>
@@ -425,7 +455,7 @@
   <aside id="config-drawer" role="dialog" aria-label="Site Configurator">
     <div class="drawer-header">
       <h2 data-i18n="configurator.title"></h2>
-      <button id="config-close" aria-label="Close">✕</button>
+      <button id="config-close" aria-label="Close">â</button>
     </div>
     <div class="drawer-body">
 
@@ -496,7 +526,7 @@
         <label data-i18n="configurator.lang_label"></label>
         <div class="lang-toggle">
           <button class="lang-btn active" data-lang="en">EN</button>
-          <button class="lang-btn" data-lang="zh-TW">中文</button>
+          <button class="lang-btn" data-lang="zh-TW">ä¸­æ</button>
         </div>
       </div>
 
@@ -514,8 +544,17 @@
 
   <div id="toast" class="toast" role="alert" aria-live="polite"></div>
 
-  <!-- ── Scripts (order matters: i18n → app → configurator) ──────────── -->
+  <!-- ââ Scripts (order matters: i18n â app â configurator) ââââââââââââ -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" defer></script>
+  <!-- Main site footer -->
+  <footer id="main-footer">
+    <div class="container footer-inner-main">
+      <a href="../index.html" class="footer-logo-main">Web<span>人</span></a>
+      <span class="footer-tagline-main">Built with clean code &amp; attention to detail.</span>
+      <span class="footer-copy-main">&copy; 2025 Webren. All rights reserved.</span>
+    </div>
+  </footer>
+
   <script src="https://cdn.jsdelivr.net/npm/i18next@23/i18next.min.js" defer></script>
   <script src="js/i18n.js" defer></script>
   <script src="js/app.js" defer></script>
