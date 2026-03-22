@@ -48,8 +48,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../css/shared-nav.css?v=17">
-  <link rel="stylesheet" href="css/style.css?v=17">
+  <link rel="stylesheet" href="../css/shared-nav.css?v=18">
+  <link rel="stylesheet" href="css/style.css?v=18">
 </head>
 <body>
 
@@ -292,55 +292,12 @@
             <p data-i18n="restaurant.menu.subtitle"></p>
           </div>
           <div class="menu-tabs">
-            <button class="menu-tab active" data-category="all">All</button>
-            <button class="menu-tab" data-category="starter" data-i18n="restaurant.menu.cat_1"></button>
+            <button class="menu-tab active" data-category="all" data-i18n="restaurant.full_menu.cat_all"></button>
             <button class="menu-tab" data-category="main" data-i18n="restaurant.menu.cat_2"></button>
             <button class="menu-tab" data-category="dessert" data-i18n="restaurant.menu.cat_3"></button>
+            <button class="menu-tab" data-category="sides" data-i18n="restaurant.full_menu.cat_sides"></button>
           </div>
-          <div class="menu-grid">
-            <div class="menu-item card reveal" data-category="starter">
-              <div class="menu-item-info">
-                <h3 data-i18n="restaurant.menu.item_1_name"></h3>
-                <p data-i18n="restaurant.menu.item_1_desc"></p>
-              </div>
-              <span class="menu-price" data-i18n="restaurant.menu.item_1_price"></span>
-            </div>
-            <div class="menu-item card reveal" data-category="starter">
-              <div class="menu-item-info">
-                <h3 data-i18n="restaurant.menu.item_2_name"></h3>
-                <p data-i18n="restaurant.menu.item_2_desc"></p>
-              </div>
-              <span class="menu-price" data-i18n="restaurant.menu.item_2_price"></span>
-            </div>
-            <div class="menu-item card reveal" data-category="main">
-              <div class="menu-item-info">
-                <h3 data-i18n="restaurant.menu.item_3_name"></h3>
-                <p data-i18n="restaurant.menu.item_3_desc"></p>
-              </div>
-              <span class="menu-price" data-i18n="restaurant.menu.item_3_price"></span>
-            </div>
-            <div class="menu-item card reveal" data-category="main">
-              <div class="menu-item-info">
-                <h3 data-i18n="restaurant.menu.item_4_name"></h3>
-                <p data-i18n="restaurant.menu.item_4_desc"></p>
-              </div>
-              <span class="menu-price" data-i18n="restaurant.menu.item_4_price"></span>
-            </div>
-            <div class="menu-item card reveal" data-category="dessert">
-              <div class="menu-item-info">
-                <h3 data-i18n="restaurant.menu.item_5_name"></h3>
-                <p data-i18n="restaurant.menu.item_5_desc"></p>
-              </div>
-              <span class="menu-price" data-i18n="restaurant.menu.item_5_price"></span>
-            </div>
-            <div class="menu-item card reveal" data-category="dessert">
-              <div class="menu-item-info">
-                <h3 data-i18n="restaurant.menu.item_6_name"></h3>
-                <p data-i18n="restaurant.menu.item_6_desc"></p>
-              </div>
-              <span class="menu-price" data-i18n="restaurant.menu.item_6_price"></span>
-            </div>
-          </div>
+          <div class="menu-grid" id="featured-menu-grid"></div>
           <div class="view-all-wrap reveal">
             <button class="btn-primary" data-show-subpage="restaurant-menu-page" data-i18n="restaurant.full_menu.view_all">View Full Menu →</button>
           </div>
@@ -789,10 +746,10 @@
 
   <!-- ââ Scripts (order matters: i18n â app â configurator) ââââââââââââ -->
   <script src="https://cdn.jsdelivr.net/npm/i18next@23/i18next.min.js" defer></script>
-  <script src="js/i18n.js?v=17" defer></script>
-  <script src="js/app.js?v=17" defer></script>
-  <script src="js/configurator.js?v=17" defer></script>
-  <script src="../js/shared-nav.js?v=17"></script>
+  <script src="js/i18n.js?v=18" defer></script>
+  <script src="js/app.js?v=18" defer></script>
+  <script src="js/configurator.js?v=18" defer></script>
+  <script src="../js/shared-nav.js?v=18"></script>
 
 </body>
 </html>

@@ -195,31 +195,66 @@ function initLangToggle() {
 
 // ── Contact forms ─────────────────────────────────────────────────────────────
 function initContactForms() {
+  const t = key => window.i18next ? window.i18next.t(key) : '';
+
+  function setFieldError(field, msg) {
+    field.classList.add('cf-error');
+    let err = field.parentElement.querySelector('.cf-error-msg');
+    if (!err) {
+      err = document.createElement('span');
+      err.className = 'cf-error-msg';
+      field.parentElement.appendChild(err);
+    }
+    err.textContent = msg;
+  }
+
+  function clearFieldError(field) {
+    field.classList.remove('cf-error');
+    const err = field.parentElement.querySelector('.cf-error-msg');
+    if (err) err.textContent = '';
+  }
+
   document.querySelectorAll('.demo-contact-form').forEach(form => {
     // Wire i18n placeholders
     form.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
       if (window.i18next) el.placeholder = window.i18next.t(el.dataset.i18nPlaceholder);
     });
 
+    // Clear error on input
+    form.querySelectorAll('input, textarea').forEach(field => {
+      field.addEventListener('input', () => clearFieldError(field));
+    });
+
     form.addEventListener('submit', e => {
       e.preventDefault();
       const btn = form.querySelector('.cf-submit');
-      const name = form.querySelector('[name="name"]').value.trim();
-      const email = form.querySelector('[name="email"]').value.trim();
-      const msg = form.querySelector('[name="message"]').value.trim();
-      if (!name || !email || !msg) return;
+      const nameField  = form.querySelector('[name="name"]');
+      const emailField = form.querySelector('[name="email"]');
+      const msgField   = form.querySelector('[name="message"]');
+
+      let valid = true;
+      const required = t('contact.error_required') || 'This field is required.';
+      const invalidEmail = t('contact.error_email') || 'Please enter a valid email address.';
+
+      if (!nameField.value.trim())  { setFieldError(nameField, required);      valid = false; }
+      if (!emailField.value.trim()) { setFieldError(emailField, required);     valid = false; }
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.value.trim())) {
+        setFieldError(emailField, invalidEmail); valid = false;
+      }
+      if (!msgField.value.trim())   { setFieldError(msgField, required);       valid = false; }
+      if (!valid) return;
 
       // Demo: show inline success state
       btn.disabled = true;
-      btn.textContent = window.i18next ? window.i18next.t('configurator.sending') : 'Sending...';
+      btn.textContent = t('configurator.sending') || 'Sending...';
       setTimeout(() => {
         form.reset();
+        form.querySelectorAll('input, textarea').forEach(f => clearFieldError(f));
         btn.disabled = false;
-        if (window.i18next) btn.textContent = window.i18next.t('contact.submit');
-        // Show toast
+        btn.textContent = t('contact.submit') || 'Send Message';
         const toast = document.getElementById('toast');
         if (toast) {
-          toast.textContent = window.i18next ? window.i18next.t('contact.success') : 'Message sent! We\'ll be in touch soon.';
+          toast.textContent = t('contact.success') || "Message sent! We'll be in touch soon.";
           toast.classList.add('show');
           setTimeout(() => toast.classList.remove('show'), 4000);
         }
@@ -252,6 +287,30 @@ function initHeroCTAs() {
       if (section) section.scrollIntoView({ behavior: 'smooth' });
     }
   });
+}
+
+// ── Featured menu (restaurant main page) ─────────────────────────────────────
+function renderFeaturedMenu() {
+  const grid = document.getElementById('featured-menu-grid');
+  if (!grid) return;
+  const lang = getCurrentLang();
+  // Pick 2 from each category as a representative sample of the actual menu data
+  const selection = ['main', 'dessert', 'sides'].flatMap(cat =>
+    RESTAURANT_MENU.filter(i => i.category === cat).slice(0, 2)
+  );
+  grid.innerHTML = selection.map(item => {
+    const primary   = lang === 'zh' ? item.nameZh : item.name;
+    const secondary = lang === 'zh' ? item.name   : item.nameZh;
+    return `
+      <div class="menu-item card reveal" data-category="${item.category}">
+        <div class="menu-item-info">
+          <h3>${primary}<span class="item-name-en"> ${secondary}</span></h3>
+          <p>${item.desc}</p>
+        </div>
+        <span class="menu-price">NT$${item.price}</span>
+      </div>`;
+  }).join('');
+  initScrollReveal();
 }
 
 // ── Menu category tabs ────────────────────────────────────────────────────────
@@ -932,8 +991,9 @@ function initSubPages() {
     renderItem: productRenderItem
   });
 
-  // Re-render catalogs when language changes
+  // Re-render catalogs + featured menu when language changes
   document.addEventListener('nav:lang', () => {
+    renderFeaturedMenu();
     if (rerenderMenu) rerenderMenu();
     if (rerenderProducts) rerenderProducts();
   });
@@ -1021,6 +1081,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   showMode(currentConfig.mode || 'company', false);
   initLangToggle();
   initCounter();
+  renderFeaturedMenu();
   initMenuTabs();
   initContactForms();
   initHeroCTAs();

@@ -247,8 +247,8 @@ section { padding: 5rem 0; }
 .cf-group input, .cf-group textarea { width: 100%; padding: 0.7rem 1rem; border-radius: 0.5rem; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); font-family: var(--font-body); font-size: 0.95rem; transition: border-color 0.2s, box-shadow 0.2s; resize: vertical; }
 .cf-group input:focus, .cf-group textarea:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent); }
 .cf-submit { align-self: flex-start; margin-top: 0.5rem; }
-.cf-success { display: none; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: 0.5rem; background: color-mix(in srgb, var(--color-primary) 15%, transparent); color: var(--color-primary); font-weight: 600; margin-top: 0.5rem; }
-.cf-success.visible { display: flex; }
+.cf-group input.cf-error, .cf-group textarea.cf-error { border-color: #f87171; box-shadow: 0 0 0 3px rgba(248,113,113,0.2); }
+.cf-error-msg { font-size: 0.78rem; color: #f87171; margin-top: 0.2rem; min-height: 1em; }
 .about-split { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }.about-img { width: 100%; border-radius: 1rem; object-fit: cover; aspect-ratio: 3/2; }.about-split .about-inner { text-align: left; margin: 0; max-width: none; }@media (max-width: 768px) { .about-split { grid-template-columns: 1fr; } }
 
 /* ── Mode sections (hidden by default except active) ─────────────────── */
