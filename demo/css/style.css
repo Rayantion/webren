@@ -741,6 +741,18 @@ section { padding: 5rem 0; }
   min-height: 80px; touch-action: manipulation;
 }
 .cat-card:hover { background: color-mix(in srgb, var(--color-primary) 12%, transparent); border-color: var(--color-primary); }
+.cat-card:active { transform: scale(0.96); }
+
+/* ── Catalog filter tab press feel ───────────────────────────────────── */
+.filter-tab { transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.12s; }
+.filter-tab:active { transform: scale(0.94); }
+
+/* ── Catalog / grid entrance animation ───────────────────────────────── */
+@keyframes gridItemIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.grid-item-in { animation: gridItemIn 0.3s ease both; }
 
 /* ── Config Toggle Button ────────────────────────────────────────────── */
 #config-toggle {

@@ -320,9 +320,42 @@ function initMenuTabs() {
       document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       const cat = tab.dataset.category;
-      document.querySelectorAll('.menu-item').forEach(item => {
-        item.classList.toggle('hidden', cat !== 'all' && item.dataset.category !== cat);
+      const items = Array.from(document.querySelectorAll('.menu-item'));
+      // Phase 1: fade out items that will hide
+      items.forEach(item => {
+        const willShow = cat === 'all' || item.dataset.category === cat;
+        if (!item.classList.contains('hidden') && !willShow) {
+          item.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+          item.style.opacity = '0';
+          item.style.transform = 'translateY(6px)';
+          setTimeout(() => {
+            item.classList.add('hidden');
+            item.style.transition = '';
+            item.style.opacity = '';
+            item.style.transform = '';
+          }, 190);
+        }
       });
+      // Phase 2: after fade-out completes, reveal items with stagger
+      setTimeout(() => {
+        let idx = 0;
+        items.forEach(item => {
+          const willShow = cat === 'all' || item.dataset.category === cat;
+          if (willShow) {
+            item.classList.remove('hidden');
+            item.style.transition = 'none';
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(8px)';
+            const delay = idx * 45;
+            idx++;
+            setTimeout(() => {
+              item.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+              item.style.opacity = '1';
+              item.style.transform = '';
+            }, delay);
+          }
+        });
+      }, 200);
     });
   });
 }
@@ -342,6 +375,9 @@ class HeroBg {
     this._ro = new ResizeObserver(() => this._resize());
     this._ro.observe(canvas.parentElement || canvas);
     this._resize();
+    this._mx = -9999; this._my = -9999;
+    this._burstPts = [];
+    this._bindMouse();
   }
 
   _resize() {
@@ -438,6 +474,61 @@ class HeroBg {
 
   setColor(color) { this.color = color; }
 
+  _bindMouse() {
+    const el = this.canvas.parentElement || this.canvas;
+    const toXY = (cx, cy) => {
+      const r = this.canvas.getBoundingClientRect();
+      if (!r.width) return [-9999, -9999];
+      return [(cx - r.left) * this._w / r.width, (cy - r.top) * this._h / r.height];
+    };
+    el.addEventListener('mousemove', e => {
+      [this._mx, this._my] = toXY(e.clientX, e.clientY);
+    }, { passive: true });
+    el.addEventListener('mouseleave', () => { this._mx = -9999; this._my = -9999; }, { passive: true });
+    el.addEventListener('click', e => {
+      const [bx, by] = toXY(e.clientX, e.clientY);
+      if (bx > -999) this._burstPts.push({ x: bx, y: by, r: 0, max: 65 + Math.random() * 55, a: 0.7 });
+    });
+    el.addEventListener('touchstart', e => {
+      const t = e.touches[0];
+      const [bx, by] = toXY(t.clientX, t.clientY);
+      if (bx > -999) {
+        this._burstPts.push({ x: bx, y: by, r: 0, max: 65 + Math.random() * 55, a: 0.7 });
+        [this._mx, this._my] = [bx, by];
+      }
+    }, { passive: true });
+    el.addEventListener('touchmove', e => {
+      const t = e.touches[0];
+      [this._mx, this._my] = toXY(t.clientX, t.clientY);
+    }, { passive: true });
+    el.addEventListener('touchend', () => { this._mx = -9999; this._my = -9999; }, { passive: true });
+  }
+
+  _drawOverlay(ctx, rgb) {
+    const mx = this._mx, my = this._my;
+    // Mouse glow
+    if (mx > -999) {
+      const g = ctx.createRadialGradient(mx, my, 0, mx, my, 85);
+      g.addColorStop(0, `rgba(${rgb},0.18)`);
+      g.addColorStop(1, `rgba(${rgb},0)`);
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(mx, my, 85, 0, Math.PI * 2); ctx.fill();
+    }
+    // Click/touch burst rings
+    this._burstPts = this._burstPts.filter(b => b.r < b.max);
+    for (const b of this._burstPts) {
+      b.r += 2.8;
+      const alpha = (1 - b.r / b.max) * b.a;
+      ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(${rgb},${alpha})`; ctx.lineWidth = 1.5; ctx.stroke();
+      const da = Math.max(0, (1 - b.r / 25) * 0.5);
+      if (da > 0) {
+        ctx.beginPath(); ctx.arc(b.x, b.y, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${rgb},${da})`; ctx.fill();
+      }
+    }
+  }
+
   _rgb() {
     const h = this.color.replace('#', '');
     return `${parseInt(h.slice(0,2),16)},${parseInt(h.slice(2,4),16)},${parseInt(h.slice(4,6),16)}`;
@@ -458,17 +549,43 @@ class HeroBg {
     else if (style === 'fireflies') this._fireflies(ctx, rgb, w, h, this._t);
     else if (style === 'aurora')    this._aurora(ctx, rgb, w, h, this._t);
     // 'none' → canvas stays clear
+    this._drawOverlay(ctx, rgb);
     this._raf = requestAnimationFrame(() => this._tick());
   }
 
   _particles(ctx, rgb, w, h) {
     const pts = this._state.pts;
+    const mx = this._mx, my = this._my;
+    const hasMouse = mx > -999;
+    // Apply mouse attraction to nearby particles
     for (const p of pts) {
+      if (hasMouse) {
+        const dx = mx - p.x, dy = my - p.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 160 && d > 0) {
+          p.vx += (dx / d) * 0.018;
+          p.vy += (dy / d) * 0.018;
+          const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+          if (spd > 1.4) { p.vx *= 0.92; p.vy *= 0.92; }
+        }
+      }
       p.x = (p.x + p.vx + w) % w;
       p.y = (p.y + p.vy + h) % h;
     }
     const THRESH = 120;
     ctx.lineWidth = 1;
+    // Draw lines from mouse cursor to nearby particles
+    if (hasMouse) {
+      for (const p of pts) {
+        const dx = p.x - mx, dy = p.y - my;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < 150 * 150) {
+          ctx.strokeStyle = `rgba(${rgb},${(1 - Math.sqrt(d2) / 150) * 0.45})`;
+          ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(p.x, p.y); ctx.stroke();
+        }
+      }
+    }
+    // Draw connections between particles
     for (let i = 0; i < pts.length; i++) {
       for (let j = i + 1; j < pts.length; j++) {
         const dx = pts[i].x - pts[j].x;
@@ -676,23 +793,18 @@ function initHeroBackgrounds() {
 function initDemoNavScroll() {
   const nav = document.getElementById('demo-site-nav');
   if (!nav) return;
-  let lastY = 0;
-  let scrollTimer = null;
+  let lastY = window.scrollY;
 
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
-    if (y > lastY + 4 && y > 80) {
-      nav.classList.add('demo-nav-hidden');
+    if (y < 60) {
+      nav.classList.remove('demo-nav-hidden'); // always show near top
+    } else if (y > lastY + 4) {
+      nav.classList.add('demo-nav-hidden');    // hide on scroll down
     } else if (y < lastY - 4) {
-      nav.classList.remove('demo-nav-hidden');
+      nav.classList.remove('demo-nav-hidden'); // show on scroll up
     }
     lastY = y;
-
-    // Also reappear when user stops scrolling
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => {
-      nav.classList.remove('demo-nav-hidden');
-    }, 200);
   }, { passive: true });
 }
 
@@ -854,6 +966,17 @@ function initCatalog({ data, gridId, searchId, categoryTabsId, subcategoryTabsId
     if (activeSort === 'price_desc') items.sort((a, b) => b.price - a.price);
 
     grid.innerHTML = items.map(renderItem).join('');
+    // Stagger-animate new items in
+    Array.from(grid.children).forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(12px)';
+      const delay = Math.min(i * 35, 210);
+      setTimeout(() => {
+        el.style.transition = 'opacity 0.28s ease, transform 0.28s ease';
+        el.style.opacity = '1';
+        el.style.transform = '';
+      }, delay);
+    });
     if (countEl) countEl.textContent = items.length + ' item' + (items.length !== 1 ? 's' : '');
   }
 
