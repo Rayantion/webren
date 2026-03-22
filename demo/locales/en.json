@@ -62,6 +62,11 @@
     "sort_price_desc": "Price: High to Low"
   },
   "restaurant": {
+    "feature": {
+      "badge": "Our Atmosphere",
+      "title": "Dining Experience",
+      "desc": "A warm and welcoming space crafted for every occasion — from family meals to special celebrations."
+    },
     "full_menu": {
       "title": "Full Menu",
       "view_all": "View Full Menu →",
@@ -69,11 +74,11 @@
       "cat_all": "All",
       "cat_main": "Main",
       "cat_dessert": "Dessert",
-      "cat_sides": "小菜",
+      "cat_sides": "Sides",
       "sub_all": "All",
       "sub_rice": "Rice",
       "sub_noodle": "Noodle",
-      "sub_mifen": "米粉"
+      "sub_mifen": "Rice Noodle"
     },
     "menu": {
       "badge": "Our Menu",

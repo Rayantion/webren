@@ -326,14 +326,16 @@ function initDemoNavScroll() {
     const y = window.scrollY;
     if (y > lastY + 4 && y > 80) {
       nav.classList.add('demo-nav-hidden');
+    } else if (y < lastY - 4) {
+      nav.classList.remove('demo-nav-hidden');
     }
     lastY = y;
 
-    // Reappear when user stops scrolling
+    // Also reappear when user stops scrolling
     clearTimeout(scrollTimer);
     scrollTimer = setTimeout(() => {
       nav.classList.remove('demo-nav-hidden');
-    }, 150);
+    }, 200);
   }, { passive: true });
 }
 
@@ -360,6 +362,13 @@ function initDemoNav() {
   });
   if (overlay) overlay.addEventListener('click', closeDemoMenu);
   menu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeDemoMenu));
+
+  // Fix C: close sub-pages before navigating to anchor sections
+  function handleNavAnchorClick() {
+    closeSubPage();
+  }
+  document.querySelectorAll('#demo-site-nav a[href^="#"], #demo-mobile-menu a[href^="#"]')
+    .forEach(link => link.addEventListener('click', handleNavAnchorClick));
 }
 
 // ── Catalog data ──────────────────────────────────────────────────────────────

@@ -62,6 +62,11 @@
     "sort_price_desc": "價格：由高至低"
   },
   "restaurant": {
+    "feature": {
+      "badge": "用餐氛圍",
+      "title": "獨特的餐飲體驗",
+      "desc": "溫馨舒適的空間，無論家庭聚餐或特殊慶典，都能留下美好回憶。"
+    },
     "full_menu": {
       "title": "完整菜單",
       "view_all": "查看完整菜單 →",

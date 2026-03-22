@@ -48,8 +48,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../css/shared-nav.css?v=8">
-  <link rel="stylesheet" href="css/style.css?v=8">
+  <link rel="stylesheet" href="../css/shared-nav.css?v=9">
+  <link rel="stylesheet" href="css/style.css?v=9">
 </head>
 <body>
 
@@ -81,13 +81,7 @@
           </li>
         </ul>
       </div>
-      <!-- Keep configurator-targeted mode-btns hidden (used by configurator.js drawer) -->
-      <div class="mode-btns" style="display:none">
-        <button class="mode-btn active" data-mode="company" data-i18n="demo_bar.company">Company</button>
-        <button class="mode-btn" data-mode="restaurant" data-i18n="demo_bar.restaurant">Restaurant</button>
-        <button class="mode-btn" data-mode="store" data-i18n="demo_bar.store">Store</button>
-      </div>
-      <span class="demo-hint" data-i18n="demo_bar.hint">Tap &#10022; below to customize</span>
+<span class="demo-hint" data-i18n="demo_bar.hint">Tap &#10022; below to customize</span>
     </div>
   </div>
 
@@ -108,6 +102,10 @@
         <li><a href="#about" data-i18n="nav.about">About</a></li>
         <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
       </ul>
+      <div class="lang-toggle demo-nav-lang">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh-TW">中文</button>
+      </div>
       <a href="#contact" class="demo-nav-cta" data-i18n="hero.cta_primary">Get Started</a>
       <button id="demo-menu-toggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -121,6 +119,10 @@
     <a href="#services" id="demo-mobile-services" data-i18n="nav.services">Services</a>
     <a href="#about" data-i18n="nav.about">About</a>
     <a href="#contact" data-i18n="nav.contact">Contact</a>
+    <div class="lang-toggle demo-mobile-lang">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="zh-TW">中文</button>
+    </div>
   </nav>
   <div id="demo-mobile-overlay"></div>
 
@@ -654,10 +656,10 @@
   <!-- ââ Scripts (order matters: i18n â app â configurator) ââââââââââââ -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/i18next@23/i18next.min.js" defer></script>
-  <script src="js/i18n.js?v=8" defer></script>
-  <script src="js/app.js?v=8" defer></script>
-  <script src="js/configurator.js?v=8" defer></script>
-  <script src="../js/shared-nav.js?v=8"></script>
+  <script src="js/i18n.js?v=9" defer></script>
+  <script src="js/app.js?v=9" defer></script>
+  <script src="js/configurator.js?v=9" defer></script>
+  <script src="../js/shared-nav.js?v=9"></script>
 
 </body>
 </html>
