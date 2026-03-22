@@ -280,6 +280,7 @@ section { padding: 5rem 0; }
   position: relative;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
+  padding-top: var(--outer-nav-h, 62px);
   overflow: clip;
   margin: 0.75rem 0;
   box-shadow: 0 4px 24px rgba(0,0,0,0.06);
@@ -288,7 +289,7 @@ section { padding: 5rem 0; }
 
 /* ── Inner demo site nav (themed — uses demo CSS variables) ──────────── */
 #demo-site-nav {
-  position: sticky; top: 0; z-index: 100;
+  position: sticky; top: var(--outer-nav-h, 62px); z-index: 100;
   background: var(--color-nav-bg, rgba(250,250,250,0.92));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -342,13 +343,12 @@ section { padding: 5rem 0; }
   background: var(--color-primary); border-radius: 2px; transition: all 0.3s;
 }
 
-/* Inner demo mobile menu (slide-in from right, contained within #demo-preview) */
+/* Inner demo mobile menu (slide-in from right) */
 #demo-mobile-menu {
-  position: absolute;
-  top: 0; right: 0;
+  position: fixed;
+  top: var(--outer-nav-h, 62px); right: 0;
   width: min(280px, 85%);
-  height: 100%;
-  min-height: 100vh;
+  height: calc(100dvh - var(--outer-nav-h, 62px));
   background: var(--color-nav-bg, rgba(250,250,250,0.98));
   border-left: 1px solid var(--color-border);
   font-family: var(--font-body);
@@ -369,8 +369,8 @@ section { padding: 5rem 0; }
 }
 #demo-mobile-menu a:hover { background: var(--color-surface); }
 #demo-mobile-overlay {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  min-height: 100vh;
+  position: fixed; top: var(--outer-nav-h, 62px); left: 0;
+  right: 0; bottom: 0;
   background: rgba(0,0,0,0.35);
   z-index: 499;
   opacity: 0; pointer-events: none;
@@ -1049,9 +1049,9 @@ input[type="color"] {
 .btn-send { width: 100%; justify-content: center; padding: 0.9rem; min-height: 52px; }
 .btn-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-/* ── Floating chat bubbles ─────────────────────────────────────────────── */
+/* ── Floating chat bubbles (left side — clearly part of the demo site) ── */
 .chat-bubbles {
-  position: fixed; bottom: calc(2rem + 50px + 0.75rem); right: 2rem; z-index: 490;
+  position: fixed; bottom: calc(2rem + 50px + 0.75rem); left: 2rem; z-index: 490;
   display: flex; flex-direction: column; gap: 0.6rem;
   align-items: center;
 }
@@ -1097,7 +1097,7 @@ input[type="color"] {
 }
 @media (max-width: 480px) {
   #config-toggle { bottom: 1rem; right: 1rem; padding: 0.75rem 1.1rem; font-size: 0.9rem; }
-  .chat-bubbles { bottom: calc(1rem + 50px + 0.6rem); right: 1rem; }
+  .chat-bubbles { bottom: calc(1rem + 50px + 0.6rem); left: 1rem; }
   .chat-bubble { width: 46px; height: 46px; }
   .chat-bubble svg { width: 22px; height: 22px; }
   .preset-grid { grid-template-columns: repeat(5, 1fr); gap: 0.4rem; }

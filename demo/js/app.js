@@ -597,6 +597,7 @@ class HeroBg {
   }
 
   _waves(ctx, rgb, w, h, t) {
+    const mx = this._mx, my = this._my, hasMouse = mx > -999;
     for (let l = 0; l < 4; l++) {
       const amp   = 18 + l * 12;
       const freq  = 0.007 + l * 0.003;
@@ -605,9 +606,15 @@ class HeroBg {
       ctx.beginPath();
       ctx.moveTo(0, h);
       for (let x = 0; x <= w; x += 3) {
-        const y = yBase
+        let y = yBase
           + Math.sin(x * freq + t * 0.018 * speed) * amp
           + Math.sin(x * freq * 1.8 + t * 0.012 * speed) * (amp * 0.4);
+        // Bend wave toward cursor — Gaussian pull at cursor X
+        if (hasMouse) {
+          const dx = x - mx;
+          const pull = Math.exp(-dx * dx / 9000);
+          y += pull * (my - yBase) * 0.4;
+        }
         ctx.lineTo(x, y);
       }
       ctx.lineTo(w, h);
@@ -699,13 +706,24 @@ class HeroBg {
   _geometric(ctx, rgb, w, h, t) {
     const mx = this._mx, my = this._my, hasMouse = mx > -999;
     for (const s of this._state.shapes) {
+      // Shapes attract toward cursor when nearby
+      if (hasMouse) {
+        const dx = mx - s.x, dy = my - s.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 160 && d > 0) {
+          s.vx += (dx / d) * 0.038;
+          s.vy += (dy / d) * 0.038;
+          const spd = Math.sqrt(s.vx * s.vx + s.vy * s.vy);
+          if (spd > 0.9) { s.vx *= 0.86; s.vy *= 0.86; }
+        }
+      }
       s.x = (s.x + s.vx + w) % w;
       s.y = (s.y + s.vy + h) % h;
-      // Shapes near cursor spin faster
+      // Spin faster near cursor
       let spinBoost = 1;
       if (hasMouse) {
         const d = Math.sqrt((s.x - mx) ** 2 + (s.y - my) ** 2);
-        spinBoost = 1 + Math.max(0, 1 - d / 120) * 4;
+        spinBoost = 1 + Math.max(0, 1 - d / 130) * 5;
       }
       s.rot += s.rotSpeed * spinBoost;
       const pulse = (Math.sin(t * 0.018 + s.phase) + 1) * 0.5;
@@ -776,6 +794,7 @@ class HeroBg {
   }
 
   _aurora(ctx, rgb, w, h, t) {
+    const mx = this._mx, my = this._my, hasMouse = mx > -999;
     for (let b = 0; b < 4; b++) {
       const yBase = h * (0.18 + b * 0.22);
       const amp   = 22 + b * 12;
@@ -786,12 +805,22 @@ class HeroBg {
       for (let x = 0; x <= w; x += 4) {
         const wave = Math.sin(x * 0.006 + t * 0.007 + b * 1.8) * amp
                    + Math.sin(x * 0.013 + t * 0.004 + b) * (amp * 0.4);
-        ctx.lineTo(x, yBase - thick + wave);
+        let bend = 0;
+        if (hasMouse) {
+          const dx = x - mx;
+          bend = Math.exp(-dx * dx / 12000) * (my - yBase) * 0.32;
+        }
+        ctx.lineTo(x, yBase - thick + wave + bend);
       }
       for (let x = w; x >= 0; x -= 4) {
         const wave = Math.sin(x * 0.006 + t * 0.007 + b * 1.8) * amp
                    + Math.sin(x * 0.013 + t * 0.004 + b) * (amp * 0.4);
-        ctx.lineTo(x, yBase + thick + wave);
+        let bend = 0;
+        if (hasMouse) {
+          const dx = x - mx;
+          bend = Math.exp(-dx * dx / 12000) * (my - yBase) * 0.32;
+        }
+        ctx.lineTo(x, yBase + thick + wave + bend);
       }
       ctx.closePath();
       ctx.fillStyle = `rgba(${rgb},${alpha})`;
@@ -828,15 +857,19 @@ function initDemoNavScroll() {
   const nav = document.getElementById('demo-site-nav');
   if (!nav) return;
   let lastY = window.scrollY;
+  let stopTimer = null;
 
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
+    clearTimeout(stopTimer);
     if (y < 60) {
       nav.classList.remove('demo-nav-hidden'); // always show near top
     } else if (y > lastY + 4) {
-      nav.classList.add('demo-nav-hidden');    // hide on scroll down
+      nav.classList.add('demo-nav-hidden');    // hide scrolling down
+      // Reappear after user stops scrolling
+      stopTimer = setTimeout(() => nav.classList.remove('demo-nav-hidden'), 500);
     } else if (y < lastY - 4) {
-      nav.classList.remove('demo-nav-hidden'); // show on scroll up
+      nav.classList.remove('demo-nav-hidden'); // show scrolling up
     }
     lastY = y;
   }, { passive: true });
@@ -1215,6 +1248,14 @@ function initDemoNavControls() {
 
   // Force nav to always show solid background on the demo page
   sharedNav.classList.add('demo-nav-solid');
+
+  // Expose outer nav height so inner demo nav sticks just below it
+  const setNavOffset = () => {
+    const h = sharedNav.getBoundingClientRect().height;
+    if (h > 0) document.documentElement.style.setProperty('--outer-nav-h', h + 'px');
+  };
+  setNavOffset();
+  setTimeout(setNavOffset, 200); // re-check after fonts settle
 
   const badge = document.querySelector('#demo-bar .demo-badge');
   const switcher = document.getElementById('mode-switcher-wrap');
