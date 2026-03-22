@@ -249,6 +249,53 @@ class HeroBg {
           phase: Math.random() * Math.PI * 2,
         }))
       };
+    } else if (this.style === 'stars') {
+      this._state = {
+        pts: Array.from({ length: 150 }, () => ({
+          x:     Math.random() * w,
+          y:     Math.random() * h,
+          vx:    (Math.random() - 0.5) * 0.12,
+          vy:    (Math.random() - 0.5) * 0.08,
+          phase: Math.random() * Math.PI * 2,
+          size:  0.5 + Math.random() * 1.2,
+        }))
+      };
+    } else if (this.style === 'geometric') {
+      this._state = {
+        shapes: Array.from({ length: 10 }, () => ({
+          x:        Math.random() * w,
+          y:        Math.random() * h,
+          vx:       (Math.random() - 0.5) * 0.2,
+          vy:       (Math.random() - 0.5) * 0.15,
+          rot:      Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.008,
+          sides:    [3, 4, 5, 6][Math.floor(Math.random() * 4)],
+          size:     20 + Math.random() * 50,
+          phase:    Math.random() * Math.PI * 2,
+        }))
+      };
+    } else if (this.style === 'ripple') {
+      this._state = {
+        rings: Array.from({ length: 5 }, () => ({
+          x:         Math.random() * w,
+          y:         Math.random() * h,
+          radius:    Math.random() * 100,
+          maxRadius: 80 + Math.random() * 120,
+          speed:     0.5 + Math.random() * 0.5,
+        }))
+      };
+    } else if (this.style === 'fireflies') {
+      this._state = {
+        fireflies: Array.from({ length: 22 }, () => ({
+          baseX:      Math.random() * w,
+          baseY:      Math.random() * h,
+          speedX:     0.6 + Math.random() * 1.2,
+          speedY:     0.6 + Math.random() * 1.2,
+          phaseX:     Math.random() * Math.PI * 2,
+          phaseY:     Math.random() * Math.PI * 2,
+          pulsePhase: Math.random() * Math.PI * 2,
+        }))
+      };
     } else {
       this._state = {};
     }
@@ -276,6 +323,11 @@ class HeroBg {
     else if (style === 'waves')     this._waves(ctx, rgb, w, h, this._t);
     else if (style === 'grid')      this._grid(ctx, rgb, w, h, this._t);
     else if (style === 'blobs')     this._blobs(ctx, rgb, w, h, this._t);
+    else if (style === 'stars')     this._stars(ctx, rgb, w, h, this._t);
+    else if (style === 'geometric') this._geometric(ctx, rgb, w, h, this._t);
+    else if (style === 'ripple')    this._ripple(ctx, rgb, w, h, this._t);
+    else if (style === 'fireflies') this._fireflies(ctx, rgb, w, h, this._t);
+    else if (style === 'aurora')    this._aurora(ctx, rgb, w, h, this._t);
     // 'none' → canvas stays clear
     this._raf = requestAnimationFrame(() => this._tick());
   }
@@ -365,6 +417,104 @@ class HeroBg {
       ctx.fillStyle = grad;
       ctx.beginPath();
       ctx.arc(b.x, b.y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  _stars(ctx, rgb, w, h, t) {
+    for (const s of this._state.pts) {
+      s.x = (s.x + s.vx + w) % w;
+      s.y = (s.y + s.vy + h) % h;
+      const twinkle = (Math.sin(t * 0.05 + s.phase) + 1) * 0.5;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.size * (0.5 + twinkle * 0.8), 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${rgb},${0.15 + twinkle * 0.75})`;
+      ctx.fill();
+    }
+  }
+
+  _geometric(ctx, rgb, w, h, t) {
+    for (const s of this._state.shapes) {
+      s.x = (s.x + s.vx + w) % w;
+      s.y = (s.y + s.vy + h) % h;
+      s.rot += s.rotSpeed;
+      const pulse = (Math.sin(t * 0.018 + s.phase) + 1) * 0.5;
+      const alpha = 0.06 + pulse * 0.14;
+      ctx.save();
+      ctx.translate(s.x, s.y);
+      ctx.rotate(s.rot);
+      ctx.beginPath();
+      for (let i = 0; i <= s.sides; i++) {
+        const a = (i / s.sides) * Math.PI * 2;
+        i === 0
+          ? ctx.moveTo(Math.cos(a) * s.size, Math.sin(a) * s.size)
+          : ctx.lineTo(Math.cos(a) * s.size, Math.sin(a) * s.size);
+      }
+      ctx.strokeStyle = `rgba(${rgb},${alpha + 0.1})`;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  _ripple(ctx, rgb, w, h, t) {
+    for (const r of this._state.rings) {
+      r.radius += r.speed;
+      if (r.radius >= r.maxRadius) {
+        r.radius = 0;
+        r.x = Math.random() * w;
+        r.y = Math.random() * h;
+      }
+      const alpha = (1 - r.radius / r.maxRadius) * 0.45;
+      ctx.beginPath();
+      ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(${rgb},${alpha})`;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+  }
+
+  _fireflies(ctx, rgb, w, h, t) {
+    for (const f of this._state.fireflies) {
+      f.baseX = (f.baseX + 0.08 + w) % w;
+      const x = f.baseX + Math.sin(t * 0.01 * f.speedX + f.phaseX) * 45;
+      const y = f.baseY + Math.cos(t * 0.008 * f.speedY + f.phaseY) * 30;
+      const glow = (Math.sin(t * 0.05 + f.pulsePhase) + 1) * 0.5;
+      const r = 2 + glow * 3;
+      const grad = ctx.createRadialGradient(x, y, 0, x, y, r * 3.5);
+      grad.addColorStop(0, `rgba(${rgb},${0.25 + glow * 0.5})`);
+      grad.addColorStop(1, `rgba(${rgb},0)`);
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(x, y, r * 3.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(x, y, r * 0.4, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${rgb},${0.6 + glow * 0.4})`;
+      ctx.fill();
+    }
+  }
+
+  _aurora(ctx, rgb, w, h, t) {
+    for (let b = 0; b < 4; b++) {
+      const yBase = h * (0.18 + b * 0.22);
+      const amp   = 22 + b * 12;
+      const thick = 35 + b * 15;
+      const alpha = 0.06 + b * 0.02;
+      ctx.beginPath();
+      ctx.moveTo(0, yBase - thick);
+      for (let x = 0; x <= w; x += 4) {
+        const wave = Math.sin(x * 0.006 + t * 0.007 + b * 1.8) * amp
+                   + Math.sin(x * 0.013 + t * 0.004 + b) * (amp * 0.4);
+        ctx.lineTo(x, yBase - thick + wave);
+      }
+      for (let x = w; x >= 0; x -= 4) {
+        const wave = Math.sin(x * 0.006 + t * 0.007 + b * 1.8) * amp
+                   + Math.sin(x * 0.013 + t * 0.004 + b) * (amp * 0.4);
+        ctx.lineTo(x, yBase + thick + wave);
+      }
+      ctx.closePath();
+      ctx.fillStyle = `rgba(${rgb},${alpha})`;
       ctx.fill();
     }
   }

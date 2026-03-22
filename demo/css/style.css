@@ -795,7 +795,7 @@ section { padding: 5rem 0; }
 .bg-style-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 .bg-style-tile {
   display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
@@ -860,6 +860,54 @@ section { padding: 5rem 0; }
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
   font-size: 14px; color: rgba(255,255,255,0.3);
+}
+/* Stars preview */
+.bg-prev-stars::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(99,202,183,0.9) 1px, transparent 1px),
+    radial-gradient(circle, rgba(99,202,183,0.5) 1px, transparent 1px),
+    radial-gradient(circle, rgba(99,202,183,0.7) 1px, transparent 1px);
+  background-size: 6px 6px, 10px 10px, 15px 15px;
+  background-position: 1px 2px, 5px 7px, 3px 11px;
+}
+/* Geometric preview */
+.bg-prev-geometric::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(45deg, transparent 40%, rgba(99,202,183,0.3) 40%, rgba(99,202,183,0.3) 42%, transparent 42%),
+    linear-gradient(-45deg, transparent 40%, rgba(99,202,183,0.2) 40%, rgba(99,202,183,0.2) 42%, transparent 42%),
+    linear-gradient(0deg, transparent 30%, rgba(99,202,183,0.2) 30%, rgba(99,202,183,0.2) 33%, transparent 33%);
+}
+/* Ripple preview */
+.bg-prev-ripple::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 40% 50%, transparent 20%, rgba(99,202,183,0.3) 21%, transparent 25%),
+    radial-gradient(circle at 40% 50%, transparent 30%, rgba(99,202,183,0.2) 31%, transparent 35%),
+    radial-gradient(circle at 70% 30%, transparent 10%, rgba(99,202,183,0.25) 11%, transparent 15%);
+}
+/* Fireflies preview */
+.bg-prev-fireflies::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(99,202,183,0.8) 2px, transparent 6px),
+    radial-gradient(circle at 55% 65%, rgba(99,202,183,0.6) 2px, transparent 8px),
+    radial-gradient(circle at 75% 25%, rgba(99,202,183,0.7) 2px, transparent 7px),
+    radial-gradient(circle at 35% 80%, rgba(99,202,183,0.5) 1px, transparent 5px);
+  background-size: 100% 100%;
+}
+/* Aurora preview */
+.bg-prev-aurora::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, transparent 10%, rgba(99,202,183,0.15) 25%, rgba(99,202,183,0.25) 35%, rgba(99,202,183,0.1) 45%, transparent 55%),
+    linear-gradient(180deg, transparent 35%, rgba(99,202,183,0.1) 50%, rgba(99,202,183,0.2) 60%, transparent 70%);
 }
 
 /* Mode buttons */
