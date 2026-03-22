@@ -244,6 +244,7 @@ section { padding: 5rem 0; }
 
 /* ── Demo preview wrapper (subtle frame to show it's a preview) ───────── */
 #demo-preview {
+  position: relative;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
   overflow: hidden;
@@ -301,12 +302,13 @@ section { padding: 5rem 0; }
   background: var(--color-primary); border-radius: 2px; transition: all 0.3s;
 }
 
-/* Inner demo mobile menu (slide-in from right — same behaviour as outer shared nav) */
+/* Inner demo mobile menu (slide-in from right, contained within #demo-preview) */
 #demo-mobile-menu {
-  position: fixed;
+  position: absolute;
   top: 0; right: 0;
-  width: min(280px, 85vw);
-  height: 100vh;
+  width: min(280px, 85%);
+  height: 100%;
+  min-height: 100vh;
   background: var(--color-nav-bg, rgba(250,250,250,0.98));
   border-left: 1px solid var(--color-border);
   font-family: var(--font-body);
@@ -327,7 +329,8 @@ section { padding: 5rem 0; }
 }
 #demo-mobile-menu a:hover { background: var(--color-surface); }
 #demo-mobile-overlay {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  min-height: 100vh;
   background: rgba(0,0,0,0.35);
   z-index: 499;
   opacity: 0; pointer-events: none;
