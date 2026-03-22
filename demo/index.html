@@ -48,8 +48,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="../css/shared-nav.css?v=3">
-  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="../css/shared-nav.css?v=4">
+  <link rel="stylesheet" href="css/style.css?v=4">
 </head>
 <body>
 
@@ -87,8 +87,19 @@
         <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
       </ul>
       <a href="#contact" class="demo-nav-cta" data-i18n="hero.cta_primary">Get Started</a>
+      <button id="demo-menu-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
+
+  <!-- Inner demo mobile menu (inline dropdown) -->
+  <nav id="demo-mobile-menu" aria-label="Demo site navigation">
+    <a href="#home" data-i18n="nav.home">Home</a>
+    <a href="#services" id="demo-mobile-services" data-i18n="nav.services">Services</a>
+    <a href="#about" data-i18n="nav.about">About</a>
+    <a href="#contact" data-i18n="nav.contact">Contact</a>
+  </nav>
 
   <main id="main-content">
 
@@ -535,10 +546,10 @@
   <!-- ââ Scripts (order matters: i18n â app â configurator) ââââââââââââ -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/i18next@23/i18next.min.js" defer></script>
-  <script src="js/i18n.js?v=3" defer></script>
-  <script src="js/app.js?v=3" defer></script>
-  <script src="js/configurator.js?v=3" defer></script>
-  <script src="../js/shared-nav.js?v=3"></script>
+  <script src="js/i18n.js?v=4" defer></script>
+  <script src="js/app.js?v=4" defer></script>
+  <script src="js/configurator.js?v=4" defer></script>
+  <script src="../js/shared-nav.js?v=4"></script>
 
 </body>
 </html>

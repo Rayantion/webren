@@ -85,12 +85,13 @@ function showMode(mode, withTransition = true) {
       el.classList.remove('revealed');
       el.style.transitionDelay = '';
     });
-    // Update inner demo nav middle link for current mode
-    const serviceLink = document.getElementById('demo-nav-services');
-    if (serviceLink && window.i18next) {
+    // Update inner demo nav middle link for current mode (desktop + mobile)
+    if (window.i18next) {
       const linkKey = { company: 'nav.services', restaurant: 'nav.menu', store: 'nav.products' }[mode] || 'nav.services';
-      serviceLink.dataset.i18n = linkKey;
-      serviceLink.textContent = window.i18next.t(linkKey);
+      ['demo-nav-services', 'demo-mobile-services'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.dataset.i18n = linkKey; el.textContent = window.i18next.t(linkKey); }
+      });
     }
     initScrollReveal();
   };
@@ -301,6 +302,25 @@ function initThreeJS() {
   };
 }
 
+// ── Inner demo nav hamburger ───────────────────────────────────────────────────
+function initDemoNav() {
+  const toggle = document.getElementById('demo-menu-toggle');
+  const menu = document.getElementById('demo-mobile-menu');
+  if (!toggle || !menu) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
 // ── Boot ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await loadConfig();
@@ -311,6 +331,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initLangToggle();
   initCounter();
   initMenuTabs();
+  initDemoNav();
   // Three.js init — runs after THREE is available (loaded via defer)
   if (typeof THREE !== 'undefined') {
     initThreeJS();

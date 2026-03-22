@@ -104,14 +104,17 @@
     a.addEventListener('click', closeMenu);
   });
 
-  // Swipe left to open, swipe right to close
+  // Swipe left from right edge to open, swipe right to close
   var touchStartX = 0;
+  var touchStartFromEdge = false;
   document.addEventListener('touchstart', function (e) {
     touchStartX = e.touches[0].clientX;
+    // Only allow open-swipe if finger starts within 30px of right edge
+    touchStartFromEdge = touchStartX > window.innerWidth - 30;
   }, { passive: true });
   document.addEventListener('touchend', function (e) {
     var dx = e.changedTouches[0].clientX - touchStartX;
-    if (dx < -50 && !menu.classList.contains('open')) openMenu();
+    if (dx < -50 && touchStartFromEdge && !menu.classList.contains('open')) openMenu();
     if (dx >  50 &&  menu.classList.contains('open')) closeMenu();
   }, { passive: true });
 
