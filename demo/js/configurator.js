@@ -235,6 +235,20 @@ function initFontSelectors() {
   loadGoogleFont(f.body);
 }
 
+// ── Background style selector ─────────────────────────────────────────────────
+function initBgSelector() {
+  const tiles = document.querySelectorAll('.bg-style-tile');
+  const current = AppState.get().bgStyle || 'particles';
+  tiles.forEach(tile => {
+    tile.classList.toggle('active', tile.dataset.bg === current);
+    tile.addEventListener('click', () => {
+      tiles.forEach(t => t.classList.remove('active'));
+      tile.classList.add('active');
+      AppState.applyBgStyle(tile.dataset.bg);
+    });
+  });
+}
+
 // ── Mode buttons ──────────────────────────────────────────────────────────────
 function initModeButtons() {
   document.querySelectorAll('.mode-btn').forEach(btn => {
@@ -293,6 +307,7 @@ function initSendButton() {
         mode: config.mode,
         theme: config.theme,
         fonts: config.fonts,
+        bgStyle: config.bgStyle || 'particles',
         viewCounter: config.viewCounter
       }
     };
@@ -335,6 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPresetThemes();
   initColorPickers();
   initFontSelectors();
+  initBgSelector();
   initModeButtons();
   initSendButton();
 });

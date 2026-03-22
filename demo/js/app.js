@@ -198,121 +198,199 @@ function initMenuTabs() {
   });
 }
 
-// ── Three.js particles ────────────────────────────────────────────────────────
-function initThreeJS() {
-  if (typeof THREE === 'undefined') return;
-
-  const canvas = document.getElementById('threejs-canvas');
-  if (!canvas) return;
-
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
-  camera.position.z = 80;
-
-  // Particles
-  const COUNT = 80;
-  const positions = new Float32Array(COUNT * 3);
-  const velocities = [];
-
-  for (let i = 0; i < COUNT; i++) {
-    positions[i*3]   = (Math.random() - 0.5) * 160;
-    positions[i*3+1] = (Math.random() - 0.5) * 100;
-    positions[i*3+2] = (Math.random() - 0.5) * 40;
-    velocities.push({
-      x: (Math.random() - 0.5) * 0.06,
-      y: (Math.random() - 0.5) * 0.04,
-    });
+// ── Hero Background Engine (Canvas 2D, 5 styles) ─────────────────────────────
+class HeroBg {
+  constructor(canvas, color, style) {
+    this.canvas = canvas;
+    this.ctx    = canvas.getContext('2d');
+    this.color  = color || '#0D9488';
+    this.style  = style || 'particles';
+    this._raf   = null;
+    this._t     = 0;
+    this._state = null;
+    this._w     = 0;
+    this._h     = 0;
+    this._ro = new ResizeObserver(() => this._resize());
+    this._ro.observe(canvas.parentElement || canvas);
+    this._resize();
   }
 
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  _resize() {
+    const parent = this.canvas.parentElement;
+    if (!parent) return;
+    const w = parent.clientWidth;
+    const h = parent.clientHeight;
+    if (w === this._w && h === this._h) return;
+    this._w = w; this._h = h;
+    this.canvas.width  = w;
+    this.canvas.height = h;
+    this._initState();
+  }
 
-  let primaryColor = new THREE.Color(currentConfig.theme?.primary || '#0D9488');
+  _initState() {
+    const w = this._w, h = this._h;
+    if (this.style === 'particles') {
+      this._state = {
+        pts: Array.from({ length: 70 }, () => ({
+          x:  Math.random() * w,
+          y:  Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.3,
+        }))
+      };
+    } else if (this.style === 'blobs') {
+      this._state = {
+        blobs: Array.from({ length: 5 }, () => ({
+          x:     Math.random() * w,
+          y:     Math.random() * h,
+          r:     80 + Math.random() * 120,
+          vx:    (Math.random() - 0.5) * 0.25,
+          vy:    (Math.random() - 0.5) * 0.18,
+          phase: Math.random() * Math.PI * 2,
+        }))
+      };
+    } else {
+      this._state = {};
+    }
+  }
 
-  const mat = new THREE.PointsMaterial({
-    color: primaryColor,
-    size: 1.5,
-    transparent: true,
-    opacity: 0.6,
-    sizeAttenuation: true,
-  });
+  setStyle(style) {
+    if (this.style === style) return;
+    this.style = style;
+    this._initState();
+  }
 
-  const points = new THREE.Points(geo, mat);
-  scene.add(points);
+  setColor(color) { this.color = color; }
 
-  // Lines between close particles
-  const lineMat = new THREE.LineBasicMaterial({ color: primaryColor, transparent: true, opacity: 0.15 });
-  let linesMesh = null;
+  _rgb() {
+    const h = this.color.replace('#', '');
+    return `${parseInt(h.slice(0,2),16)},${parseInt(h.slice(2,4),16)},${parseInt(h.slice(4,6),16)}`;
+  }
 
-  function buildLines() {
-    if (linesMesh) scene.remove(linesMesh);
-    const linePositions = [];
-    const threshold = 28;
-    for (let i = 0; i < COUNT; i++) {
-      for (let j = i+1; j < COUNT; j++) {
-        const dx = positions[i*3] - positions[j*3];
-        const dy = positions[i*3+1] - positions[j*3+1];
-        const d = Math.sqrt(dx*dx + dy*dy);
-        if (d < threshold) {
-          linePositions.push(
-            positions[i*3], positions[i*3+1], positions[i*3+2],
-            positions[j*3], positions[j*3+1], positions[j*3+2]
-          );
+  _tick() {
+    const { ctx, _w: w, _h: h, style } = this;
+    const rgb = this._rgb();
+    this._t++;
+    ctx.clearRect(0, 0, w, h);
+    if      (style === 'particles') this._particles(ctx, rgb, w, h);
+    else if (style === 'waves')     this._waves(ctx, rgb, w, h, this._t);
+    else if (style === 'grid')      this._grid(ctx, rgb, w, h, this._t);
+    else if (style === 'blobs')     this._blobs(ctx, rgb, w, h, this._t);
+    // 'none' → canvas stays clear
+    this._raf = requestAnimationFrame(() => this._tick());
+  }
+
+  _particles(ctx, rgb, w, h) {
+    const pts = this._state.pts;
+    for (const p of pts) {
+      p.x = (p.x + p.vx + w) % w;
+      p.y = (p.y + p.vy + h) % h;
+    }
+    const THRESH = 120;
+    ctx.lineWidth = 1;
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[i].x - pts[j].x;
+        const dy = pts[i].y - pts[j].y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < THRESH * THRESH) {
+          ctx.strokeStyle = `rgba(${rgb},${(1 - Math.sqrt(d2) / THRESH) * 0.25})`;
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x, pts[i].y);
+          ctx.lineTo(pts[j].x, pts[j].y);
+          ctx.stroke();
         }
       }
     }
-    const lineGeo = new THREE.BufferGeometry();
-    lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linePositions), 3));
-    linesMesh = new THREE.LineSegments(lineGeo, lineMat);
-    scene.add(linesMesh);
-  }
-
-  function resize() {
-    const hero = canvas.parentElement;
-    if (!hero) return;
-    const w = hero.clientWidth;
-    const h = hero.clientHeight;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-  }
-
-  resize();
-  window.addEventListener('resize', resize, { passive: true });
-
-  let frame = 0;
-  function animate() {
-    requestAnimationFrame(animate);
-
-    for (let i = 0; i < COUNT; i++) {
-      positions[i*3]   += velocities[i].x;
-      positions[i*3+1] += velocities[i].y;
-      // Wrap around edges
-      if (positions[i*3] > 85)   positions[i*3] = -85;
-      if (positions[i*3] < -85)  positions[i*3] = 85;
-      if (positions[i*3+1] > 55) positions[i*3+1] = -55;
-      if (positions[i*3+1] < -55) positions[i*3+1] = 55;
+    ctx.fillStyle = `rgba(${rgb},0.7)`;
+    for (const p of pts) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+      ctx.fill();
     }
-
-    geo.attributes.position.needsUpdate = true;
-    frame++;
-    if (frame % 4 === 0) buildLines(); // rebuild lines every 4 frames for perf
-
-    renderer.render(scene, camera);
   }
 
-  buildLines();
-  animate();
+  _waves(ctx, rgb, w, h, t) {
+    for (let l = 0; l < 4; l++) {
+      const amp   = 18 + l * 12;
+      const freq  = 0.007 + l * 0.003;
+      const speed = (l + 1) * 0.25;
+      const yBase = h * (0.42 + l * 0.16);
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      for (let x = 0; x <= w; x += 3) {
+        const y = yBase
+          + Math.sin(x * freq + t * 0.018 * speed) * amp
+          + Math.sin(x * freq * 1.8 + t * 0.012 * speed) * (amp * 0.4);
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(w, h);
+      ctx.closePath();
+      ctx.fillStyle = `rgba(${rgb},${0.06 + l * 0.04})`;
+      ctx.fill();
+    }
+  }
 
-  // Expose color update
-  window._threeUpdate = (hex) => {
-    const c = new THREE.Color(hex);
-    mat.color.set(c);
-    lineMat.color.set(c);
-  };
+  _grid(ctx, rgb, w, h, t) {
+    const sp = 38;
+    const cols = Math.ceil(w / sp) + 1;
+    const rows = Math.ceil(h / sp) + 1;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = c * sp;
+        const y = r * sp;
+        const d = Math.sqrt((x - w / 2) ** 2 + (y - h / 2) ** 2);
+        const pulse = (Math.sin(t * 0.02 - d * 0.035) + 1) * 0.5;
+        ctx.beginPath();
+        ctx.arc(x, y, 1.2 + pulse * 1.8, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${rgb},${0.08 + pulse * 0.35})`;
+        ctx.fill();
+      }
+    }
+  }
+
+  _blobs(ctx, rgb, w, h, t) {
+    for (const b of this._state.blobs) {
+      b.x += b.vx;
+      b.y += b.vy;
+      if (b.x < -b.r) b.x = w + b.r;
+      if (b.x > w + b.r) b.x = -b.r;
+      if (b.y < -b.r) b.y = h + b.r;
+      if (b.y > h + b.r) b.y = -b.r;
+      const pulse = (Math.sin(t * 0.014 + b.phase) + 1) * 0.5;
+      const r = b.r * (0.8 + pulse * 0.3);
+      const grad = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, r);
+      grad.addColorStop(0, `rgba(${rgb},0.22)`);
+      grad.addColorStop(1, `rgba(${rgb},0)`);
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  start() {
+    if (this._raf) return;
+    this._initState();
+    this._raf = requestAnimationFrame(() => this._tick());
+  }
+
+  stop() {
+    if (this._raf) { cancelAnimationFrame(this._raf); this._raf = null; }
+    this._ro.disconnect();
+  }
+}
+
+function initHeroBackgrounds() {
+  const style = currentConfig.bgStyle || 'particles';
+  const color = currentConfig.theme?.primary || '#0D9488';
+  window._heroBgs = Array.from(document.querySelectorAll('.hero-canvas')).map(canvas => {
+    const bg = new HeroBg(canvas, color, style);
+    bg.start();
+    return bg;
+  });
+  window._bgStyleUpdate = (s) => window._heroBgs?.forEach(bg => bg.setStyle(s));
+  window._threeUpdate   = (hex) => window._heroBgs?.forEach(bg => bg.setColor(hex));
 }
 
 // ── Inner demo nav scroll hide/show ──────────────────────────────────────────
@@ -675,12 +753,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initDemoNav();
   initSubPages();
   initDemoBarSwitcher();
-  // Three.js init — runs after THREE is available (loaded via defer)
-  if (typeof THREE !== 'undefined') {
-    initThreeJS();
-  } else {
-    window.addEventListener('load', initThreeJS);
-  }
+  initHeroBackgrounds();
   // initScrollReveal() is called inside showMode()
 });
 
@@ -690,6 +763,11 @@ window.AppState = {
   showMode,
   applyTheme,
   applyFonts,
+  applyBgStyle: (style) => {
+    currentConfig.bgStyle = style;
+    localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(currentConfig));
+    if (window._bgStyleUpdate) window._bgStyleUpdate(style);
+  },
   runTransition,
   saveConfig: () => localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(currentConfig))
 };

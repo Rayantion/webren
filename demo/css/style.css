@@ -40,8 +40,8 @@ a { color: var(--color-primary); text-decoration: none; }
 }
 #page-transition.active { transform: scaleY(1); pointer-events: all; }
 
-/* ── Three.js canvas ─────────────────────────────────────────────────── */
-#threejs-canvas {
+/* ── Hero background canvas ──────────────────────────────────────────── */
+.hero-canvas {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -789,6 +789,77 @@ section { padding: 5rem 0; }
   font-size: 0.7rem; color: rgba(249,250,251,0.6);
   text-align: center; margin-top: 0.3rem;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Background style selector */
+.bg-style-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+.bg-style-tile {
+  display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.25rem;
+  cursor: pointer; color: rgba(249,250,251,0.7);
+  font-size: 0.7rem; font-family: var(--font-body);
+  transition: all 0.2s; touch-action: manipulation;
+}
+.bg-style-tile:hover { background: rgba(255,255,255,0.12); color: #F9FAFB; }
+.bg-style-tile.active {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 20%, transparent);
+  color: #F9FAFB;
+}
+.bg-tile-preview {
+  width: 36px; height: 28px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.08);
+  display: block; overflow: hidden; position: relative;
+}
+/* Particle dots preview */
+.bg-prev-particles::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(99,202,183,0.8) 1px, transparent 1px),
+    radial-gradient(circle, rgba(99,202,183,0.5) 1px, transparent 1px);
+  background-size: 8px 8px, 14px 14px;
+  background-position: 2px 3px, 6px 8px;
+}
+/* Waves preview */
+.bg-prev-waves::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    transparent 0px, transparent 5px,
+    rgba(99,202,183,0.25) 5px, rgba(99,202,183,0.25) 7px,
+    transparent 7px, transparent 12px
+  );
+}
+/* Grid dots preview */
+.bg-prev-grid::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(99,202,183,0.7) 1px, transparent 1px);
+  background-size: 7px 7px;
+}
+/* Blobs preview */
+.bg-prev-blobs::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(99,202,183,0.4) 30%, transparent 65%),
+    radial-gradient(circle at 70% 60%, rgba(99,202,183,0.3) 25%, transparent 55%);
+}
+/* None preview */
+.bg-prev-none::after {
+  content: '✕';
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: rgba(255,255,255,0.3);
 }
 
 /* Mode buttons */
