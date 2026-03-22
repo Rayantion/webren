@@ -193,6 +193,32 @@ function initLangToggle() {
   });
 }
 
+// ── Hero CTA buttons ──────────────────────────────────────────────────────────
+function initHeroCTAs() {
+  const preview = document.getElementById('demo-preview');
+  if (!preview) return;
+  preview.addEventListener('click', e => {
+    const hero = e.target.closest('.hero');
+    if (!hero) return;
+    const mode = currentConfig.mode || 'company';
+    // Primary button → scroll to contact
+    if (e.target.closest('.hero-actions .btn-primary')) {
+      e.preventDefault();
+      const modeEl = document.getElementById(`mode-${mode}`);
+      const contact = modeEl && modeEl.querySelector('#contact');
+      if (contact) contact.scrollIntoView({ behavior: 'smooth' });
+    }
+    // Secondary button → scroll to services/menu/products
+    if (e.target.closest('.hero-actions .btn-secondary')) {
+      e.preventDefault();
+      const modeEl = document.getElementById(`mode-${mode}`);
+      const targetId = { company: 'services', restaurant: 'menu', store: 'products' }[mode] || 'services';
+      const section = modeEl && modeEl.querySelector(`#${targetId}`);
+      if (section) section.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+}
+
 // ── Menu category tabs ────────────────────────────────────────────────────────
 function initMenuTabs() {
   document.querySelectorAll('.menu-tab').forEach(tab => {
@@ -783,7 +809,24 @@ function initSubPages() {
     if (trigger) {
       e.preventDefault();
       e.stopPropagation(); // prevent click reaching mode-switch listeners
-      showSubPage(trigger.dataset.showSubpage);
+      const pageId = trigger.dataset.showSubpage;
+      const filterCat = trigger.dataset.filterCategory;
+      showSubPage(pageId);
+      // If a category filter was requested, activate that tab and re-render
+      if (filterCat && pageId === 'store-products-page') {
+        const tabsEl = document.getElementById('products-category-tabs');
+        if (tabsEl) {
+          tabsEl.querySelectorAll('.filter-tab').forEach(t => {
+            t.classList.toggle('active', t.dataset.category === filterCat);
+          });
+          tabsEl.dispatchEvent(Object.assign(new MouseEvent('click', { bubbles: true }), {
+            _filterCategory: filterCat
+          }));
+          // Find the matching tab and click it to trigger the catalog's own listener
+          const matchTab = tabsEl.querySelector(`[data-category="${filterCat}"]`);
+          if (matchTab) matchTab.click();
+        }
+      }
       return;
     }
     const back = e.target.closest('[data-close-subpage]');
@@ -929,6 +972,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initLangToggle();
   initCounter();
   initMenuTabs();
+  initHeroCTAs();
   initDemoNavControls();
   initDemoNavScroll();
   initDemoNav();

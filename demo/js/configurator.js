@@ -172,6 +172,16 @@ function applyAndSaveTheme(theme) {
 
 function initColorPickers() {
   ['primary','accent','bg','text'].forEach(key => {
+    const picker = document.getElementById(`cp-${key}`);
+    if (picker) {
+      picker.addEventListener('click', () => {
+        // Snap to vivid version of current hue so picker opens with full S+V
+        const [h] = hexToHsl(picker.value);
+        const vivid = hslToHex(h, 100, 50);
+        picker.value = vivid;
+        // Don't fire onchange — just pre-position the picker; actual change fires on 'input'
+      });
+    }
     syncColorPair(`cp-${key}`, `hex-${key}`, val => {
       AppState.get().theme[key] = val;
       AppState.applyTheme(AppState.get().theme);
