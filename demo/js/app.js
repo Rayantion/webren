@@ -506,13 +506,13 @@ class HeroBg {
 
   _drawOverlay(ctx, rgb) {
     const mx = this._mx, my = this._my;
-    // Mouse glow
+    // Very subtle ambient warmth where the cursor is — not a visible tracker
     if (mx > -999) {
-      const g = ctx.createRadialGradient(mx, my, 0, mx, my, 85);
-      g.addColorStop(0, `rgba(${rgb},0.18)`);
+      const g = ctx.createRadialGradient(mx, my, 0, mx, my, 110);
+      g.addColorStop(0, `rgba(${rgb},0.09)`);
       g.addColorStop(1, `rgba(${rgb},0)`);
       ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(mx, my, 85, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(mx, my, 110, 0, Math.PI * 2); ctx.fill();
     }
     // Click/touch burst rings
     this._burstPts = this._burstPts.filter(b => b.r < b.max);
@@ -557,16 +557,16 @@ class HeroBg {
     const pts = this._state.pts;
     const mx = this._mx, my = this._my;
     const hasMouse = mx > -999;
-    // Apply mouse attraction to nearby particles
+    // Particles gently repel from cursor — creates an ambient parting effect
     for (const p of pts) {
       if (hasMouse) {
-        const dx = mx - p.x, dy = my - p.y;
+        const dx = p.x - mx, dy = p.y - my;
         const d = Math.sqrt(dx * dx + dy * dy);
-        if (d < 160 && d > 0) {
-          p.vx += (dx / d) * 0.018;
-          p.vy += (dy / d) * 0.018;
+        if (d < 100 && d > 0) {
+          p.vx += (dx / d) * 0.022 * (1 - d / 100);
+          p.vy += (dy / d) * 0.022 * (1 - d / 100);
           const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-          if (spd > 1.4) { p.vx *= 0.92; p.vy *= 0.92; }
+          if (spd > 1.2) { p.vx *= 0.9; p.vy *= 0.9; }
         }
       }
       p.x = (p.x + p.vx + w) % w;
@@ -574,18 +574,6 @@ class HeroBg {
     }
     const THRESH = 120;
     ctx.lineWidth = 1;
-    // Draw lines from mouse cursor to nearby particles
-    if (hasMouse) {
-      for (const p of pts) {
-        const dx = p.x - mx, dy = p.y - my;
-        const d2 = dx * dx + dy * dy;
-        if (d2 < 150 * 150) {
-          ctx.strokeStyle = `rgba(${rgb},${(1 - Math.sqrt(d2) / 150) * 0.45})`;
-          ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(p.x, p.y); ctx.stroke();
-        }
-      }
-    }
-    // Draw connections between particles
     for (let i = 0; i < pts.length; i++) {
       for (let j = i + 1; j < pts.length; j++) {
         const dx = pts[i].x - pts[j].x;
@@ -633,22 +621,41 @@ class HeroBg {
     const sp = 38;
     const cols = Math.ceil(w / sp) + 1;
     const rows = Math.ceil(h / sp) + 1;
+    const mx = this._mx, my = this._my, hasMouse = mx > -999;
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         const x = c * sp;
         const y = r * sp;
         const d = Math.sqrt((x - w / 2) ** 2 + (y - h / 2) ** 2);
         const pulse = (Math.sin(t * 0.02 - d * 0.035) + 1) * 0.5;
+        // Dots near cursor glow brighter
+        let mBoost = 0;
+        if (hasMouse) {
+          const md = Math.sqrt((x - mx) ** 2 + (y - my) ** 2);
+          mBoost = Math.max(0, 1 - md / 90) * 0.5;
+        }
         ctx.beginPath();
-        ctx.arc(x, y, 1.2 + pulse * 1.8, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${rgb},${0.08 + pulse * 0.35})`;
+        ctx.arc(x, y, 1.2 + pulse * 1.8 + mBoost * 2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${rgb},${0.08 + pulse * 0.35 + mBoost * 0.45})`;
         ctx.fill();
       }
     }
   }
 
   _blobs(ctx, rgb, w, h, t) {
+    const mx = this._mx, my = this._my, hasMouse = mx > -999;
     for (const b of this._state.blobs) {
+      // Blobs drift gently away from cursor
+      if (hasMouse) {
+        const dx = b.x - mx, dy = b.y - my;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 180 && d > 0) {
+          b.vx += (dx / d) * 0.008;
+          b.vy += (dy / d) * 0.008;
+          const spd = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
+          if (spd > 0.5) { b.vx *= 0.95; b.vy *= 0.95; }
+        }
+      }
       b.x += b.vx;
       b.y += b.vy;
       if (b.x < -b.r) b.x = w + b.r;
@@ -668,7 +675,17 @@ class HeroBg {
   }
 
   _stars(ctx, rgb, w, h, t) {
+    const mx = this._mx, my = this._my, hasMouse = mx > -999;
     for (const s of this._state.pts) {
+      // Stars shimmer brighter near cursor
+      if (hasMouse) {
+        const dx = s.x - mx, dy = s.y - my;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 80 && d > 0) {
+          s.vx += (dx / d) * 0.006;
+          s.vy += (dy / d) * 0.006;
+        }
+      }
       s.x = (s.x + s.vx + w) % w;
       s.y = (s.y + s.vy + h) % h;
       const twinkle = (Math.sin(t * 0.05 + s.phase) + 1) * 0.5;
@@ -680,10 +697,17 @@ class HeroBg {
   }
 
   _geometric(ctx, rgb, w, h, t) {
+    const mx = this._mx, my = this._my, hasMouse = mx > -999;
     for (const s of this._state.shapes) {
       s.x = (s.x + s.vx + w) % w;
       s.y = (s.y + s.vy + h) % h;
-      s.rot += s.rotSpeed;
+      // Shapes near cursor spin faster
+      let spinBoost = 1;
+      if (hasMouse) {
+        const d = Math.sqrt((s.x - mx) ** 2 + (s.y - my) ** 2);
+        spinBoost = 1 + Math.max(0, 1 - d / 120) * 4;
+      }
+      s.rot += s.rotSpeed * spinBoost;
       const pulse = (Math.sin(t * 0.018 + s.phase) + 1) * 0.5;
       const alpha = 0.06 + pulse * 0.14;
       ctx.save();
@@ -721,7 +745,17 @@ class HeroBg {
   }
 
   _fireflies(ctx, rgb, w, h, t) {
+    const mx = this._mx, my = this._my, hasMouse = mx > -999;
     for (const f of this._state.fireflies) {
+      // Fireflies are gently drawn toward the cursor
+      if (hasMouse) {
+        const dx = mx - f.baseX, dy = my - f.baseY;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 200 && d > 0) {
+          f.baseX += (dx / d) * 0.35;
+          f.baseY += (dy / d) * 0.35;
+        }
+      }
       f.baseX = (f.baseX + 0.08 + w) % w;
       const x = f.baseX + Math.sin(t * 0.01 * f.speedX + f.phaseX) * 45;
       const y = f.baseY + Math.cos(t * 0.008 * f.speedY + f.phaseY) * 30;
