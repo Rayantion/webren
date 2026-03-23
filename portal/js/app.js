@@ -4,6 +4,14 @@ const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 const COMMISSION    = 0.15;
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+function pt(key, fallback) {
+  const lang = localStorage.getItem('webren_lang') || 'en';
+  const s = window.PORTAL_STRINGS && window.PORTAL_STRINGS[lang];
+  return (s && s[key] !== undefined) ? s[key] : (fallback !== undefined ? fallback : key);
+}
+let lastClients = [];
+let lastInvoices = [];
+
 function escHtml(str) {
   if (str == null) return '';
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -13,7 +21,7 @@ let currentUser = null;
 let isAdmin     = false;
 let agentName   = '';
 function statusBadge(status) {
-  const map = { active: ['status-active', 'Active'], hold: ['status-hold', 'On Hold'], cancelled: ['status-cancelled', 'Cancelled'], inactive: ['status-inactive', 'Inactive'] };
+  const map = { active: ['status-active', pt('status_active', 'Active')], hold: ['status-hold', pt('status_hold', 'On Hold')], cancelled: ['status-cancelled', pt('status_cancelled', 'Cancelled')], inactive: ['status-inactive', pt('status_inactive', 'Inactive')] };
   const cfg = map[status] || ['status-hold', status || 'Unknown'];
   return '<span class="status-badge ' + cfg[0] + '">' + cfg[1] + '</span>';
 }
@@ -47,7 +55,7 @@ async function resolveAdmin() {
   const { data } = await sb.from('agents').select('is_admin, full_name').eq('id', currentUser.id).single();
   isAdmin = !!(data && data.is_admin);
   agentName = (data && data.full_name) || currentUser.email;
-  document.getElementById('header-welcome').textContent = 'Welcome, ' + agentName;
+  document.getElementById('header-welcome').textContent = pt('welcome', 'Welcome, ') + agentName;
   document.getElementById('header-user').classList.remove('hidden');
   ['col-paydue', 'col-desc', 'col-approve'].forEach(id => document.getElementById(id).classList.toggle('hidden', !isAdmin));
   document.getElementById('allowed-emails-section').classList.toggle('hidden', !isAdmin);
@@ -98,16 +106,17 @@ async function loadDashboard() {
 async function loadClients() {
   const tbody = document.getElementById('clients-tbody');
   const cols = isAdmin ? 9 : 6;
-  tbody.innerHTML = '<tr><td colspan="' + cols + '" class="empty-row">Loading…</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="' + cols + '" class="empty-row">' + pt('loading', 'Loading\u2026') + '</td></tr>';
   const query = isAdmin ? sb.from('clients').select('*, agents(full_name)').order('created_at', { ascending: false }) : sb.from('clients').select('*').eq('agent_id', currentUser.id).order('created_at', { ascending: false });
   const { data, error } = await query;
-  if (error) { tbody.innerHTML = '<tr><td colspan="' + cols + '" class="empty-row">Error loading clients.</td></tr>'; return; }
+  if (error) { tbody.innerHTML = '<tr><td colspan="' + cols + '" class="empty-row">' + pt('err_clients', 'Error loading clients.') + '</td></tr>'; return; }
   renderClients(data || []); renderStats(data || []); await loadTotalEarned();
 }
 function renderClients(clients) {
+  lastClients = clients;
   const tbody = document.getElementById('clients-tbody');
   const cols = isAdmin ? 9 : 6;
-  if (!clients.length) { tbody.innerHTML = '<tr><td colspan="' + cols + '" class="empty-row">No clients yet.</td></tr>'; document.getElementById('total-commission').textContent = 'NT$0'; return; }
+  if (!clients.length) { tbody.innerHTML = '<tr><td colspan="' + cols + '" class="empty-row">' + pt('no_clients', 'No clients yet.') + '</td></tr>'; document.getElementById('total-commission').textContent = 'NT$0'; return; }
   let totalComm = 0;
   const rows = clients.map(c => {
     const fee = Number(c.monthly_fee) || 0; const comm = fee * COMMISSION;
@@ -160,7 +169,7 @@ async function loadTotalEarned() {
 async function updateClientStatus(id, status) {
   const { error } = await sb.from('clients').update({ status }).eq('id', id);
   if (error) { showToast('Error updating status.'); loadClients(); return; }
-  showToast('Status updated!'); renderStats([]); loadClients();
+  showToast(pt('toast_status', 'Status updated!')); renderStats([]); loadClients();
 }
 async function updateClientDesc(id, description) {
   const { error } = await sb.from('clients').update({ description }).eq('id', id);
@@ -168,21 +177,22 @@ async function updateClientDesc(id, description) {
 }
 async function loadInvoices() {
   const tbody = document.getElementById('invoices-tbody');
-  tbody.innerHTML = '<tr><td colspan="4" class="empty-row">Loading…</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="4" class="empty-row">' + pt('loading', 'Loading\u2026') + '</td></tr>';
   let query = sb.from('invoices').select('*, clients(client_name)').eq('status', 'pending').order('due_date');
   if (!isAdmin) query = query.eq('agent_id', currentUser.id);
   const { data, error } = await query;
-  if (error) { tbody.innerHTML = '<tr><td colspan="4" class="empty-row">Error loading invoices.</td></tr>'; return; }
+  if (error) { tbody.innerHTML = '<tr><td colspan="4" class="empty-row">' + pt('err_invoices', 'Error loading invoices.') + '</td></tr>'; return; }
   renderInvoices(data || []);
 }
 function renderInvoices(invoices) {
+  lastInvoices = invoices;
   const tbody = document.getElementById('invoices-tbody');
-  if (!invoices.length) { tbody.innerHTML = '<tr><td colspan="4" class="empty-row">No pending invoices.</td></tr>'; return; }
+  if (!invoices.length) { tbody.innerHTML = '<tr><td colspan="4" class="empty-row">' + pt('no_invoices', 'No pending invoices.') + '</td></tr>'; return; }
   const rows = invoices.map(inv => {
     const amount = Number(inv.commission_amount) || 0;
     const due = inv.due_date ? new Date(inv.due_date).toLocaleDateString() : '—';
     const client = (inv.clients && inv.clients.client_name) || '—';
-    const payBtn = isAdmin ? '<button type="button" class="btn-pay" data-id="' + escAttr(inv.id) + '">Mark Paid</button>' : '<span style="color:var(--text-muted);font-size:0.85rem">Pending</span>';
+    const payBtn = isAdmin ? '<button type="button" class="btn-pay" data-id="' + escAttr(inv.id) + '">' + pt('btn_mark_paid', 'Mark Paid') + '</button>' : '<span style="color:var(--text-muted);font-size:0.85rem">' + pt('btn_pending', 'Pending') + '</span>';
     return '<tr><td>' + escHtml(client) + '</td><td>NT$' + amount.toLocaleString() + '</td><td>' + due + '</td><td>' + payBtn + '</td></tr>';
   });
   tbody.innerHTML = rows.join('');
@@ -191,7 +201,7 @@ function renderInvoices(invoices) {
 async function markInvoicePaid(id) {
   const { error } = await sb.from('invoices').update({ status: 'paid', paid_at: new Date().toISOString() }).eq('id', id);
   if (error) { showToast('Error updating invoice.'); return; }
-  showToast('Invoice marked as paid!'); loadInvoices(); loadTotalEarned();
+  showToast(pt('toast_invoice', 'Invoice marked as paid!')); loadInvoices(); loadTotalEarned();
 }
 async function handleAddClient(e) {
   e.preventDefault();
@@ -211,7 +221,7 @@ async function handleAddClient(e) {
     status: 'hold',
   });
   if (error) { showMsg('add-client-error', error.message); }
-  else { closeModal(); e.target.reset(); showToast('Client submitted for approval!'); loadClients(); }
+  else { closeModal(); e.target.reset(); showToast(pt('toast_client', 'Client submitted for approval!')); loadClients(); }
   btn.disabled = false;
 }
 function showScreen(name) {
@@ -240,19 +250,19 @@ function showToast(msg) {
 
 async function loadAllowedEmails() {
   const tbody = document.getElementById('allowed-emails-tbody');
-  tbody.innerHTML = '<tr><td colspan="5" class="empty-row">Loading…</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="5" class="empty-row">' + pt('loading', 'Loading\u2026') + '</td></tr>';
   const { data, error } = await sb.from('allowed_emails').select('*').order('created_at', { ascending: false });
-  if (error) { tbody.innerHTML = '<tr><td colspan="5" class="empty-row">Error loading.</td></tr>'; return; }
+  if (error) { tbody.innerHTML = '<tr><td colspan="5" class="empty-row">' + pt('err_allowed', 'Error loading.') + '</td></tr>'; return; }
   renderAllowedEmails(data || []);
 }
 function renderAllowedEmails(rows) {
   const tbody = document.getElementById('allowed-emails-tbody');
-  if (!rows.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-row">No emails yet.</td></tr>'; return; }
+  if (!rows.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-row">' + pt('no_allowed', 'No emails yet.') + '</td></tr>'; return; }
   tbody.innerHTML = rows.map(r => {
     const added = r.created_at ? new Date(r.created_at).toLocaleDateString() : '—';
     const paidChk = '<input type="checkbox" class="ae-paid" data-id="' + r.id + '"' + (r.is_paid ? ' checked' : '') + '>';
     const freeChk = '<input type="checkbox" class="ae-free" data-id="' + r.id + '"' + (r.is_free ? ' checked' : '') + '>';
-    const del = '<button class="btn-remove-email" data-id="' + r.id + '">Remove</button>';
+    const del = '<button class="btn-remove-email" data-id="' + r.id + '">' + pt('btn_remove', 'Remove') + '</button>';
     return '<tr><td>' + escHtml(r.email) + '</td><td>' + paidChk + '</td><td>' + freeChk + '</td><td>' + added + '</td><td>' + del + '</td></tr>';
   }).join('');
   tbody.querySelectorAll('.ae-paid').forEach(cb => cb.addEventListener('change', () => toggleAEFlag(cb.dataset.id, 'is_paid', cb.checked)));
@@ -262,12 +272,12 @@ function renderAllowedEmails(rows) {
 async function addAllowedEmail() {
   const emailEl = document.getElementById('new-allowed-email');
   const email = emailEl.value.trim();
-  if (!email) { showToast('Enter an email address.'); return; }
+  if (!email) { showToast(pt('toast_enter_email', 'Enter an email address.')); return; }
   const is_paid = document.getElementById('new-email-paid').checked;
   const is_free = document.getElementById('new-email-free').checked;
   const { error } = await sb.from('allowed_emails').insert({ email, is_paid, is_free });
   if (error) { showToast('Error: ' + error.message); return; }
-  showToast('Email added!'); emailEl.value = '';
+  showToast(pt('toast_email_added', 'Email added!')); emailEl.value = '';
   document.getElementById('new-email-paid').checked = false;
   document.getElementById('new-email-free').checked = false;
   loadAllowedEmails();
@@ -275,7 +285,7 @@ async function addAllowedEmail() {
 async function removeAllowedEmail(id) {
   const { error } = await sb.from('allowed_emails').delete().eq('id', id);
   if (error) { showToast('Error removing email.'); return; }
-  showToast('Email removed.'); loadAllowedEmails();
+  showToast(pt('toast_email_removed', 'Email removed.')); loadAllowedEmails();
 }
 async function toggleAEFlag(id, field, val) {
   const upd = {};
@@ -283,6 +293,13 @@ async function toggleAEFlag(id, field, val) {
   const { error } = await sb.from('allowed_emails').update(upd).eq('id', id);
   if (error) showToast('Error updating.');
 }
+
+document.addEventListener('portal:lang', () => {
+  if (window.applyPortalStrings) window.applyPortalStrings(localStorage.getItem('webren_lang') || 'en');
+  renderClients(lastClients);
+  renderInvoices(lastInvoices);
+  if (currentUser && isAdmin) loadAllowedEmails();
+});
 
 function downloadContract(name, date) {
   if (typeof html2pdf === "undefined" || typeof contractHTML === "undefined") {

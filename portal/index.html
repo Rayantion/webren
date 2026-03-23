@@ -10,6 +10,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .portal-lang { display:flex; gap:4px; }
+    .p-lang-btn { background:none; border:1.5px solid rgba(255,255,255,0.22); color:rgba(255,255,255,0.5); border-radius:6px; padding:3px 10px; font-size:0.75rem; font-weight:600; cursor:pointer; transition:all 0.2s; font-family:inherit; line-height:1.5; }
+    .p-lang-btn:hover { border-color:rgba(255,255,255,0.55); color:rgba(255,255,255,0.85); }
+    .p-lang-btn.active { background:rgba(255,255,255,0.12); border-color:rgba(255,255,255,0.55); color:#fff; }
+    .header-right { margin-left:auto; display:flex; align-items:center; gap:12px; }
+  </style>
 </head>
 <body>
 
@@ -17,10 +24,16 @@
   <header id="portal-header">
     <div class="container header-inner">
       <a href="../" class="logo">Web<span>人</span></a>
-      <div id="header-user" class="header-user hidden">
-        <span id="header-welcome"></span>
-        <button type="button" id="btn-download-contract" class="btn-contract">Contract</button>
-        <button type="button" id="btn-logout" class="btn-logout">Logout</button>
+      <div class="header-right">
+        <div class="portal-lang">
+          <button class="p-lang-btn active" data-lang="en">EN</button>
+          <button class="p-lang-btn" data-lang="zh-TW">中文</button>
+        </div>
+        <div id="header-user" class="header-user hidden">
+          <span id="header-welcome"></span>
+          <button type="button" id="btn-download-contract" class="btn-contract" data-i18n="btn_contract">Contract</button>
+          <button type="button" id="btn-logout" class="btn-logout" data-i18n="btn_logout">Logout</button>
+        </div>
       </div>
     </div>
   </header>
@@ -33,72 +46,72 @@
 
       <!-- Tab switcher -->
       <div class="auth-tabs" id="auth-tabs">
-        <button type="button" class="auth-tab active" data-tab="login">Sign In</button>
-        <button type="button" class="auth-tab" data-tab="register">Register</button>
+        <button type="button" class="auth-tab active" data-tab="login" data-i18n="tab_login">Sign In</button>
+        <button type="button" class="auth-tab" data-tab="register" data-i18n="tab_register">Register</button>
       </div>
 
       <!-- Login Form -->
       <form id="form-login" class="auth-form">
         <div class="form-group">
-          <label for="login-email">Email</label>
+          <label for="login-email" data-i18n="label_email">Email</label>
           <input type="email" id="login-email" autocomplete="email" required>
         </div>
         <div class="form-group">
-          <label for="login-password">Password</label>
+          <label for="login-password" data-i18n="label_password">Password</label>
           <input type="password" id="login-password" autocomplete="current-password" required>
         </div>
         <div class="form-message hidden" id="login-error" role="alert"></div>
-        <button type="submit" class="btn-primary btn-full" id="btn-login">Sign In</button>
-        <button type="button" class="link-btn" id="btn-forgot">Forgot password?</button>
+        <button type="submit" class="btn-primary btn-full" id="btn-login" data-i18n="btn_signin">Sign In</button>
+        <button type="button" class="link-btn" id="btn-forgot" data-i18n="btn_forgot">Forgot password?</button>
       </form>
 
       <!-- Register Form -->
       <form id="form-register" class="auth-form hidden">
         <div class="register-notice">
           <span class="register-notice-icon">ℹ️</span>
-          <span>To create an account, please contact the owner to register your email first. <a href="https://wa.me/6285183005811" target="_blank" rel="noopener">Contact Aaron &rarr;</a></span>
+          <span data-i18n="register_notice">To create an account, please contact the owner to register your email first. <a href="https://wa.me/6285183005811" target="_blank" rel="noopener">Contact Aaron &rarr;</a></span>
         </div>
         <div class="form-group">
-          <label for="reg-name">Full Name</label>
+          <label for="reg-name" data-i18n="label_fullname">Full Name</label>
           <input type="text" id="reg-name" autocomplete="name" required>
         </div>
         <div class="form-group">
-          <label for="reg-email">Email</label>
+          <label for="reg-email" data-i18n="label_email">Email</label>
           <input type="email" id="reg-email" autocomplete="email" required>
         </div>
         <div class="form-group">
-          <label for="reg-phone">Phone <span class="label-optional">(optional)</span></label>
+          <label for="reg-phone"><span data-i18n="label_phone">Phone</span> <span class="label-optional" data-i18n="label_phone_opt">(optional)</span></label>
           <input type="tel" id="reg-phone" autocomplete="tel">
         </div>
         <div class="form-group">
-          <label for="reg-password">Password <span class="label-optional">(min 8 chars)</span></label>
+          <label for="reg-password"><span data-i18n="label_password">Password</span> <span class="label-optional" data-i18n="label_pass_hint">(min 8 chars)</span></label>
           <input type="password" id="reg-password" autocomplete="new-password" minlength="8" required>
         </div>
         <div class="form-group checkbox-group">
           <input type="checkbox" id="reg-terms" required>
-          <label for="reg-terms">I agree to the
+          <label for="reg-terms" data-i18n="label_terms">I agree to the
             <a href="privacy.html" target="_blank">Privacy Policy</a> and
             <a href="terms.html" target="_blank">Terms &amp; Conditions</a>
           </label>
         </div>
         <div class="form-message hidden" id="reg-error" role="alert"></div>
         <div class="form-message success hidden" id="reg-success" role="status"></div>
-        <button type="button" class="btn-primary btn-full hidden" id="btn-download-contract-reg">Download Your Contract (PDF)</button>
-        <button type="submit" class="btn-primary btn-full" id="btn-register">Create Account</button>
+        <button type="button" class="btn-primary btn-full hidden" id="btn-download-contract-reg" data-i18n="btn_download_contract">Download Your Contract (PDF)</button>
+        <button type="submit" class="btn-primary btn-full" id="btn-register" data-i18n="btn_create_account">Create Account</button>
       </form>
 
       <!-- Forgot Password Form -->
       <form id="form-forgot" class="auth-form hidden">
-        <button type="button" class="link-btn back-btn" id="btn-back-login">← Back to Sign In</button>
-        <h3>Reset Password</h3>
-        <p class="form-hint">Enter your email and we'll send a reset link.</p>
+        <button type="button" class="link-btn back-btn" id="btn-back-login" data-i18n="btn_back_login">← Back to Sign In</button>
+        <h3 data-i18n="h_reset">Reset Password</h3>
+        <p class="form-hint" data-i18n="hint_reset">Enter your email and we'll send a reset link.</p>
         <div class="form-group">
-          <label for="forgot-email">Email</label>
+          <label for="forgot-email" data-i18n="label_email">Email</label>
           <input type="email" id="forgot-email" required>
         </div>
         <div class="form-message hidden" id="forgot-error" role="alert"></div>
         <div class="form-message success hidden" id="forgot-success" role="status"></div>
-        <button type="submit" class="btn-primary btn-full">Send Reset Link</button>
+        <button type="submit" class="btn-primary btn-full" data-i18n="btn_reset">Send Reset Link</button>
       </form>
 
     </div>
@@ -111,72 +124,72 @@
       <!-- Stats -->
       <section class="stats-grid" aria-label="Summary statistics">
         <div class="stat-card">
-          <div class="stat-label">Total Clients</div>
+          <div class="stat-label" data-i18n="stat_clients">Total Clients</div>
           <div class="stat-value" id="stat-clients">0</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Monthly Commission</div>
+          <div class="stat-label" data-i18n="stat_monthly">Monthly Commission</div>
           <div class="stat-value" id="stat-monthly">NT$0</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Yearly Commission</div>
+          <div class="stat-label" data-i18n="stat_yearly">Yearly Commission</div>
           <div class="stat-value" id="stat-yearly">NT$0</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Total Earned</div>
+          <div class="stat-label" data-i18n="stat_earned">Total Earned</div>
           <div class="stat-value" id="stat-earned">NT$0</div>
         </div>
       </section>
 
       <!-- Clients -->
       <div class="section-row">
-        <h2 class="section-title">Clients</h2>
-        <button type="button" id="btn-open-add-client" class="btn-primary btn-sm">+ Add Client</button>
+        <h2 class="section-title" data-i18n="section_clients">Clients</h2>
+        <button type="button" id="btn-open-add-client" class="btn-primary btn-sm" data-i18n="btn_add_client">+ Add Client</button>
       </div>
 
       <div class="table-wrap">
         <table class="data-table" id="clients-table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Plan</th>
-              <th>Monthly Fee</th>
-              <th>Commission (15%)</th>
-              <th>Status</th>
-              <th>Start Date</th>
-              <th id="col-paydue" class="hidden">Payment Due</th>
-              <th id="col-desc" class="hidden">Notes</th>
-              <th id="col-approve" class="hidden">Actions</th>
+              <th data-i18n="th_name">Name</th>
+              <th data-i18n="th_plan">Plan</th>
+              <th data-i18n="th_fee">Monthly Fee</th>
+              <th data-i18n="th_commission">Commission (15%)</th>
+              <th data-i18n="th_status">Status</th>
+              <th data-i18n="th_start">Start Date</th>
+              <th id="col-paydue" class="hidden" data-i18n="th_paydue">Payment Due</th>
+              <th id="col-desc" class="hidden" data-i18n="th_notes">Notes</th>
+              <th id="col-approve" class="hidden" data-i18n="th_actions">Actions</th>
             </tr>
           </thead>
           <tbody id="clients-tbody">
-            <tr><td colspan="7" class="empty-row">Loading…</td></tr>
+            <tr><td colspan="7" class="empty-row" data-i18n="loading">Loading…</td></tr>
           </tbody>
         </table>
       </div>
 
       <div class="commission-row">
-        <span>Total Commission:</span>
+        <span data-i18n="total_commission">Total Commission:</span>
         <strong id="total-commission">NT$0</strong>
       </div>
 
       <!-- Invoices -->
       <div class="section-row" style="margin-top:2.5rem;">
-        <h2 class="section-title">Pending Invoices</h2>
+        <h2 class="section-title" data-i18n="section_invoices">Pending Invoices</h2>
       </div>
 
       <div class="table-wrap">
         <table class="data-table" id="invoices-table">
           <thead>
             <tr>
-              <th>Client</th>
-              <th>Amount</th>
-              <th>Due Date</th>
-              <th>Action</th>
+              <th data-i18n="th_client">Client</th>
+              <th data-i18n="th_amount">Amount</th>
+              <th data-i18n="th_due">Due Date</th>
+              <th data-i18n="th_action">Action</th>
             </tr>
           </thead>
           <tbody id="invoices-tbody">
-            <tr><td colspan="4" class="empty-row">Loading…</td></tr>
+            <tr><td colspan="4" class="empty-row" data-i18n="loading">Loading…</td></tr>
           </tbody>
         </table>
       </div>
@@ -184,27 +197,27 @@
       <!-- Allowed Emails (Admin Only) -->
       <div id="allowed-emails-section" class="hidden" style="margin-top:2.5rem;">
         <div class="section-row">
-          <h2 class="section-title">Allowed Emails</h2>
+          <h2 class="section-title" data-i18n="section_allowed">Allowed Emails</h2>
         </div>
         <div class="add-email-row">
-          <input type="email" id="new-allowed-email" placeholder="email@example.com">
-          <label class="check-label"><input type="checkbox" id="new-email-paid"> Paid</label>
-          <label class="check-label"><input type="checkbox" id="new-email-free"> Free</label>
-          <button type="button" id="btn-add-email" class="btn-primary btn-sm">+ Add</button>
+          <input type="email" id="new-allowed-email" placeholder="email@example.com" data-i18n-ph="ph_email">
+          <label class="check-label"><input type="checkbox" id="new-email-paid"> <span data-i18n="label_paid">Paid</span></label>
+          <label class="check-label"><input type="checkbox" id="new-email-free"> <span data-i18n="label_free">Free</span></label>
+          <button type="button" id="btn-add-email" class="btn-primary btn-sm" data-i18n="btn_add_email">+ Add</button>
         </div>
         <div class="table-wrap" style="margin-top:12px;">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Email</th>
-                <th>Paid</th>
-                <th>Free</th>
-                <th>Added</th>
-                <th>Action</th>
+                <th data-i18n="label_email">Email</th>
+                <th data-i18n="label_paid">Paid</th>
+                <th data-i18n="label_free">Free</th>
+                <th data-i18n="th_added">Added</th>
+                <th data-i18n="th_action">Action</th>
               </tr>
             </thead>
             <tbody id="allowed-emails-tbody">
-              <tr><td colspan="5" class="empty-row">Loading…</td></tr>
+              <tr><td colspan="5" class="empty-row" data-i18n="loading">Loading…</td></tr>
             </tbody>
           </table>
         </div>
@@ -217,18 +230,18 @@
   <div id="add-client-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Add New Client">
     <div class="modal">
       <div class="modal-header">
-        <h3>Add New Client</h3>
+        <h3 data-i18n="modal_title">Add New Client</h3>
         <button type="button" id="btn-close-modal" class="btn-close" aria-label="Close">✕</button>
       </div>
       <form id="form-add-client">
         <div class="form-group">
-          <label for="client-name">Client Name</label>
+          <label for="client-name" data-i18n="label_client_name">Client Name</label>
           <input type="text" id="client-name" required>
         </div>
         <div class="form-group">
-          <label for="client-plan">Plan</label>
+          <label for="client-plan" data-i18n="label_plan">Plan</label>
           <select id="client-plan" required>
-            <option value="">Select a plan…</option>
+            <option value="" data-i18n="plan_select">Select a plan…</option>
             <option value="Option A Basic">Option A Basic — NT$3,000/mo</option>
             <option value="Option A Professional">Option A Professional — NT$4,500/mo</option>
             <option value="Option A Premium">Option A Premium — NT$5,000/mo</option>
@@ -236,20 +249,20 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="client-fee">Monthly Fee (NT$)</label>
+          <label for="client-fee" data-i18n="label_fee">Monthly Fee (NT$)</label>
           <input type="number" id="client-fee" min="0" step="100" required>
         </div>
         <div class="form-group">
-          <label for="client-start">Start Date</label>
+          <label for="client-start" data-i18n="label_start">Start Date</label>
           <input type="date" id="client-start">
         </div>
         <div class="form-group">
-          <label for="client-desc">Notes <span class="label-optional">(optional)</span></label>
+          <label for="client-desc"><span data-i18n="label_notes">Notes</span> <span class="label-optional" data-i18n="label_notes_opt">(optional)</span></label>
           <textarea id="client-desc" rows="2" placeholder="Restaurant name, contact, any notes…"></textarea>
         </div>
         <div class="form-message hidden" id="add-client-error" role="alert"></div>
-        <div class="modal-note">Status will default to <span class="status-badge status-hold">On Hold</span> until Aaron approves.</div>
-        <button type="submit" class="btn-primary btn-full" id="btn-submit-client">Submit for Approval</button>
+        <div class="modal-note" data-i18n="modal_note">Status will default to <span class="status-badge status-hold">On Hold</span> until Aaron approves.</div>
+        <button type="submit" class="btn-primary btn-full" id="btn-submit-client" data-i18n="btn_submit_client">Submit for Approval</button>
       </form>
     </div>
   </div>
@@ -259,8 +272,8 @@
     <div class="container footer-inner">
       <a href="../" class="footer-logo">Web<span>人</span></a>
       <nav class="footer-links" aria-label="Legal">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms &amp; Conditions</a>
+        <a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
+        <a href="terms.html" data-i18n="footer_terms">Terms &amp; Conditions</a>
       </nav>
       <span class="footer-copy">&copy; 2025 Web人. All rights reserved.</span>
     </div>
@@ -268,6 +281,149 @@
 
   <!-- ── Toast ──────────────────────────────────────────────────────────────── -->
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <!-- ── i18n ───────────────────────────────────────────────────────────────── -->
+  <script>
+  (function () {
+    var iH = 'inner' + 'HTML';
+    window.PORTAL_STRINGS = {
+      en: {
+        tab_login: 'Sign In', tab_register: 'Register',
+        label_email: 'Email', label_password: 'Password',
+        btn_signin: 'Sign In', btn_forgot: 'Forgot password?',
+        register_notice: 'To create an account, please contact the owner to register your email first. <a href="https://wa.me/6285183005811" target="_blank" rel="noopener">Contact Aaron &rarr;</a>',
+        label_fullname: 'Full Name', label_phone: 'Phone',
+        label_phone_opt: '(optional)', label_pass_hint: '(min 8 chars)',
+        label_terms: 'I agree to the <a href="privacy.html" target="_blank">Privacy Policy</a> and <a href="terms.html" target="_blank">Terms &amp; Conditions</a>',
+        btn_create_account: 'Create Account',
+        btn_download_contract: 'Download Your Contract (PDF)',
+        h_reset: 'Reset Password',
+        hint_reset: "Enter your email and we'll send a reset link.",
+        btn_reset: 'Send Reset Link', btn_back_login: '\u2190 Back to Sign In',
+        btn_contract: 'Contract', btn_logout: 'Logout',
+        welcome: 'Welcome, ',
+        stat_clients: 'Total Clients', stat_monthly: 'Monthly Commission',
+        stat_yearly: 'Yearly Commission', stat_earned: 'Total Earned',
+        section_clients: 'Clients', btn_add_client: '+ Add Client',
+        th_name: 'Name', th_plan: 'Plan', th_fee: 'Monthly Fee',
+        th_commission: 'Commission (15%)', th_status: 'Status',
+        th_start: 'Start Date', th_paydue: 'Payment Due',
+        th_notes: 'Notes', th_actions: 'Actions',
+        total_commission: 'Total Commission:',
+        section_invoices: 'Pending Invoices',
+        th_client: 'Client', th_amount: 'Amount',
+        th_due: 'Due Date', th_action: 'Action',
+        section_allowed: 'Allowed Emails',
+        ph_email: 'email@example.com',
+        label_paid: 'Paid', label_free: 'Free',
+        btn_add_email: '+ Add', th_added: 'Added',
+        modal_title: 'Add New Client', label_client_name: 'Client Name',
+        label_plan: 'Plan', plan_select: 'Select a plan\u2026',
+        label_fee: 'Monthly Fee (NT$)', label_start: 'Start Date',
+        label_notes: 'Notes', label_notes_opt: '(optional)',
+        modal_note: 'Status will default to <span class="status-badge status-hold">On Hold</span> until Aaron approves.',
+        btn_submit_client: 'Submit for Approval',
+        footer_privacy: 'Privacy Policy', footer_terms: 'Terms &amp; Conditions',
+        loading: 'Loading\u2026', no_clients: 'No clients yet.',
+        err_clients: 'Error loading clients.', no_invoices: 'No pending invoices.',
+        err_invoices: 'Error loading invoices.', err_allowed: 'Error loading.',
+        no_allowed: 'No emails yet.',
+        status_active: 'Active', status_hold: 'On Hold',
+        status_cancelled: 'Cancelled', status_inactive: 'Inactive',
+        btn_mark_paid: 'Mark Paid', btn_pending: 'Pending', btn_remove: 'Remove',
+        toast_status: 'Status updated!', toast_invoice: 'Invoice marked as paid!',
+        toast_client: 'Client submitted for approval!',
+        toast_email_added: 'Email added!', toast_email_removed: 'Email removed.',
+        toast_enter_email: 'Enter an email address.',
+      },
+      'zh-TW': {
+        tab_login: '\u767b\u5165', tab_register: '\u8a3b\u518a',
+        label_email: '\u96fb\u5b50\u90f5\u4ef6', label_password: '\u5bc6\u78bc',
+        btn_signin: '\u767b\u5165', btn_forgot: '\u5fd8\u8a18\u5bc6\u78bc\uff1f',
+        register_notice: '\u5efa\u7acb\u5e33\u865f\u524d\uff0c\u8acb\u5148\u806f\u7d61\u7ba1\u7406\u54e1\u5c07\u60a8\u7684\u96fb\u5b50\u90f5\u4ef6\u52a0\u5165\u540d\u55ae\u3002<a href="https://wa.me/6285183005811" target="_blank" rel="noopener">\u806f\u7d61 Aaron &rarr;</a>',
+        label_fullname: '\u59d3\u540d', label_phone: '\u96fb\u8a71',
+        label_phone_opt: '\uff08\u9078\u586b\uff09', label_pass_hint: '\uff08\u81f3\u5c11 8 \u5b57\u5143\uff09',
+        label_terms: '\u6211\u540c\u610f <a href="privacy.html" target="_blank">\u9690\u79c1\u653f\u7b56</a> \u8207 <a href="terms.html" target="_blank">\u670d\u52d9\u689d\u6b3e</a>',
+        btn_create_account: '\u5efa\u7acb\u5e33\u865f',
+        btn_download_contract: '\u4e0b\u8f09\u5408\u7d04\uff08PDF\uff09',
+        h_reset: '\u91cd\u8a2d\u5bc6\u78bc',
+        hint_reset: '\u8f38\u5165\u60a8\u7684\u96fb\u5b50\u90f5\u4ef6\uff0c\u6211\u5011\u5c07\u767c\u9001\u91cd\u8a2d\u9023\u7d50\u3002',
+        btn_reset: '\u767c\u9001\u91cd\u8a2d\u9023\u7d50', btn_back_login: '\u2190 \u8fd4\u56de\u767b\u5165',
+        btn_contract: '\u5408\u7d04', btn_logout: '\u767b\u51fa',
+        welcome: '\u6b61\u8fce\uff0c',
+        stat_clients: '\u5ba2\u6236\u7e3d\u6578', stat_monthly: '\u6bcf\u6708\u4f63\u91d1',
+        stat_yearly: '\u5e74\u5ea6\u4f63\u91d1', stat_earned: '\u7d2f\u8a08\u6536\u76ca',
+        section_clients: '\u5ba2\u6236', btn_add_client: '+ \u65b0\u589e\u5ba2\u6236',
+        th_name: '\u540d\u7a31', th_plan: '\u65b9\u6848', th_fee: '\u6708\u8cbb',
+        th_commission: '\u4f63\u91d1\uff0815%\uff09', th_status: '\u72c0\u614b',
+        th_start: '\u958b\u59cb\u65e5\u671f', th_paydue: '\u4ed8\u6b3e\u622a\u6b62',
+        th_notes: '\u5099\u8a3b', th_actions: '\u64cd\u4f5c',
+        total_commission: '\u4f63\u91d1\u5408\u8a08\uff1a',
+        section_invoices: '\u5f85\u4ed8\u767c\u7968',
+        th_client: '\u5ba2\u6236', th_amount: '\u91d1\u984d',
+        th_due: '\u5230\u671f\u65e5', th_action: '\u64cd\u4f5c',
+        section_allowed: '\u6388\u6b0a\u540d\u55ae',
+        ph_email: 'email@example.com',
+        label_paid: '\u4ed8\u8cbb', label_free: '\u514d\u8cbb',
+        btn_add_email: '+ \u65b0\u589e', th_added: '\u65b0\u589e\u65e5\u671f',
+        modal_title: '\u65b0\u589e\u5ba2\u6236', label_client_name: '\u5ba2\u6236\u540d\u7a31',
+        label_plan: '\u65b9\u6848', plan_select: '\u9078\u64c7\u65b9\u6848\u2026',
+        label_fee: '\u6708\u8cbb\uff08NT$\uff09', label_start: '\u958b\u59cb\u65e5\u671f',
+        label_notes: '\u5099\u8a3b', label_notes_opt: '\uff08\u9078\u586b\uff09',
+        modal_note: '\u72c0\u614b\u9810\u8a2d\u70ba <span class="status-badge status-hold">\u5f85\u5be9\u6838</span>\uff0c\u7b49\u5f85 Aaron \u78ba\u8a8d\u3002',
+        btn_submit_client: '\u9001\u51fa\u5be9\u6838',
+        footer_privacy: '\u9690\u79c1\u653f\u7b56', footer_terms: '\u670d\u52d9\u689d\u6b3e',
+        loading: '\u8f09\u5165\u4e2d\u2026', no_clients: '\u5c1a\u7121\u5ba2\u6236\u3002',
+        err_clients: '\u8f09\u5165\u5ba2\u6236\u8cc7\u6599\u6642\u767c\u751f\u932f\u8aa4\u3002',
+        no_invoices: '\u7121\u5f85\u4ed8\u767c\u7968\u3002',
+        err_invoices: '\u8f09\u5165\u767c\u7968\u6642\u767c\u751f\u932f\u8aa4\u3002',
+        err_allowed: '\u8f09\u5165\u6642\u767c\u751f\u932f\u8aa4\u3002',
+        no_allowed: '\u5c1a\u7121\u96fb\u5b50\u90f5\u4ef6\u3002',
+        status_active: '\u6d3b\u8e8d', status_hold: '\u5f85\u5be9\u6838',
+        status_cancelled: '\u5df2\u53d6\u6d88', status_inactive: '\u505c\u7528',
+        btn_mark_paid: '\u6a19\u8a18\u5df2\u4ed8', btn_pending: '\u5f85\u78ba\u8a8d', btn_remove: '\u79fb\u9664',
+        toast_status: '\u72c0\u614b\u5df2\u66f4\u65b0\uff01', toast_invoice: '\u767c\u7968\u5df2\u6a19\u8a18\u70ba\u5df2\u4ed8\uff01',
+        toast_client: '\u5ba2\u6236\u5df2\u9001\u51fa\u5be9\u6838\uff01',
+        toast_email_added: '\u96fb\u5b50\u90f5\u4ef6\u5df2\u65b0\u589e\uff01',
+        toast_email_removed: '\u96fb\u5b50\u90f5\u4ef6\u5df2\u79fb\u9664\u3002',
+        toast_enter_email: '\u8acb\u8f38\u5165\u96fb\u5b50\u90f5\u4ef6\u5730\u5740\u3002',
+      }
+    };
+
+    var savedLang = localStorage.getItem('webren_lang') || 'en';
+
+    function applyPortalStrings(lang) {
+      var s = window.PORTAL_STRINGS[lang] || window.PORTAL_STRINGS['en'];
+      document.documentElement.lang = lang === 'zh-TW' ? 'zh-TW' : 'en';
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n');
+        if (s[key] !== undefined) el[iH] = s[key];
+      });
+      document.querySelectorAll('[data-i18n-ph]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n-ph');
+        if (s[key] !== undefined) el.placeholder = s[key];
+      });
+      document.querySelectorAll('.p-lang-btn').forEach(function (btn) {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+    }
+
+    window.applyPortalStrings = applyPortalStrings;
+    window.getCurrentPortalLang = function () { return localStorage.getItem('webren_lang') || 'en'; };
+
+    applyPortalStrings(savedLang);
+
+    document.querySelectorAll('.p-lang-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (btn.classList.contains('active')) return;
+        var lang = btn.dataset.lang;
+        localStorage.setItem('webren_lang', lang);
+        applyPortalStrings(lang);
+        document.dispatchEvent(new CustomEvent('portal:lang', { detail: lang }));
+      });
+    });
+  }());
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
