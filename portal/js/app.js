@@ -296,6 +296,8 @@ async function toggleAEFlag(id, field, val) {
 
 document.addEventListener('portal:lang', () => {
   if (window.applyPortalStrings) window.applyPortalStrings(localStorage.getItem('webren_lang') || 'en');
+  const welcomeEl = document.getElementById('header-welcome');
+  if (welcomeEl && agentName) welcomeEl.textContent = pt('welcome', 'Welcome, ') + agentName;
   renderClients(lastClients);
   renderInvoices(lastInvoices);
   if (currentUser && isAdmin) loadAllowedEmails();

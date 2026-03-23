@@ -16,6 +16,7 @@
     .p-lang-btn:hover { border-color:rgba(255,255,255,0.55); color:rgba(255,255,255,0.85); }
     .p-lang-btn.active { background:rgba(255,255,255,0.12); border-color:rgba(255,255,255,0.55); color:#fff; }
     .header-right { margin-left:auto; display:flex; align-items:center; gap:12px; }
+    body.lang-zh { font-family: 'Noto Sans TC', 'Space Grotesk', system-ui, sans-serif; }
   </style>
 </head>
 <body>
@@ -395,6 +396,7 @@
     function applyPortalStrings(lang) {
       var s = window.PORTAL_STRINGS[lang] || window.PORTAL_STRINGS['en'];
       document.documentElement.lang = lang === 'zh-TW' ? 'zh-TW' : 'en';
+      document.body.classList.toggle('lang-zh', lang === 'zh-TW');
       document.querySelectorAll('[data-i18n]').forEach(function (el) {
         var key = el.getAttribute('data-i18n');
         if (s[key] !== undefined) el[iH] = s[key];
