@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page Not Found | Web人</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/shared-nav.css?v=1">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #fff;
+      color: #0F172A;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .page-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .error-inner { max-width: 520px; }
+
+    /* Giant 404 */
+    .error-code {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(7rem, 20vw, 11rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, #0D9488 0%, #7C3AED 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      user-select: none;
+    }
+    .error-title {
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700;
+      color: #0F172A;
+      margin-bottom: 12px;
+    }
+    .error-sub {
+      font-size: 1rem;
+      color: #475569;
+      line-height: 1.65;
+      margin-bottom: 36px;
+    }
+    .btn-home {
+      display: inline-block;
+      background: #0D9488;
+      color: #fff;
+      padding: 13px 32px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-home:hover { opacity: 0.88; transform: translateY(-2px); }
+    .divider {
+      display: inline-block;
+      width: 1px;
+      height: 18px;
+      background: #CBD5E1;
+      margin: 0 16px;
+      vertical-align: middle;
+    }
+    .link-subtle {
+      color: #475569;
+      font-size: 0.9rem;
+      text-decoration: none;
+      vertical-align: middle;
+      transition: color 0.2s;
+    }
+    .link-subtle:hover { color: #0D9488; }
+  </style>
+</head>
+<body>
+
+  <script src="js/shared-nav.js?v=1" defer></script>
+
+  <div class="page-wrap">
+    <div class="error-inner">
+      <div class="error-code">404</div>
+      <h1 class="error-title">Page not found</h1>
+      <p class="error-sub">The page you're looking for doesn't exist or has been moved.<br>Let's get you back on track.</p>
+      <a href="/" class="btn-home">Go Home</a>
+      <span class="divider"></span>
+      <a href="/#contact" class="link-subtle">Contact us</a>
+    </div>
+  </div>
+
+</body>
+</html>
