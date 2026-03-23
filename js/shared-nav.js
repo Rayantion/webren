@@ -27,7 +27,6 @@
       <li><a href="${base}"${!isPricing && !isDemo ? ' class="active"' : ''}>Home</a></li>
       <li><a href="${base}pricing/"${isPricing ? ' class="active"' : ''}>Pricing</a></li>
       <li><a href="${base}#portfolio">Portfolio</a></li>
-      <li><a href="${base}#services">Services</a></li>
       <li><a href="${base}#features">Features</a></li>
       <li><a href="${base}#contact">Contact</a></li>
       <li><a href="${base}demo/"${isDemo ? ' class="active"' : ''}>Demo</a></li>
@@ -56,7 +55,6 @@
   <a href="${base}"${!isPricing && !isDemo ? ' class="active"' : ''}>Home</a>
   <a href="${base}pricing/"${isPricing ? ' class="active"' : ''}>Pricing</a>
   <a href="${base}#portfolio">Portfolio</a>
-  <a href="${base}#services">Services</a>
   <a href="${base}#features">Features</a>
   <a href="${base}#contact">Contact</a>
   <a href="${base}demo/"${isDemo ? ' class="active"' : ''}>Demo</a>
