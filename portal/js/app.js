@@ -11,6 +11,7 @@ function escHtml(str) {
 function escAttr(s) { return escHtml(s); }
 let currentUser = null;
 let isAdmin     = false;
+let agentName   = '';
 function statusBadge(status) {
   const map = { active: ['status-active', 'Active'], hold: ['status-hold', 'On Hold'], cancelled: ['status-cancelled', 'Cancelled'], inactive: ['status-inactive', 'Inactive'] };
   const cfg = map[status] || ['status-hold', status || 'Unknown'];
@@ -29,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('add-client-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
   document.getElementById('form-add-client').addEventListener('submit', handleAddClient);
   document.getElementById('btn-add-email').addEventListener('click', addAllowedEmail);
+  document.getElementById('btn-download-contract').addEventListener('click', () => downloadContract(agentName, new Date().toLocaleDateString('en-GB')));
+  document.getElementById('btn-download-contract-reg').addEventListener('click', function () { downloadContract(this.dataset.name, this.dataset.date); });
   document.getElementById('client-plan').addEventListener('change', e => {
     const fees = { 'Option A Basic': 3000, 'Option A Professional': 4500, 'Option A Premium': 5000 };
     const fee = (fees[e.target.value] != null) ? fees[e.target.value] : '';
@@ -43,8 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
 async function resolveAdmin() {
   const { data } = await sb.from('agents').select('is_admin, full_name').eq('id', currentUser.id).single();
   isAdmin = !!(data && data.is_admin);
-  const name = (data && data.full_name) || currentUser.email;
-  document.getElementById('header-welcome').textContent = 'Welcome, ' + name;
+  agentName = (data && data.full_name) || currentUser.email;
+  document.getElementById('header-welcome').textContent = 'Welcome, ' + agentName;
   document.getElementById('header-user').classList.remove('hidden');
   ['col-paydue', 'col-desc', 'col-approve'].forEach(id => document.getElementById(id).classList.toggle('hidden', !isAdmin));
   document.getElementById('allowed-emails-section').classList.toggle('hidden', !isAdmin);
@@ -69,7 +72,14 @@ async function handleRegister(e) {
   if (!allowed) { showMsg('reg-error', 'Registration closed. Contact Aaron to join.'); btn.disabled = false; return; }
   const { error } = await sb.auth.signUp({ email, password: pass, options: { data: { full_name: name, phone } } });
   if (error) { showMsg('reg-error', error.message); }
-  else { showMsg('reg-success', 'Account created! Please check your email to confirm.', true); e.target.reset(); }
+  else {
+    showMsg('reg-success', 'Account created! Please check your email to confirm.', true);
+    const dlBtn = document.getElementById('btn-download-contract-reg');
+    dlBtn.dataset.name = name;
+    dlBtn.dataset.date = new Date().toLocaleDateString('en-GB');
+    dlBtn.classList.remove('hidden');
+    e.target.reset();
+  }
   btn.disabled = false;
 }
 async function handleForgotPassword(e) {
@@ -272,4 +282,22 @@ async function toggleAEFlag(id, field, val) {
   upd[field] = val;
   const { error } = await sb.from('allowed_emails').update(upd).eq('id', id);
   if (error) showToast('Error updating.');
+}
+
+function downloadContract(name, date) {
+  if (typeof html2pdf === "undefined" || typeof contractHTML === "undefined") {
+    showToast('PDF library not loaded. Try again in a moment.'); return;
+  }
+  const safeName = name || 'Agent';
+  const safeDate = date || new Date().toLocaleDateString('en-GB');
+  const el = document.createElement('div');
+  el.innerHTML = contractHTML(escHtml(safeName), escHtml(safeDate));
+  el.style.cssText = 'position:fixed;left:-9999px;top:0;width:800px;';
+  document.body.appendChild(el);
+  html2pdf().set({
+    margin: 0,
+    filename: 'WebRen-Agent-Agreement.pdf',
+    html2canvas: { scale: 2, useCORS: true, logging: false },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  }).from(el).save().then(() => document.body.removeChild(el));
 }
