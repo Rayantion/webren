@@ -121,6 +121,10 @@ function showMode(mode, withTransition = true) {
       }
     });
   }
+  // Update nav links to point to mode-prefixed section IDs
+  document.querySelectorAll('[data-section]').forEach(el => {
+    el.href = `#${mode}-${el.dataset.section}`;
+  });
   initScrollReveal();
   if (window._updateModeSwitcher) window._updateModeSwitcher(mode);
 }
@@ -966,39 +970,12 @@ function getCurrentLang() {
   return (window.i18next?.language || 'en').startsWith('zh') ? 'zh' : 'en';
 }
 
-// ── Custom sort dropdown ──────────────────────────────────────────────────────
+// ── Native sort select ────────────────────────────────────────────────────────
 function initCustomSort(uiId, onchange) {
-  const wrap = document.getElementById(uiId);
-  if (!wrap) return () => 'relevance';
-
-  const btn   = wrap.querySelector('.custom-sort-btn');
-  const label = wrap.querySelector('.custom-sort-label');
-  const menu  = wrap.querySelector('.custom-sort-menu');
-
-  btn.addEventListener('click', e => {
-    e.stopPropagation();
-    const isOpen = wrap.classList.toggle('open');
-    btn.setAttribute('aria-expanded', isOpen);
-  });
-
-  wrap.querySelectorAll('.custom-sort-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      wrap.querySelectorAll('.custom-sort-option').forEach(o => o.classList.remove('active'));
-      opt.classList.add('active');
-      wrap.dataset.value = opt.dataset.value;
-      label.textContent = opt.textContent;
-      wrap.classList.remove('open');
-      btn.setAttribute('aria-expanded', 'false');
-      onchange(opt.dataset.value);
-    });
-  });
-
-  document.addEventListener('click', () => {
-    wrap.classList.remove('open');
-    btn.setAttribute('aria-expanded', 'false');
-  });
-
-  return () => wrap.dataset.value || 'relevance';
+  const el = document.getElementById(uiId);
+  if (!el) return () => 'relevance';
+  el.addEventListener('change', () => onchange(el.value));
+  return () => el.value || 'relevance';
 }
 
 // ── Generic catalog (search + sort + filter) ──────────────────────────────────

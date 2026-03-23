@@ -491,6 +491,7 @@ section { padding: 5rem 0; }
 .filter-tab.active { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-on-primary, #fff); }
 .filter-tab:hover:not(.active) { border-color: var(--color-primary); color: var(--color-primary); }
 .catalog-sort-row { display: flex; justify-content: flex-end; align-items: center; }
+.catalog-sort-select { padding: 0.4rem 0.75rem; border: 1px solid var(--color-border); border-radius: 0.4rem; background: var(--color-surface); color: var(--color-text); font-family: var(--font-body); font-size: 0.85rem; cursor: pointer; outline: none; }
 .catalog-sort {
   padding: 0.4rem 0.75rem;
   border: 1px solid var(--color-border); border-radius: 0.4rem;

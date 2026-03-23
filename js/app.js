@@ -208,14 +208,14 @@ function initCounters() {
 // ─── Language Toggle ──────────────────────────────────────────────────────────
 function initLangToggle() {
   const overlay = document.getElementById('lang-overlay');
-  
+
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       if (btn.classList.contains('active')) return;
-      
+
       // Trigger dropdown fill animation
       overlay.classList.add('active');
-      
+
       I18N.switchLanguage(btn.dataset.lang).then(() => {
         setTimeout(() => {
           overlay.classList.remove('active');
@@ -263,7 +263,7 @@ function initPageTransitions() {
     link.addEventListener('click', e => {
       const target = document.querySelector(link.getAttribute('href'));
       if (!target) return;
-      
+
       e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth' });
     });

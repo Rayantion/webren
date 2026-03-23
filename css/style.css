@@ -327,6 +327,21 @@ h1, h2, h3, h4 {
 
 #mobile-menu a:hover { background: var(--bg-soft); }
 
+.mobile-lang-row {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}
+.mobile-lang-row .lang-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 #menu-overlay {
   display: none;
   position: fixed;
