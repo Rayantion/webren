@@ -61,6 +61,13 @@
 #shared-nav .nav-links a:hover, #shared-nav .nav-links a.active {
   color: var(--nav-text); background: var(--nav-bg-soft);
 }
+#shared-nav .nav-links a.nav-portal-link {
+  background: var(--nav-teal, #0D9488); color: #fff;
+  border-radius: 8px; font-weight: 600;
+}
+#shared-nav .nav-links a.nav-portal-link:hover {
+  opacity: 0.88; background: var(--nav-teal, #0D9488); color: #fff;
+}
 #shared-nav .nav-right {
   display: flex; align-items: center; gap: 12px;
 }

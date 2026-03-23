@@ -8,7 +8,8 @@
   // e.g. /webren/ → depth 0, /webren/pricing/ → depth 1
   const isDemo    = path.includes('/demo/');
   const isPricing = path.includes('/pricing/');
-  const base = (isDemo || isPricing) ? '../' : './';
+  const isJoin    = path.includes('/join/');
+  const base = (isDemo || isPricing || isJoin) ? '../' : './';
 
   // ── Current lang (used to set active button) ─────────────────────────
   const savedLang = localStorage.getItem('webren_lang') ||
@@ -30,6 +31,8 @@
       <li><a href="${base}#features">Features</a></li>
       <li><a href="${base}#contact">Contact</a></li>
       <li><a href="${base}demo/"${isDemo ? ' class="active"' : ''}>Demo</a></li>
+      <li><a href="${base}join/"${isJoin ? ' class="active"' : ''}>Join Us</a></li>
+      <li><a href="${base}portal/" class="nav-portal-link">Portal</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang-toggle">
@@ -57,6 +60,8 @@
   <a href="${base}#features">Features</a>
   <a href="${base}#contact">Contact</a>
   <a href="${base}demo/"${isDemo ? ' class="active"' : ''}>Demo</a>
+  <a href="${base}join/"${isJoin ? ' class="active"' : ''}>Join Us</a>
+  <a href="${base}portal/">Portal</a>
   <div class="mobile-menu-lang">
     <button class="lang-btn${savedLang === 'en' ? ' active' : ''}" data-lang="en">EN</button>
     <button class="lang-btn${savedLang !== 'en' ? ' active' : ''}" data-lang="zh-TW">中文</button>

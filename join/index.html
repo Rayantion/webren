@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Us — Web人 Agent Programme</title>
+  <meta name="description" content="Earn passive income by referring clients to Web人. 15% monthly commission, no tech knowledge needed. Join our agent programme today.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/shared-nav.css?v=1">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0B0F19;
+      --bg-card:    #111827;
+      --bg-soft:    rgba(255,255,255,0.05);
+      --border:     rgba(255,255,255,0.08);
+      --text:       #F3F4F6;
+      --text-2:     #9CA3AF;
+      --teal:       #0D9488;
+      --teal-soft:  rgba(13,148,136,0.12);
+      --teal-glow:  rgba(13,148,136,0.25);
+      --green:      #22C55E;
+      --transition: 0.2s ease;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Hero ─────────────────────────────────────────────────────────── */
+    .join-hero {
+      padding: 120px 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .join-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, var(--teal-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--teal-soft); border: 1px solid var(--teal);
+      color: var(--teal); border-radius: 100px;
+      padding: 6px 16px; font-size: 0.82rem; font-weight: 600;
+      margin-bottom: 24px; letter-spacing: 0.03em;
+    }
+    .hero-badge-dot {
+      width: 7px; height: 7px; background: var(--teal);
+      border-radius: 50%; animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .join-hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 700; line-height: 1.15;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .join-hero h1 span {
+      background: linear-gradient(135deg, var(--teal) 0%, #34D399 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .join-hero p {
+      font-size: 1.15rem; color: var(--text-2);
+      max-width: 560px; margin: 0 auto 40px;
+    }
+    .hero-cta-group {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--teal); color: #fff;
+      padding: 14px 32px; border-radius: 10px;
+      font-weight: 700; font-size: 1rem;
+      text-decoration: none;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-ghost {
+      display: inline-block;
+      border: 1px solid var(--border); color: var(--text-2);
+      padding: 14px 32px; border-radius: 10px;
+      font-weight: 600; font-size: 1rem;
+      text-decoration: none;
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .btn-ghost:hover { border-color: var(--teal); color: var(--text); }
+
+    /* ── Stats bar ────────────────────────────────────────────────────── */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; margin: 0 0 80px;
+    }
+    .stat-item {
+      background: var(--bg-card);
+      padding: 28px 24px; text-align: center;
+    }
+    .stat-num {
+      font-size: 2.2rem; font-weight: 700;
+      color: var(--teal); line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label { font-size: 0.88rem; color: var(--text-2); }
+
+    /* ── Section headers ──────────────────────────────────────────────── */
+    .section { padding: 80px 0; }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-tag {
+      display: inline-block;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .section-header h2 {
+      font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+      font-weight: 700; margin-bottom: 12px;
+    }
+    .section-header p { color: var(--text-2); max-width: 500px; margin: 0 auto; }
+
+    /* ── How it works ─────────────────────────────────────────────────── */
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border); border-radius: 16px;
+      padding: 32px 28px;
+      position: relative;
+      transition: border-color var(--transition);
+    }
+    .step-card:hover { border-color: var(--teal); }
+    .step-num {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--teal-soft); border: 1px solid var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 700; color: var(--teal);
+      margin-bottom: 20px;
+    }
+    .step-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; }
+    .step-card p { color: var(--text-2); font-size: 0.92rem; line-height: 1.6; }
+
+    /* ── Pricing ──────────────────────────────────────────────────────── */
+    .pricing-section { background: var(--bg-card); }
+    .pricing-cards {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 24px; max-width: 720px; margin: 0 auto;
+    }
+    .pricing-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 20px; padding: 36px 32px;
+      position: relative; overflow: hidden;
+    }
+    .pricing-card.featured {
+      border-color: var(--teal);
+      background: linear-gradient(135deg, rgba(13,148,136,0.08) 0%, var(--bg) 60%);
+    }
+    .pricing-badge {
+      display: inline-block;
+      background: var(--teal); color: #fff;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; border-radius: 100px;
+      padding: 4px 12px; margin-bottom: 20px;
+    }
+    .pricing-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+    .pricing-price {
+      margin: 16px 0 8px;
+    }
+    .pricing-price .amount {
+      font-size: 2.4rem; font-weight: 700; line-height: 1;
+    }
+    .pricing-price .period { color: var(--text-2); font-size: 0.9rem; margin-left: 4px; }
+    .pricing-price .original {
+      text-decoration: line-through; color: var(--text-2);
+      font-size: 1rem; margin-left: 10px;
+    }
+    .pricing-card .note { color: var(--text-2); font-size: 0.88rem; margin-bottom: 24px; }
+    .pricing-card ul { list-style: none; padding: 0; }
+    .pricing-card ul li {
+      padding: 8px 0; border-top: 1px solid var(--border);
+      font-size: 0.9rem; color: var(--text-2);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .pricing-card ul li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; }
+
+    /* ── What You Get ─────────────────────────────────────────────────── */
+    .perks-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .perk-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px 24px;
+      display: flex; gap: 18px; align-items: flex-start;
+    }
+    .perk-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: var(--teal-soft); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .perk-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+    .perk-card p { color: var(--text-2); font-size: 0.88rem; line-height: 1.55; }
+
+    /* ── FAQ ──────────────────────────────────────────────────────────── */
+    .faq-list { max-width: 720px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--border); padding: 24px 0;
+    }
+    .faq-item:first-child { padding-top: 0; }
+    .faq-item h3 { font-size: 1rem; font-weight: 600; margin-bottom: 10px; }
+    .faq-item p { color: var(--text-2); font-size: 0.92rem; line-height: 1.65; }
+
+    /* ── Final CTA ────────────────────────────────────────────────────── */
+    .cta-section {
+      padding: 80px 0;
+      text-align: center;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, var(--teal-soft) 0%, rgba(52,211,153,0.06) 100%);
+      border: 1px solid var(--teal);
+      border-radius: 24px; padding: 64px 48px;
+      max-width: 680px; margin: 0 auto;
+    }
+    .cta-box h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; margin-bottom: 14px; }
+    .cta-box p { color: var(--text-2); margin-bottom: 36px; font-size: 1rem; }
+    .spots-left {
+      display: inline-block;
+      background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3);
+      color: var(--green); border-radius: 100px;
+      padding: 5px 16px; font-size: 0.82rem; font-weight: 600;
+      margin-bottom: 28px;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .steps-grid { grid-template-columns: 1fr; }
+      .pricing-cards { grid-template-columns: 1fr; }
+      .perks-grid { grid-template-columns: 1fr; }
+      .stats-bar { grid-template-columns: 1fr; }
+      .join-hero { padding: 100px 0 60px; }
+      .cta-box { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <script src="../js/shared-nav.js?v=1" defer></script>
+
+  <!-- ── Hero ─────────────────────────────────────────────────────────────── -->
+  <section class="join-hero">
+    <div class="container">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        Agent Programme — Now Open
+      </div>
+      <h1>Turn Your Connections Into<br><span>Passive Income</span></h1>
+      <p>Refer businesses to Web人, earn 15% monthly commission — for as long as they stay with us. No tech knowledge needed.</p>
+      <div class="hero-cta-group">
+        <a href="../portal/" class="btn-primary">Apply Now &rarr;</a>
+        <a href="#how-it-works" class="btn-ghost">How It Works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats ─────────────────────────────────────────────────────────────── -->
+  <div class="container">
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num">15%</div>
+        <div class="stat-label">Commission per client, every month</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">NT$450+</div>
+        <div class="stat-label">Earned per client per month</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">20</div>
+        <div class="stat-label">Free spots — first come, first served</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── How It Works ──────────────────────────────────────────────────────── -->
+  <section id="how-it-works" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">The Process</div>
+        <h2>Three Steps to Your First Commission</h2>
+        <p>No cold calling, no tech skills. Just connect people who need websites with us.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Register &amp; Get Approved</h3>
+          <p>Create your agent account on the portal. Aaron reviews and activates your account within 24 hours.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Refer a Business</h3>
+          <p>Know a restaurant, shop, or company that needs a website? Introduce them to Web人 and log the lead in your portal.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Earn Every Month</h3>
+          <p>Once your client goes active, you earn 15% of their monthly plan — automatically, month after month.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Pricing ───────────────────────────────────────────────────────────── -->
+  <section class="section pricing-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Agent Fee</div>
+        <h2>One Small Fee. Unlimited Earning Potential.</h2>
+        <p>The fee covers your portal access and agent account management.</p>
+      </div>
+      <div class="pricing-cards">
+        <div class="pricing-card featured">
+          <div class="pricing-badge">First 20 Agents</div>
+          <h3>Founding Agent</h3>
+          <div class="pricing-price">
+            <span class="amount" style="color: var(--teal);">FREE</span>
+            <span class="original">NT$200/mo</span>
+          </div>
+          <p class="note">No monthly fee. Yours to keep forever.</p>
+          <ul>
+            <li>Full portal access</li>
+            <li>Real-time commission dashboard</li>
+            <li>Priority support from Aaron</li>
+            <li>Founding agent status</li>
+          </ul>
+        </div>
+        <div class="pricing-card">
+          <h3>Standard Agent</h3>
+          <div class="pricing-price">
+            <span class="amount">NT$200</span>
+            <span class="period">/month</span>
+          </div>
+          <p class="note">After the first 20 founding spots fill up.</p>
+          <ul>
+            <li>Full portal access</li>
+            <li>Real-time commission dashboard</li>
+            <li>Email support</li>
+            <li>Unlimited client referrals</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── What You Get ───────────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Benefits</div>
+        <h2>What You Get as an Agent</h2>
+      </div>
+      <div class="perks-grid">
+        <div class="perk-card">
+          <div class="perk-icon">💸</div>
+          <div>
+            <h3>Recurring Commission</h3>
+            <p>15% of your client's monthly plan, paid every month they stay active. NT$3,000 plan = NT$450/mo per client.</p>
+          </div>
+        </div>
+        <div class="perk-card">
+          <div class="perk-icon">📊</div>
+          <div>
+            <h3>Live Dashboard</h3>
+            <p>See all your clients, their status, and your total commission in real time — right from your portal.</p>
+          </div>
+        </div>
+        <div class="perk-card">
+          <div class="perk-icon">🤝</div>
+          <div>
+            <h3>We Handle Everything</h3>
+            <p>You bring the lead. We do the design, development, hosting, and support. You just watch your commission grow.</p>
+          </div>
+        </div>
+        <div class="perk-card">
+          <div class="perk-icon">🔒</div>
+          <div>
+            <h3>No Risk</h3>
+            <p>No targets, no pressure. Refer one client or ten — you only earn, never owe. Cancel anytime.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ───────────────────────────────────────────────────────────────── -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">FAQ</div>
+        <h2>Common Questions</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>Do I need any technical knowledge?</h3>
+          <p>Not at all. Your job is to refer people — we handle all the technical work. If your contact needs a website, just introduce them to us and log the lead in your portal.</p>
+        </div>
+        <div class="faq-item">
+          <h3>When do I get paid?</h3>
+          <p>Commission is tracked monthly through the portal. Once a client's payment is confirmed, your commission is marked and paid out to you. Aaron handles approvals directly.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How long do I earn commission?</h3>
+          <p>For as long as your client is on an active plan with Web人. There is no cap — a client who stays for 3 years means 3 years of commission for you.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is my spot really free?</h3>
+          <p>Yes — the first 20 agents to register and get approved pay NT$0/month, permanently. After that, new agents pay NT$200/month. Once you're in, you're in for free.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What plans can I refer clients to?</h3>
+          <p>Option A Basic (NT$3,000/mo), Option A Professional (NT$4,500/mo), Option A Premium (NT$5,000/mo), and custom Option B projects. Full pricing is on our <a href="../pricing/" style="color: var(--teal);">Pricing page</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ───────────────────────────────────────────────────────────────── -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <div class="spots-left">Only 20 founding spots available</div>
+        <h2>Ready to Start Earning?</h2>
+        <p>Create your agent account now. It takes 2 minutes and costs nothing.</p>
+        <a href="../portal/" class="btn-primary" style="font-size: 1.05rem; padding: 16px 40px;">
+          Register on the Portal &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

@@ -224,6 +224,17 @@ h1, h2, h3, h4 {
   color: var(--text);
   background: var(--bg-soft);
 }
+.nav-portal-link {
+  background: #0D9488 !important;
+  color: #fff !important;
+  border-radius: 8px;
+  font-weight: 600 !important;
+}
+.nav-portal-link:hover {
+  opacity: 0.88;
+  background: #0D9488 !important;
+  color: #fff !important;
+}
 
 .nav-right {
   display: flex;

@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-close-modal').addEventListener('click', closeModal);
   document.getElementById('add-client-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
   document.getElementById('form-add-client').addEventListener('submit', handleAddClient);
+  document.getElementById('btn-add-email').addEventListener('click', addAllowedEmail);
   document.getElementById('client-plan').addEventListener('change', e => {
     const fees = { 'Option A Basic': 3000, 'Option A Professional': 4500, 'Option A Premium': 5000 };
     const fee = (fees[e.target.value] != null) ? fees[e.target.value] : '';
@@ -46,6 +47,7 @@ async function resolveAdmin() {
   document.getElementById('header-welcome').textContent = 'Welcome, ' + name;
   document.getElementById('header-user').classList.remove('hidden');
   ['col-paydue', 'col-desc', 'col-approve'].forEach(id => document.getElementById(id).classList.toggle('hidden', !isAdmin));
+  document.getElementById('allowed-emails-section').classList.toggle('hidden', !isAdmin);
 }
 async function handleLogin(e) {
   e.preventDefault();
@@ -63,6 +65,8 @@ async function handleRegister(e) {
   const email = document.getElementById('reg-email').value.trim();
   const phone = document.getElementById('reg-phone').value.trim();
   const pass  = document.getElementById('reg-password').value;
+  const { data: allowed } = await sb.from('allowed_emails').select('id').eq('email', email).maybeSingle();
+  if (!allowed) { showMsg('reg-error', 'Registration closed. Contact Aaron to join.'); btn.disabled = false; return; }
   const { error } = await sb.auth.signUp({ email, password: pass, options: { data: { full_name: name, phone } } });
   if (error) { showMsg('reg-error', error.message); }
   else { showMsg('reg-success', 'Account created! Please check your email to confirm.', true); e.target.reset(); }
@@ -77,7 +81,10 @@ async function handleForgotPassword(e) {
   else { showMsg('forgot-success', 'Reset link sent - check your inbox.', true); }
 }
 async function handleLogout() { await sb.auth.signOut(); document.getElementById('header-user').classList.add('hidden'); }
-async function loadDashboard() { await Promise.all([loadClients(), loadInvoices()]); }
+async function loadDashboard() {
+  await Promise.all([loadClients(), loadInvoices()]);
+  if (isAdmin) loadAllowedEmails();
+}
 async function loadClients() {
   const tbody = document.getElementById('clients-tbody');
   const cols = isAdmin ? 9 : 6;
@@ -219,4 +226,50 @@ function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.remove('hidden');
   clearTimeout(t._timer); t._timer = setTimeout(() => t.classList.add('hidden'), 3000);
+}
+
+async function loadAllowedEmails() {
+  const tbody = document.getElementById('allowed-emails-tbody');
+  tbody.innerHTML = '<tr><td colspan="5" class="empty-row">Loading…</td></tr>';
+  const { data, error } = await sb.from('allowed_emails').select('*').order('created_at', { ascending: false });
+  if (error) { tbody.innerHTML = '<tr><td colspan="5" class="empty-row">Error loading.</td></tr>'; return; }
+  renderAllowedEmails(data || []);
+}
+function renderAllowedEmails(rows) {
+  const tbody = document.getElementById('allowed-emails-tbody');
+  if (!rows.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-row">No emails yet.</td></tr>'; return; }
+  tbody.innerHTML = rows.map(r => {
+    const added = r.created_at ? new Date(r.created_at).toLocaleDateString() : '—';
+    const paidChk = '<input type="checkbox" class="ae-paid" data-id="' + r.id + '"' + (r.is_paid ? ' checked' : '') + '>';
+    const freeChk = '<input type="checkbox" class="ae-free" data-id="' + r.id + '"' + (r.is_free ? ' checked' : '') + '>';
+    const del = '<button class="btn-remove-email" data-id="' + r.id + '">Remove</button>';
+    return '<tr><td>' + escHtml(r.email) + '</td><td>' + paidChk + '</td><td>' + freeChk + '</td><td>' + added + '</td><td>' + del + '</td></tr>';
+  }).join('');
+  tbody.querySelectorAll('.ae-paid').forEach(cb => cb.addEventListener('change', () => toggleAEFlag(cb.dataset.id, 'is_paid', cb.checked)));
+  tbody.querySelectorAll('.ae-free').forEach(cb => cb.addEventListener('change', () => toggleAEFlag(cb.dataset.id, 'is_free', cb.checked)));
+  tbody.querySelectorAll('.btn-remove-email').forEach(btn => btn.addEventListener('click', () => removeAllowedEmail(btn.dataset.id)));
+}
+async function addAllowedEmail() {
+  const emailEl = document.getElementById('new-allowed-email');
+  const email = emailEl.value.trim();
+  if (!email) { showToast('Enter an email address.'); return; }
+  const is_paid = document.getElementById('new-email-paid').checked;
+  const is_free = document.getElementById('new-email-free').checked;
+  const { error } = await sb.from('allowed_emails').insert({ email, is_paid, is_free });
+  if (error) { showToast('Error: ' + error.message); return; }
+  showToast('Email added!'); emailEl.value = '';
+  document.getElementById('new-email-paid').checked = false;
+  document.getElementById('new-email-free').checked = false;
+  loadAllowedEmails();
+}
+async function removeAllowedEmail(id) {
+  const { error } = await sb.from('allowed_emails').delete().eq('id', id);
+  if (error) { showToast('Error removing email.'); return; }
+  showToast('Email removed.'); loadAllowedEmails();
+}
+async function toggleAEFlag(id, field, val) {
+  const upd = {};
+  upd[field] = val;
+  const { error } = await sb.from('allowed_emails').update(upd).eq('id', id);
+  if (error) showToast('Error updating.');
 }

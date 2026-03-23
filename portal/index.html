@@ -175,6 +175,35 @@
         </table>
       </div>
 
+      <!-- Allowed Emails (Admin Only) -->
+      <div id="allowed-emails-section" class="hidden" style="margin-top:2.5rem;">
+        <div class="section-row">
+          <h2 class="section-title">Allowed Emails</h2>
+        </div>
+        <div class="add-email-row">
+          <input type="email" id="new-allowed-email" placeholder="email@example.com">
+          <label class="check-label"><input type="checkbox" id="new-email-paid"> Paid</label>
+          <label class="check-label"><input type="checkbox" id="new-email-free"> Free</label>
+          <button type="button" id="btn-add-email" class="btn-primary btn-sm">+ Add</button>
+        </div>
+        <div class="table-wrap" style="margin-top:12px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Paid</th>
+                <th>Free</th>
+                <th>Added</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="allowed-emails-tbody">
+              <tr><td colspan="5" class="empty-row">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   </main>
 
