@@ -11,6 +11,11 @@ function escHtml(str) {
 function escAttr(s) { return escHtml(s); }
 let currentUser = null;
 let isAdmin     = false;
+function statusBadge(status) {
+  const map = { active: ['status-active', 'Active'], hold: ['status-hold', 'On Hold'], cancelled: ['status-cancelled', 'Cancelled'], inactive: ['status-inactive', 'Inactive'] };
+  const cfg = map[status] || ['status-hold', status || 'Unknown'];
+  return '<span class="status-badge ' + cfg[0] + '">' + cfg[1] + '</span>';
+}
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.auth-tab').forEach(btn => btn.addEventListener('click', () => switchAuthTab(btn.dataset.tab)));
   document.getElementById('form-login').addEventListener('submit', handleLogin);
@@ -40,7 +45,7 @@ async function resolveAdmin() {
   const name = (data && data.full_name) || currentUser.email;
   document.getElementById('header-welcome').textContent = 'Welcome, ' + name;
   document.getElementById('header-user').classList.remove('hidden');
-  document.getElementById('col-approve').classList.toggle('hidden', !isAdmin);
+  ['col-paydue', 'col-desc', 'col-approve'].forEach(id => document.getElementById(id).classList.toggle('hidden', !isAdmin));
 }
 async function handleLogin(e) {
   e.preventDefault();
@@ -75,28 +80,51 @@ async function handleLogout() { await sb.auth.signOut(); document.getElementById
 async function loadDashboard() { await Promise.all([loadClients(), loadInvoices()]); }
 async function loadClients() {
   const tbody = document.getElementById('clients-tbody');
-  tbody.innerHTML = '<tr><td colspan="7" class="empty-row">Loading…</td></tr>';
+  const cols = isAdmin ? 9 : 6;
+  tbody.innerHTML = '<tr><td colspan="' + cols + '" class="empty-row">Loading…</td></tr>';
   const query = isAdmin ? sb.from('clients').select('*, agents(full_name)').order('created_at', { ascending: false }) : sb.from('clients').select('*').eq('agent_id', currentUser.id).order('created_at', { ascending: false });
   const { data, error } = await query;
-  if (error) { tbody.innerHTML = '<tr><td colspan="7" class="empty-row">Error loading clients.</td></tr>'; return; }
+  if (error) { tbody.innerHTML = '<tr><td colspan="' + cols + '" class="empty-row">Error loading clients.</td></tr>'; return; }
   renderClients(data || []); renderStats(data || []); await loadTotalEarned();
 }
 function renderClients(clients) {
   const tbody = document.getElementById('clients-tbody');
-  if (!clients.length) { tbody.innerHTML = '<tr><td colspan="7" class="empty-row">No clients yet.</td></tr>'; document.getElementById('total-commission').textContent = 'NT$0'; return; }
+  const cols = isAdmin ? 9 : 6;
+  if (!clients.length) { tbody.innerHTML = '<tr><td colspan="' + cols + '" class="empty-row">No clients yet.</td></tr>'; document.getElementById('total-commission').textContent = 'NT$0'; return; }
   let totalComm = 0;
   const rows = clients.map(c => {
     const fee = Number(c.monthly_fee) || 0; const comm = fee * COMMISSION;
     if (c.status === 'active') totalComm += comm;
-    const badge = c.status === 'active' ? '<span class="status-badge status-active">Active</span>' : '<span class="status-badge status-hold">On Hold</span>';
+    const badge = statusBadge(c.status);
     const agentInfo = (isAdmin && c.agents) ? '<span style="font-size:0.8rem;color:var(--text-muted)">' + escHtml(c.agents.full_name) + '</span><br>' : '';
-    const approveBtn = (isAdmin && c.status !== 'active') ? '<button type="button" class="btn-approve" data-id="' + escAttr(c.id) + '">Approve</button>' : '';
     const startDate = c.start_date ? new Date(c.start_date).toLocaleDateString() : '—';
-    return '<tr><td>' + agentInfo + escHtml(c.client_name) + '</td><td>' + escHtml(c.plan) + '</td><td>NT$' + fee.toLocaleString() + '</td><td>NT$' + comm.toLocaleString() + '</td><td>' + badge + '</td><td>' + startDate + '</td><td>' + approveBtn + '</td></tr>';
+    let adminCols = '';
+    if (isAdmin) {
+      const statuses = ['hold', 'active', 'cancelled', 'inactive'];
+      const labels   = { hold: 'On Hold', active: 'Active', cancelled: 'Cancelled', inactive: 'Inactive' };
+      const opts = statuses.map(s => '<option value="' + s + '"' + (c.status === s ? ' selected' : '') + '>' + labels[s] + '</option>').join('');
+      const due = c.payment_deadline ? new Date(c.payment_deadline).toLocaleDateString() : (c.status === 'hold' ? '7 days from start' : '—');
+      adminCols = '<td>' + due + '</td>'
+        + '<td><input class="desc-input" data-id="' + escAttr(c.id) + '" value="' + escAttr(c.description || '') + '" placeholder="Notes…"></td>'
+        + '<td><select class="status-select" data-id="' + escAttr(c.id) + '">' + opts + '</select></td>';
+    }
+    return '<tr><td>' + agentInfo + escHtml(c.client_name)
+      + '</td><td>' + escHtml(c.plan)
+      + '</td><td>NT$' + fee.toLocaleString()
+      + '</td><td>NT$' + comm.toLocaleString()
+      + '</td><td>' + badge
+      + '</td><td>' + startDate
+      + adminCols + '</tr>';
   });
   tbody.innerHTML = rows.join('');
   document.getElementById('total-commission').textContent = 'NT$' + totalComm.toLocaleString();
-  tbody.querySelectorAll('.btn-approve').forEach(btn => btn.addEventListener('click', () => approveClient(btn.dataset.id)));
+  if (isAdmin) {
+    tbody.querySelectorAll('.status-select').forEach(sel => sel.addEventListener('change', () => updateClientStatus(sel.dataset.id, sel.value)));
+    tbody.querySelectorAll('.desc-input').forEach(inp => {
+      let timer;
+      inp.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(() => updateClientDesc(inp.dataset.id, inp.value), 800); });
+    });
+  }
 }
 function renderStats(clients) {
   const active = clients.filter(c => c.status === 'active');
@@ -112,10 +140,14 @@ async function loadTotalEarned() {
   const total = (data || []).reduce((s, r) => s + Number(r.commission_amount), 0);
   document.getElementById('stat-earned').textContent = 'NT$' + total.toLocaleString();
 }
-async function approveClient(id) {
-  const { error } = await sb.from('clients').update({ status: 'active' }).eq('id', id);
-  if (error) { showToast('Error approving client.'); return; }
-  showToast('Client approved!'); loadClients();
+async function updateClientStatus(id, status) {
+  const { error } = await sb.from('clients').update({ status }).eq('id', id);
+  if (error) { showToast('Error updating status.'); loadClients(); return; }
+  showToast('Status updated!'); renderStats([]); loadClients();
+}
+async function updateClientDesc(id, description) {
+  const { error } = await sb.from('clients').update({ description }).eq('id', id);
+  if (error) showToast('Error saving notes.');
 }
 async function loadInvoices() {
   const tbody = document.getElementById('invoices-tbody');
@@ -148,12 +180,17 @@ async function handleAddClient(e) {
   e.preventDefault();
   const btn = document.getElementById('btn-submit-client');
   btn.disabled = true; showMsg('add-client-error', '');
+  const startVal = document.getElementById('client-start').value;
+  let payDeadline = null;
+  if (startVal) { const d = new Date(startVal); d.setDate(d.getDate() + 7); payDeadline = d.toISOString().split('T')[0]; }
   const { error } = await sb.from('clients').insert({
     agent_id: currentUser.id,
     client_name: document.getElementById('client-name').value.trim(),
     plan: document.getElementById('client-plan').value,
     monthly_fee: Number(document.getElementById('client-fee').value),
-    start_date: document.getElementById('client-start').value || null,
+    start_date: startVal || null,
+    payment_deadline: payDeadline,
+    description: document.getElementById('client-desc').value.trim() || null,
     status: 'hold',
   });
   if (error) { showMsg('add-client-error', error.message); }

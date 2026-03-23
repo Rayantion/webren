@@ -138,7 +138,9 @@
               <th>Commission (15%)</th>
               <th>Status</th>
               <th>Start Date</th>
-              <th id="col-approve" class="hidden">Approve</th>
+              <th id="col-paydue" class="hidden">Payment Due</th>
+              <th id="col-desc" class="hidden">Notes</th>
+              <th id="col-approve" class="hidden">Actions</th>
             </tr>
           </thead>
           <tbody id="clients-tbody">
@@ -205,6 +207,10 @@
         <div class="form-group">
           <label for="client-start">Start Date</label>
           <input type="date" id="client-start">
+        </div>
+        <div class="form-group">
+          <label for="client-desc">Notes <span class="label-optional">(optional)</span></label>
+          <textarea id="client-desc" rows="2" placeholder="Restaurant name, contact, any notes…"></textarea>
         </div>
         <div class="form-message hidden" id="add-client-error" role="alert"></div>
         <div class="modal-note">Status will default to <span class="status-badge status-hold">On Hold</span> until Aaron approves.</div>
