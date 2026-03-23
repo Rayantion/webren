@@ -5,458 +5,584 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Join Us — Web人 Agent Programme</title>
   <meta name="description" content="Earn passive income by referring clients to Web人. 15% monthly commission, no tech knowledge needed. Join our agent programme today.">
+  <meta name="keywords" content="web agent programme, passive income taiwan, referral commission, webren agent, Web人 代理">
+  <meta name="author" content="Web人">
   <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://rayantion.me/webren/join/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rayantion.me/webren/join/">
+  <meta property="og:title" content="Join Us — Web人 Agent Programme">
+  <meta property="og:description" content="Refer businesses to Web人 and earn 15% monthly commission forever. Free for the first 20 agents.">
+
+  <link rel="alternate" hreflang="en" href="https://rayantion.me/webren/join/">
+  <link rel="alternate" hreflang="zh-TW" href="https://rayantion.me/webren/join/?lang=zh-TW">
+  <link rel="alternate" hreflang="x-default" href="https://rayantion.me/webren/join/">
+
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/shared-nav.css?v=1">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/shared-nav.css">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:         #0B0F19;
-      --bg-card:    #111827;
-      --bg-soft:    rgba(255,255,255,0.05);
-      --border:     rgba(255,255,255,0.08);
-      --text:       #F3F4F6;
-      --text-2:     #9CA3AF;
-      --teal:       #0D9488;
-      --teal-soft:  rgba(13,148,136,0.12);
-      --teal-glow:  rgba(13,148,136,0.25);
-      --green:      #22C55E;
-      --transition: 0.2s ease;
+      --teal: #0D9488; --teal-dark: #0A7B72;
+      --violet: #7C3AED;
+      --bg: #FFFFFF; --bg-soft: #F8FAFC; --bg-card: #FFFFFF;
+      --bg-teal: #F0FDF9;
+      --border: #E2E8F0;
+      --text: #0F172A; --text-2: #475569; --text-3: #94A3B8;
+      --radius: 14px; --radius-lg: 24px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.07);
+      --shadow-lg: 0 16px 64px rgba(0,0,0,0.10);
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
     }
-
+    html { scroll-behavior: smooth; }
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Space Grotesk', sans-serif;
-      line-height: 1.6;
-      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; line-height: 1.7;
+      color: var(--text); background: var(--bg);
+      overflow-x: hidden;
     }
-
+    body.lang-zh { font-family: 'Noto Sans TC', 'Plus Jakarta Sans', sans-serif; }
+    h1,h2,h3,h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+    a { color: var(--teal); text-decoration: none; }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
-    /* ── Hero ─────────────────────────────────────────────────────────── */
+    /* Page transition */
+    #page-transition {
+      position: fixed; inset: 0; background: var(--teal);
+      transform: scaleY(0); transform-origin: top;
+      z-index: 9999; pointer-events: none;
+      transition: transform 0.4s ease-in-out;
+    }
+    #page-transition.active { transform: scaleY(1); pointer-events: all; }
+
+    /* Hero */
     .join-hero {
-      padding: 120px 0 80px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      padding: 6rem 0 4rem; text-align: center;
+      background: linear-gradient(180deg, var(--bg-teal) 0%, var(--bg) 100%);
     }
-    .join-hero::before {
-      content: '';
-      position: absolute;
-      top: -60px; left: 50%; transform: translateX(-50%);
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, var(--teal-glow) 0%, transparent 70%);
-      pointer-events: none;
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 14px; border-radius: 100px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.07em;
+      text-transform: uppercase; margin-bottom: 1.25rem;
     }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--teal-soft); border: 1px solid var(--teal);
-      color: var(--teal); border-radius: 100px;
-      padding: 6px 16px; font-size: 0.82rem; font-weight: 600;
-      margin-bottom: 24px; letter-spacing: 0.03em;
-    }
-    .hero-badge-dot {
-      width: 7px; height: 7px; background: var(--teal);
-      border-radius: 50%; animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
-    .join-hero h1 {
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
-      font-weight: 700; line-height: 1.15;
-      margin-bottom: 20px;
-      position: relative;
-    }
+    .badge-teal { background: rgba(13,148,136,0.1); color: var(--teal); border: 1px solid rgba(13,148,136,0.2); }
+    .badge-dot { width: 7px; height: 7px; background: var(--teal); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(0.8);} }
+    .join-hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin-bottom: 1rem; }
     .join-hero h1 span {
       background: linear-gradient(135deg, var(--teal) 0%, #34D399 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .join-hero p {
-      font-size: 1.15rem; color: var(--text-2);
-      max-width: 560px; margin: 0 auto 40px;
-    }
-    .hero-cta-group {
-      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
-    }
-    .btn-primary {
-      display: inline-block;
-      background: var(--teal); color: #fff;
-      padding: 14px 32px; border-radius: 10px;
-      font-weight: 700; font-size: 1rem;
-      text-decoration: none;
-      transition: transform var(--transition), opacity var(--transition);
-    }
-    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
-    .btn-ghost {
-      display: inline-block;
-      border: 1px solid var(--border); color: var(--text-2);
-      padding: 14px 32px; border-radius: 10px;
-      font-weight: 600; font-size: 1rem;
-      text-decoration: none;
-      transition: border-color var(--transition), color var(--transition);
-    }
-    .btn-ghost:hover { border-color: var(--teal); color: var(--text); }
+    .join-hero p { color: var(--text-2); font-size: 1.1rem; max-width: 560px; margin: 0 auto 2rem; }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-    /* ── Stats bar ────────────────────────────────────────────────────── */
+    /* Buttons */
+    .btn-primary {
+      background: var(--teal); color: #fff; border: none;
+      padding: 0.85rem 1.75rem; border-radius: 10px; cursor: pointer;
+      font-size: 1rem; font-weight: 600; font-family: inherit;
+      transition: all var(--transition); display: inline-flex; align-items: center; gap: 8px;
+      min-height: 50px; text-decoration: none;
+    }
+    .btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,148,136,0.3); }
+    .btn-outline {
+      background: transparent; color: var(--text); border: 1.5px solid var(--border);
+      padding: 0.85rem 1.75rem; border-radius: 10px; cursor: pointer;
+      font-size: 1rem; font-weight: 600; font-family: inherit;
+      transition: all var(--transition); display: inline-flex; align-items: center; gap: 8px;
+      min-height: 50px; text-decoration: none;
+    }
+    .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* Stats bar */
     .stats-bar {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: 16px;
-      overflow: hidden; margin: 0 0 80px;
+      border: 1.5px solid var(--border); border-radius: var(--radius-lg);
+      overflow: hidden; margin: 0 0 5rem;
+      box-shadow: var(--shadow);
     }
-    .stat-item {
-      background: var(--bg-card);
-      padding: 28px 24px; text-align: center;
-    }
-    .stat-num {
-      font-size: 2.2rem; font-weight: 700;
-      color: var(--teal); line-height: 1;
-      margin-bottom: 6px;
-    }
-    .stat-label { font-size: 0.88rem; color: var(--text-2); }
+    .stat-item { background: var(--bg-soft); padding: 2rem 1.5rem; text-align: center; }
+    .stat-item + .stat-item { border-left: 1.5px solid var(--border); }
+    .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; font-weight: 700; color: var(--teal); line-height: 1; margin-bottom: 6px; }
+    .stat-label { font-size: 0.875rem; color: var(--text-2); }
 
-    /* ── Section headers ──────────────────────────────────────────────── */
-    .section { padding: 80px 0; }
-    .section-header { text-align: center; margin-bottom: 56px; }
-    .section-tag {
-      display: inline-block;
-      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--teal);
-      margin-bottom: 12px;
-    }
-    .section-header h2 {
-      font-size: clamp(1.7rem, 3.5vw, 2.4rem);
-      font-weight: 700; margin-bottom: 12px;
-    }
+    /* Sections */
+    .section { padding: 5rem 0; }
+    .section-soft { background: var(--bg-soft); }
+    .section-teal { background: var(--bg-teal); }
+    .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .section-tag { display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+    .section-header h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); margin-bottom: 10px; }
     .section-header p { color: var(--text-2); max-width: 500px; margin: 0 auto; }
 
-    /* ── How it works ─────────────────────────────────────────────────── */
-    .steps-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
+    /* Steps */
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .step-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border); border-radius: 16px;
-      padding: 32px 28px;
-      position: relative;
-      transition: border-color var(--transition);
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 2rem 1.75rem;
+      box-shadow: var(--shadow); transition: border-color var(--transition), transform var(--transition);
     }
-    .step-card:hover { border-color: var(--teal); }
+    .step-card:hover { border-color: var(--teal); transform: translateY(-3px); }
     .step-num {
       width: 44px; height: 44px; border-radius: 12px;
-      background: var(--teal-soft); border: 1px solid var(--teal);
+      background: rgba(13,148,136,0.1); border: 1.5px solid rgba(13,148,136,0.25);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; font-weight: 700; color: var(--teal);
-      margin-bottom: 20px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--teal);
+      margin-bottom: 1.25rem;
     }
-    .step-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; }
-    .step-card p { color: var(--text-2); font-size: 0.92rem; line-height: 1.6; }
+    .step-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .step-card p { color: var(--text-2); font-size: 0.9rem; line-height: 1.65; }
 
-    /* ── Pricing ──────────────────────────────────────────────────────── */
-    .pricing-section { background: var(--bg-card); }
-    .pricing-cards {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 24px; max-width: 720px; margin: 0 auto;
-    }
+    /* Pricing */
+    .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 720px; margin: 0 auto; }
     .pricing-card {
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: 20px; padding: 36px 32px;
-      position: relative; overflow: hidden;
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2.25rem 2rem;
+      box-shadow: var(--shadow);
     }
     .pricing-card.featured {
       border-color: var(--teal);
-      background: linear-gradient(135deg, rgba(13,148,136,0.08) 0%, var(--bg) 60%);
+      background: linear-gradient(135deg, rgba(13,148,136,0.04) 0%, var(--bg-card) 60%);
+      box-shadow: 0 0 0 1px var(--teal), var(--shadow-lg);
     }
-    .pricing-badge {
-      display: inline-block;
-      background: var(--teal); color: #fff;
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
-      text-transform: uppercase; border-radius: 100px;
-      padding: 4px 12px; margin-bottom: 20px;
-    }
-    .pricing-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
-    .pricing-price {
-      margin: 16px 0 8px;
-    }
-    .pricing-price .amount {
-      font-size: 2.4rem; font-weight: 700; line-height: 1;
-    }
-    .pricing-price .period { color: var(--text-2); font-size: 0.9rem; margin-left: 4px; }
-    .pricing-price .original {
-      text-decoration: line-through; color: var(--text-2);
-      font-size: 1rem; margin-left: 10px;
-    }
-    .pricing-card .note { color: var(--text-2); font-size: 0.88rem; margin-bottom: 24px; }
-    .pricing-card ul { list-style: none; padding: 0; }
-    .pricing-card ul li {
-      padding: 8px 0; border-top: 1px solid var(--border);
-      font-size: 0.9rem; color: var(--text-2);
-      display: flex; align-items: center; gap: 10px;
-    }
-    .pricing-card ul li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; }
+    .pricing-badge { display: inline-block; background: var(--teal); color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 100px; padding: 3px 12px; margin-bottom: 1.25rem; }
+    .pricing-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+    .pricing-price { margin: 1rem 0 6px; display: flex; align-items: baseline; gap: 6px; }
+    .pricing-price .amount { font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 700; line-height: 1; }
+    .pricing-price .period { color: var(--text-2); font-size: 0.9rem; }
+    .pricing-price .original { text-decoration: line-through; color: var(--text-3); font-size: 1rem; }
+    .pricing-note { color: var(--text-2); font-size: 0.875rem; margin-bottom: 1.5rem; }
+    .pricing-card ul { list-style: none; padding: 0; border-top: 1.5px solid var(--border); }
+    .pricing-card ul li { padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--text-2); display: flex; align-items: center; gap: 10px; }
+    .pricing-card ul li::before { content: "✓"; color: var(--teal); font-weight: 700; flex-shrink: 0; }
 
-    /* ── What You Get ─────────────────────────────────────────────────── */
-    .perks-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
+    /* Perks */
+    .perks-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
     .perk-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 14px; padding: 28px 24px;
-      display: flex; gap: 18px; align-items: flex-start;
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem 1.5rem;
+      display: flex; gap: 1.1rem; align-items: flex-start;
+      box-shadow: var(--shadow); transition: border-color var(--transition);
     }
-    .perk-icon {
-      width: 44px; height: 44px; flex-shrink: 0;
-      background: var(--teal-soft); border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem;
-    }
-    .perk-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
-    .perk-card p { color: var(--text-2); font-size: 0.88rem; line-height: 1.55; }
+    .perk-card:hover { border-color: var(--teal); }
+    .perk-icon { width: 44px; height: 44px; flex-shrink: 0; background: rgba(13,148,136,0.08); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+    .perk-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 5px; }
+    .perk-card p { color: var(--text-2); font-size: 0.875rem; line-height: 1.6; }
 
-    /* ── FAQ ──────────────────────────────────────────────────────────── */
+    /* FAQ */
     .faq-list { max-width: 720px; margin: 0 auto; }
-    .faq-item {
-      border-bottom: 1px solid var(--border); padding: 24px 0;
+    .faq-item { border: 1.5px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; }
+    .faq-q {
+      width: 100%; background: none; border: none; cursor: pointer;
+      padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between;
+      font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600;
+      color: var(--text); text-align: left; transition: background var(--transition);
     }
-    .faq-item:first-child { padding-top: 0; }
-    .faq-item h3 { font-size: 1rem; font-weight: 600; margin-bottom: 10px; }
-    .faq-item p { color: var(--text-2); font-size: 0.92rem; line-height: 1.65; }
+    .faq-q:hover { background: var(--bg-soft); }
+    .faq-icon { font-size: 1.2rem; color: var(--teal); transition: transform 0.3s ease; flex-shrink: 0; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; padding: 0 1.5rem; }
+    .faq-a p { color: var(--text-2); font-size: 0.92rem; line-height: 1.7; padding-bottom: 1.25rem; }
+    .faq-item.open .faq-a { max-height: 300px; }
 
-    /* ── Final CTA ────────────────────────────────────────────────────── */
-    .cta-section {
-      padding: 80px 0;
-      text-align: center;
-    }
-    .cta-box {
-      background: linear-gradient(135deg, var(--teal-soft) 0%, rgba(52,211,153,0.06) 100%);
-      border: 1px solid var(--teal);
-      border-radius: 24px; padding: 64px 48px;
-      max-width: 680px; margin: 0 auto;
-    }
-    .cta-box h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; margin-bottom: 14px; }
-    .cta-box p { color: var(--text-2); margin-bottom: 36px; font-size: 1rem; }
-    .spots-left {
-      display: inline-block;
-      background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3);
-      color: var(--green); border-radius: 100px;
-      padding: 5px 16px; font-size: 0.82rem; font-weight: 600;
-      margin-bottom: 28px;
-    }
+    /* CTA */
+    .cta-section { padding: 5rem 0; background: var(--bg-teal); }
+    .cta-box { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 4rem 3rem; max-width: 680px; margin: 0 auto; box-shadow: var(--shadow-lg); text-align: center; }
+    .cta-box h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 12px; }
+    .cta-box p { color: var(--text-2); margin-bottom: 2.25rem; font-size: 1rem; }
+    .spots-badge { display: inline-block; background: rgba(13,148,136,0.08); border: 1px solid rgba(13,148,136,0.2); color: var(--teal); border-radius: 100px; padding: 5px 16px; font-size: 0.82rem; font-weight: 600; margin-bottom: 1.75rem; }
 
-    /* ── Responsive ───────────────────────────────────────────────────── */
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
     @media (max-width: 768px) {
-      .steps-grid { grid-template-columns: 1fr; }
-      .pricing-cards { grid-template-columns: 1fr; }
-      .perks-grid { grid-template-columns: 1fr; }
+      .steps-grid, .pricing-grid, .perks-grid { grid-template-columns: 1fr; }
       .stats-bar { grid-template-columns: 1fr; }
-      .join-hero { padding: 100px 0 60px; }
-      .cta-box { padding: 40px 24px; }
+      .stat-item + .stat-item { border-left: none; border-top: 1.5px solid var(--border); }
+      .join-hero { padding: 5rem 0 3rem; }
+      .cta-box { padding: 2.5rem 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <script src="../js/shared-nav.js?v=1" defer></script>
+  <div id="page-transition"></div>
+  <script src="../js/shared-nav.js" defer></script>
 
-  <!-- ── Hero ─────────────────────────────────────────────────────────────── -->
+  <!-- Hero -->
   <section class="join-hero">
     <div class="container">
-      <div class="hero-badge">
-        <div class="hero-badge-dot"></div>
-        Agent Programme — Now Open
+      <div class="badge badge-teal">
+        <span class="badge-dot"></span>
+        <span data-i18n="badge"></span>
       </div>
-      <h1>Turn Your Connections Into<br><span>Passive Income</span></h1>
-      <p>Refer businesses to Web人, earn 15% monthly commission — for as long as they stay with us. No tech knowledge needed.</p>
-      <div class="hero-cta-group">
-        <a href="../portal/" class="btn-primary">Apply Now &rarr;</a>
-        <a href="#how-it-works" class="btn-ghost">How It Works</a>
+      <h1 data-i18n="hero_h1"></h1>
+      <p data-i18n="hero_p"></p>
+      <div class="hero-actions">
+        <a href="../portal/" class="btn-primary" data-i18n="hero_cta1"></a>
+        <a href="#how-it-works" class="btn-outline" data-i18n="hero_cta2"></a>
       </div>
     </div>
   </section>
 
-  <!-- ── Stats ─────────────────────────────────────────────────────────────── -->
+  <!-- Stats -->
   <div class="container">
-    <div class="stats-bar">
+    <div class="stats-bar reveal">
       <div class="stat-item">
         <div class="stat-num">15%</div>
-        <div class="stat-label">Commission per client, every month</div>
+        <div class="stat-label" data-i18n="stat1"></div>
       </div>
       <div class="stat-item">
         <div class="stat-num">NT$450+</div>
-        <div class="stat-label">Earned per client per month</div>
+        <div class="stat-label" data-i18n="stat2"></div>
       </div>
       <div class="stat-item">
         <div class="stat-num">20</div>
-        <div class="stat-label">Free spots — first come, first served</div>
+        <div class="stat-label" data-i18n="stat3"></div>
       </div>
     </div>
   </div>
 
-  <!-- ── How It Works ──────────────────────────────────────────────────────── -->
-  <section id="how-it-works" class="section">
+  <!-- How It Works -->
+  <section id="how-it-works" class="section section-soft">
     <div class="container">
-      <div class="section-header">
-        <div class="section-tag">The Process</div>
-        <h2>Three Steps to Your First Commission</h2>
-        <p>No cold calling, no tech skills. Just connect people who need websites with us.</p>
+      <div class="section-header reveal">
+        <div class="section-tag" data-i18n="hiw_tag"></div>
+        <h2 data-i18n="hiw_h2"></h2>
+        <p data-i18n="hiw_p"></p>
       </div>
       <div class="steps-grid">
-        <div class="step-card">
+        <div class="step-card reveal">
           <div class="step-num">1</div>
-          <h3>Register &amp; Get Approved</h3>
-          <p>Create your agent account on the portal. Aaron reviews and activates your account within 24 hours.</p>
+          <h3 data-i18n="step1_h"></h3>
+          <p data-i18n="step1_p"></p>
         </div>
-        <div class="step-card">
+        <div class="step-card reveal">
           <div class="step-num">2</div>
-          <h3>Refer a Business</h3>
-          <p>Know a restaurant, shop, or company that needs a website? Introduce them to Web人 and log the lead in your portal.</p>
+          <h3 data-i18n="step2_h"></h3>
+          <p data-i18n="step2_p"></p>
         </div>
-        <div class="step-card">
+        <div class="step-card reveal">
           <div class="step-num">3</div>
-          <h3>Earn Every Month</h3>
-          <p>Once your client goes active, you earn 15% of their monthly plan — automatically, month after month.</p>
+          <h3 data-i18n="step3_h"></h3>
+          <p data-i18n="step3_p"></p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── Pricing ───────────────────────────────────────────────────────────── -->
-  <section class="section pricing-section">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Agent Fee</div>
-        <h2>One Small Fee. Unlimited Earning Potential.</h2>
-        <p>The fee covers your portal access and agent account management.</p>
-      </div>
-      <div class="pricing-cards">
-        <div class="pricing-card featured">
-          <div class="pricing-badge">First 20 Agents</div>
-          <h3>Founding Agent</h3>
-          <div class="pricing-price">
-            <span class="amount" style="color: var(--teal);">FREE</span>
-            <span class="original">NT$200/mo</span>
-          </div>
-          <p class="note">No monthly fee. Yours to keep forever.</p>
-          <ul>
-            <li>Full portal access</li>
-            <li>Real-time commission dashboard</li>
-            <li>Priority support from Aaron</li>
-            <li>Founding agent status</li>
-          </ul>
-        </div>
-        <div class="pricing-card">
-          <h3>Standard Agent</h3>
-          <div class="pricing-price">
-            <span class="amount">NT$200</span>
-            <span class="period">/month</span>
-          </div>
-          <p class="note">After the first 20 founding spots fill up.</p>
-          <ul>
-            <li>Full portal access</li>
-            <li>Real-time commission dashboard</li>
-            <li>Email support</li>
-            <li>Unlimited client referrals</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── What You Get ───────────────────────────────────────────────────────── -->
+  <!-- Pricing -->
   <section class="section">
     <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Benefits</div>
-        <h2>What You Get as an Agent</h2>
+      <div class="section-header reveal">
+        <div class="section-tag" data-i18n="price_tag"></div>
+        <h2 data-i18n="price_h2"></h2>
+        <p data-i18n="price_p"></p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card featured reveal">
+          <div class="pricing-badge" data-i18n="free_badge"></div>
+          <h3 data-i18n="free_h"></h3>
+          <div class="pricing-price">
+            <span class="amount" style="color:var(--teal);" data-i18n="free_amount"></span>
+            <span class="original">NT$200/mo</span>
+          </div>
+          <p class="pricing-note" data-i18n="free_note"></p>
+          <ul>
+            <li data-i18n="free_f1"></li>
+            <li data-i18n="free_f2"></li>
+            <li data-i18n="free_f3"></li>
+            <li data-i18n="free_f4"></li>
+          </ul>
+        </div>
+        <div class="pricing-card reveal">
+          <h3 data-i18n="std_h"></h3>
+          <div class="pricing-price">
+            <span class="amount">NT$200</span>
+            <span class="period" data-i18n="std_period"></span>
+          </div>
+          <p class="pricing-note" data-i18n="std_note"></p>
+          <ul>
+            <li data-i18n="std_f1"></li>
+            <li data-i18n="std_f2"></li>
+            <li data-i18n="std_f3"></li>
+            <li data-i18n="std_f4"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Perks -->
+  <section class="section section-teal">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag" data-i18n="perks_tag"></div>
+        <h2 data-i18n="perks_h2"></h2>
       </div>
       <div class="perks-grid">
-        <div class="perk-card">
+        <div class="perk-card reveal">
           <div class="perk-icon">💸</div>
           <div>
-            <h3>Recurring Commission</h3>
-            <p>15% of your client's monthly plan, paid every month they stay active. NT$3,000 plan = NT$450/mo per client.</p>
+            <h3 data-i18n="perk1_h"></h3>
+            <p data-i18n="perk1_p"></p>
           </div>
         </div>
-        <div class="perk-card">
+        <div class="perk-card reveal">
           <div class="perk-icon">📊</div>
           <div>
-            <h3>Live Dashboard</h3>
-            <p>See all your clients, their status, and your total commission in real time — right from your portal.</p>
+            <h3 data-i18n="perk2_h"></h3>
+            <p data-i18n="perk2_p"></p>
           </div>
         </div>
-        <div class="perk-card">
+        <div class="perk-card reveal">
           <div class="perk-icon">🤝</div>
           <div>
-            <h3>We Handle Everything</h3>
-            <p>You bring the lead. We do the design, development, hosting, and support. You just watch your commission grow.</p>
+            <h3 data-i18n="perk3_h"></h3>
+            <p data-i18n="perk3_p"></p>
           </div>
         </div>
-        <div class="perk-card">
+        <div class="perk-card reveal">
           <div class="perk-icon">🔒</div>
           <div>
-            <h3>No Risk</h3>
-            <p>No targets, no pressure. Refer one client or ten — you only earn, never owe. Cancel anytime.</p>
+            <h3 data-i18n="perk4_h"></h3>
+            <p data-i18n="perk4_p"></p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── FAQ ───────────────────────────────────────────────────────────────── -->
-  <section class="section" style="padding-top: 0;">
+  <!-- FAQ -->
+  <section class="section section-soft">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header reveal">
         <div class="section-tag">FAQ</div>
-        <h2>Common Questions</h2>
+        <h2 data-i18n="faq_h2"></h2>
       </div>
       <div class="faq-list">
-        <div class="faq-item">
-          <h3>Do I need any technical knowledge?</h3>
-          <p>Not at all. Your job is to refer people — we handle all the technical work. If your contact needs a website, just introduce them to us and log the lead in your portal.</p>
+        <div class="faq-item reveal">
+          <button class="faq-q"><span data-i18n="faq1_q"></span><span class="faq-icon">+</span></button>
+          <div class="faq-a"><p data-i18n="faq1_a"></p></div>
         </div>
-        <div class="faq-item">
-          <h3>When do I get paid?</h3>
-          <p>Commission is tracked monthly through the portal. Once a client's payment is confirmed, your commission is marked and paid out to you. Aaron handles approvals directly.</p>
+        <div class="faq-item reveal">
+          <button class="faq-q"><span data-i18n="faq2_q"></span><span class="faq-icon">+</span></button>
+          <div class="faq-a"><p data-i18n="faq2_a"></p></div>
         </div>
-        <div class="faq-item">
-          <h3>How long do I earn commission?</h3>
-          <p>For as long as your client is on an active plan with Web人. There is no cap — a client who stays for 3 years means 3 years of commission for you.</p>
+        <div class="faq-item reveal">
+          <button class="faq-q"><span data-i18n="faq3_q"></span><span class="faq-icon">+</span></button>
+          <div class="faq-a"><p data-i18n="faq3_a"></p></div>
         </div>
-        <div class="faq-item">
-          <h3>Is my spot really free?</h3>
-          <p>Yes — the first 20 agents to register and get approved pay NT$0/month, permanently. After that, new agents pay NT$200/month. Once you're in, you're in for free.</p>
+        <div class="faq-item reveal">
+          <button class="faq-q"><span data-i18n="faq4_q"></span><span class="faq-icon">+</span></button>
+          <div class="faq-a"><p data-i18n="faq4_a"></p></div>
         </div>
-        <div class="faq-item">
-          <h3>What plans can I refer clients to?</h3>
-          <p>Option A Basic (NT$3,000/mo), Option A Professional (NT$4,500/mo), Option A Premium (NT$5,000/mo), and custom Option B projects. Full pricing is on our <a href="../pricing/" style="color: var(--teal);">Pricing page</a>.</p>
+        <div class="faq-item reveal">
+          <button class="faq-q"><span data-i18n="faq5_q"></span><span class="faq-icon">+</span></button>
+          <div class="faq-a"><p data-i18n="faq5_a"></p></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── CTA ───────────────────────────────────────────────────────────────── -->
+  <!-- CTA -->
   <section class="cta-section">
     <div class="container">
-      <div class="cta-box">
-        <div class="spots-left">Only 20 founding spots available</div>
-        <h2>Ready to Start Earning?</h2>
-        <p>Create your agent account now. It takes 2 minutes and costs nothing.</p>
-        <a href="../portal/" class="btn-primary" style="font-size: 1.05rem; padding: 16px 40px;">
-          Register on the Portal &rarr;
-        </a>
+      <div class="cta-box reveal">
+        <div class="spots-badge" data-i18n="cta_spots"></div>
+        <h2 data-i18n="cta_h2"></h2>
+        <p data-i18n="cta_p"></p>
+        <a href="../portal/" class="btn-primary" style="font-size:1.05rem;padding:1rem 2.5rem;display:inline-flex;" data-i18n="cta_btn"></a>
       </div>
     </div>
   </section>
+
+  <script>
+  (function () {
+    var iH = 'inner' + 'HTML';
+
+    var STRINGS = {
+      en: {
+        badge: 'Agent Programme \u2014 Now Open',
+        hero_h1: 'Turn Your Connections Into <span style="background:linear-gradient(135deg,#0D9488 0%,#34D399 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Passive Income</span>',
+        hero_p: 'Refer businesses to Web\u4eba, earn 15% monthly commission \u2014 for as long as they stay with us. No tech knowledge needed.',
+        hero_cta1: 'Apply Now \u2192',
+        hero_cta2: 'How It Works',
+        stat1: 'Commission per client, every month',
+        stat2: 'Earned per client per month',
+        stat3: 'Free founding spots available',
+        hiw_tag: 'The Process',
+        hiw_h2: 'Three Steps to Your First Commission',
+        hiw_p: 'No cold calling, no tech skills. Just connect people who need websites with us.',
+        step1_h: 'Register &amp; Get Approved',
+        step1_p: 'Create your agent account on the portal. Aaron reviews and activates your account within 24 hours.',
+        step2_h: 'Refer a Business',
+        step2_p: 'Know a restaurant, shop, or company that needs a website? Introduce them to Web\u4eba and log the lead in your portal.',
+        step3_h: 'Earn Every Month',
+        step3_p: 'Once your client goes active, you earn 15% of their monthly plan \u2014 automatically, month after month.',
+        price_tag: 'Agent Fee',
+        price_h2: 'One Small Fee. Unlimited Earning Potential.',
+        price_p: 'The fee covers your portal access and agent account management.',
+        free_badge: 'First 20 Agents',
+        free_h: 'Founding Agent',
+        free_amount: 'FREE',
+        free_note: 'No monthly fee. Yours to keep forever.',
+        free_f1: 'Full portal access',
+        free_f2: 'Real-time commission dashboard',
+        free_f3: 'Priority support from Aaron',
+        free_f4: 'Founding agent status',
+        std_h: 'Standard Agent',
+        std_period: '/month',
+        std_note: 'After the first 20 founding spots fill up.',
+        std_f1: 'Full portal access',
+        std_f2: 'Real-time commission dashboard',
+        std_f3: 'Email support',
+        std_f4: 'Unlimited client referrals',
+        perks_tag: 'Benefits',
+        perks_h2: 'What You Get as an Agent',
+        perk1_h: 'Recurring Commission',
+        perk1_p: "15% of your client's monthly plan, paid every month they stay active. NT$3,000 plan = NT$450/mo per client.",
+        perk2_h: 'Live Dashboard',
+        perk2_p: 'See all your clients, their status, and your total commission in real time \u2014 right from your portal.',
+        perk3_h: 'We Handle Everything',
+        perk3_p: 'You bring the lead. We do the design, development, hosting, and support. You just watch your commission grow.',
+        perk4_h: 'No Risk',
+        perk4_p: 'No targets, no pressure. Refer one client or ten \u2014 you only earn, never owe. Cancel anytime.',
+        faq_h2: 'Common Questions',
+        faq1_q: 'Do I need any technical knowledge?',
+        faq1_a: 'Not at all. Your job is to refer people \u2014 we handle all the technical work. If your contact needs a website, just introduce them to us and log the lead in your portal.',
+        faq2_q: 'When do I get paid?',
+        faq2_a: "Commission is tracked monthly through the portal. Once a client's payment is confirmed, your commission is marked and paid out to you. Aaron handles approvals directly.",
+        faq3_q: 'How long do I earn commission?',
+        faq3_a: 'For as long as your client is on an active plan with Web\u4eba. There is no cap \u2014 a client who stays for 3 years means 3 years of commission for you.',
+        faq4_q: 'Is my spot really free?',
+        faq4_a: "Yes \u2014 the first 20 agents to register and get approved pay NT$0/month, permanently. After that, new agents pay NT$200/month. Once you're in, you're in for free.",
+        faq5_q: 'What plans can I refer clients to?',
+        faq5_a: 'Option A Basic (NT$3,000/mo), Option A Professional (NT$4,500/mo), Option A Premium (NT$5,000/mo), and custom Option B projects. Full pricing on our <a href="../pricing/" style="color:var(--teal)">Pricing page</a>.',
+        cta_spots: 'Only 20 founding spots available',
+        cta_h2: 'Ready to Start Earning?',
+        cta_p: 'Create your agent account now. It takes 2 minutes and costs nothing.',
+        cta_btn: 'Register on the Portal \u2192'
+      },
+      'zh-TW': {
+        badge: '\u4ee3\u7406\u8a08\u756b \u2014 \u73fe\u5728\u958b\u653e',
+        hero_h1: '\u5c07\u4eba\u8108\u8f49\u5316\u70ba <span style="background:linear-gradient(135deg,#0D9488 0%,#34D399 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">\u88ab\u52d5\u6536\u5165</span>',
+        hero_p: '\u5c07\u4f01\u696d\u4ecb\u7d39\u7d66 Web\u4eba\uff0c\u6bcf\u6708\u7372\u5f9715%\u4f63\u91d1\u2014\u53ea\u8981\u4ed6\u5011\u7e7c\u7e8c\u5c31\u4e0d\u6703\u505c\u3002\u4e0d\u9700\u4efb\u4f55\u6280\u8853\u80cc\u666f\u3002',
+        hero_cta1: '\u7acb\u5373\u7533\u8acb \u2192',
+        hero_cta2: '\u4e86\u89e3\u6d41\u7a0b',
+        stat1: '\u6bcf\u500b\u5ba2\u6236\u6bcf\u6708\u4f63\u91d1\u6bd4\u4f8b',
+        stat2: '\u6bcf\u500b\u5ba2\u6236\u6bcf\u6708\u6536\u5165',
+        stat3: '\u514d\u8cbb\u521d\u5275\u540d\u984d\u53ef\u7528',
+        hiw_tag: '\u6d41\u7a0b',
+        hiw_h2: '\u4e09\u6b65\u9a5f\u5f97\u9996\u7b46\u4f63\u91d1',
+        hiw_p: '\u4e0d\u9700\u96fb\u8a71\u62dd\u8a2a\uff0c\u4e0d\u9700\u6280\u8853\u3002\u53ea\u9700\u628a\u9700\u8981\u7db2\u7ad9\u7684\u4eba\u4ecb\u7d39\u7d66\u6211\u5011\u3002',
+        step1_h: '\u8a3b\u518a\u4e26\u7372\u5f97\u6279\u51c6',
+        step1_p: '\u5728\u9580\u6236\u5efa\u7acb\u4ee3\u7406\u5e33\u865f\u3002Aaron \u5c07\u5728 24 \u5c0f\u6642\u5167\u5be9\u67e5\u4e26\u6fc0\u6d3b\u60a8\u7684\u5e33\u865f\u3002',
+        step2_h: '\u4ecb\u7d39\u4f01\u696d',
+        step2_p: '\u8a8d\u8b58\u9700\u8981\u7db2\u7ad9\u7684\u9910\u5ef3\u3001\u5e97\u9bde\u6216\u516c\u53f8\uff1f\u628a\u4ed6\u5011\u4ecb\u7d39\u7d66 Web\u4eba\uff0c\u4e26\u5728\u9580\u6236\u767b\u9304\u8a72\u5c0d\u8c61\u3002',
+        step3_h: '\u6bcf\u6708\u7a69\u5b9a\u6536\u5165',
+        step3_p: '\u5ba2\u6236\u4e00\u65e6\u6210\u70ba\u6d3b\u8e8d\u8a02\u6236\uff0c\u60a8\u5c31\u81ea\u52d5\u7372\u5f97\u5176\u6bcf\u6708\u65b9\u6848\u8cbb\u7528\u768415%\u2014\u9010\u6708\u9001\u9054\u3002',
+        price_tag: '\u4ee3\u7406\u8cbb\u7528',
+        price_h2: '\u5c11\u91cf\u8cbb\u7528\uff0c\u7121\u9650\u6f5b\u529b\u3002',
+        price_p: '\u8cbb\u7528\u6db5\u84cb\u9580\u6236\u4f7f\u7528\u6b0a\u8207\u5e33\u865f\u7ba1\u7406\u3002',
+        free_badge: '\u524d 20 \u4f4d\u4ee3\u7406',
+        free_h: '\u521d\u5275\u4ee3\u7406',
+        free_amount: '\u514d\u8cbb',
+        free_note: '\u7121\u6708\u8cbb\uff0c\u6c38\u4e45\u6709\u6548\u3002',
+        free_f1: '\u5b8c\u6574\u9580\u6236\u4f7f\u7528\u6b0a',
+        free_f2: '\u5373\u6642\u4f63\u91d1\u5100\u8868\u677f',
+        free_f3: 'Aaron \u512a\u5148\u652f\u63f4',
+        free_f4: '\u521d\u5275\u4ee3\u7406\u8eab\u5206',
+        std_h: '\u6a19\u6e96\u4ee3\u7406',
+        std_period: '/\u6708',
+        std_note: '\u524d 20 \u500b\u521d\u5275\u540d\u984d\u984d\u6eff\u5f8c\u9069\u7528\u3002',
+        std_f1: '\u5b8c\u6574\u9580\u6236\u4f7f\u7528\u6b0a',
+        std_f2: '\u5373\u6642\u4f63\u91d1\u5100\u8868\u677f',
+        std_f3: '\u96fb\u5b50\u90f5\u4ef6\u652f\u63f4',
+        std_f4: '\u4ecb\u7d39\u5ba2\u6236\u4e0d\u9650\u984d',
+        perks_tag: '\u798f\u5229',
+        perks_h2: '\u4ee3\u7406\u7684\u6b0a\u76ca',
+        perk1_h: '\u6301\u7e8c\u6027\u4f63\u91d1',
+        perk1_p: '\u6bcf\u6708\u7372\u5f97\u5ba2\u6236\u65b9\u6848\u8cbb\u7528\u768415%\uff0c\u53ea\u8981\u4ed6\u5011\u4e0d\u96e2\u958b\u3002NT$3,000\u65b9\u6848 = \u6bcf\u5ba2\u6236\u6bcf\u6708NT$450\u3002',
+        perk2_h: '\u5373\u6642\u5100\u8868\u677f',
+        perk2_p: '\u5373\u6642\u67e5\u770b\u6240\u6709\u5ba2\u6236\u3001\u72c0\u614b\u53ca\u7e3d\u4f63\u91d1\u2014\u76f4\u63a5\u5728\u60a8\u7684\u9580\u6236\u4e2d\u67e5\u770b\u3002',
+        perk3_h: '\u6211\u5011\u8655\u7406\u4e00\u5207',
+        perk3_p: '\u60a8\u53ea\u9700\u5f15\u5c0e\u5ba2\u6236\u3002\u8a2d\u8a08\u3001\u958b\u767c\u3001\u4e3b\u6a5f\u548c\u652f\u63f4\u7531\u6211\u5011\u8ca0\u8cac\u3002\u60a8\u53ea\u9700\u770b\u8457\u4f63\u91d1\u589e\u9577\u3002',
+        perk4_h: '\u96f6\u98a8\u96aa',
+        perk4_p: '\u6c92\u6709\u76ee\u6a19\uff0c\u6c92\u6709\u58d3\u529b\u3002\u4ecb\u7d39\u4e00\u500b\u6216\u5341\u500b\u5ba2\u6236\u90fd\u884c\u2014\u53ea\u6709\u6536\u5165\uff0c\u7d55\u4e0d\u6703\u503a\u50b5\u3002\u96a8\u6642\u53ef\u53d6\u6d88\u3002',
+        faq_h2: '\u5e38\u898b\u554f\u984c',
+        faq1_q: '\u6211\u9700\u8981\u6280\u8853\u80cc\u666f\u55ce\uff1f',
+        faq1_a: '\u4e0d\u9700\u8981\u3002\u60a8\u7684\u5de5\u4f5c\u662f\u4ecb\u7d39\u5ba2\u6236\u2014\u6280\u8853\u5de5\u4f5c\u7531\u6211\u5011\u8655\u7406\u3002\u53ea\u9700\u628a\u9700\u8981\u7db2\u7ad9\u7684\u8a8d\u8b58\u4ecb\u7d39\u7d66\u6211\u5011\uff0c\u4e26\u5728\u9580\u6236\u767b\u9304\u5c0d\u8c61\u3002',
+        faq2_q: '\u6211\u4ec0\u9ebc\u6642\u5019\u6536\u5230\u4ed8\u6b3e\uff1f',
+        faq2_a: '\u9580\u6236\u6bcf\u6708\u8ffd\u8e64\u4f63\u91d1\u3002\u5ba2\u6236\u4ed8\u6b3e\u78ba\u8a8d\u5f8c\uff0c\u60a8\u7684\u4f63\u91d1\u5373\u6703\u8a18\u9304\u4e26\u652f\u4ed8\u7d66\u60a8\u3002Aaron \u76f4\u63a5\u8655\u7406\u5be9\u6279\u3002',
+        faq3_q: '\u4f63\u91d1\u53ef\u4ee5\u6536\u5230\u4ec0\u9ebc\u6642\u5019\uff1f',
+        faq3_a: '\u53ea\u8981\u60a8\u7684\u5ba2\u6236\u6301\u7e8c\u8a02\u95b1 Web\u4eba \u7684\u65b9\u6848\uff0c\u4f63\u91d1\u5373\u4e0d\u4e2d\u65b7\u3002\u6c92\u6709\u4e0a\u9650\u2014\u5ba2\u6236\u7559\u4e0b 3 \u5e74\u5c31\u4ee3\u8868 3 \u5e74\u7684\u4f63\u91d1\u3002',
+        faq4_q: '\u6211\u7684\u540d\u984d\u771f\u7684\u514d\u8cbb\u55ce\uff1f',
+        faq4_a: '\u662f\u7684\u2014\u524d 20 \u4f4d\u6ce8\u518a\u4e26\u7372\u5f97\u6279\u51c6\u7684\u4ee3\u7406\u6bcf\u6708\u652f\u4ed8NT$0\uff0c\u6c38\u4e45\u6709\u6548\u3002\u6b64\u5f8c\u7684\u65b0\u4ee3\u7406\u6bcf\u6708\u652f\u4ed8NT$200\u3002\u4e00\u65e6\u52a0\u5165\uff0c\u7d42\u8eab\u514d\u8cbb\u3002',
+        faq5_q: '\u6211\u53ef\u4ee5\u4ecb\u7d39\u54ea\u4e9b\u65b9\u6848\uff1f',
+        faq5_a: 'Option A Basic (NT$3,000/\u6708)\u3001Option A Professional (NT$4,500/\u6708)\u3001Option A Premium (NT$5,000/\u6708)\uff0c\u4ee5\u53ca\u5ba2\u88fd Option B \u5c08\u6848\u3002\u8a73\u60c5\u8acb\u67e5\u770b\u6211\u5011\u7684 <a href="../pricing/" style="color:var(--teal)">\u50f9\u683c\u9801\u9762</a>\u3002',
+        cta_spots: '\u50c5\u5269 20 \u500b\u521d\u5275\u540d\u984d',
+        cta_h2: '\u6e96\u5099\u958b\u59cb\u7372\u5229\uff1f',
+        cta_p: '\u73fe\u5728\u5c31\u5efa\u7acb\u4ee3\u7406\u5e33\u865f\u30022 \u5206\u9418\u5373\u53ef\u5b8c\u6210\uff0c\u5b8c\u5168\u514d\u8cbb\u3002',
+        cta_btn: '\u5728\u9580\u6236\u8a3b\u518a \u2192'
+      }
+    };
+
+    var savedLang = localStorage.getItem('webren_lang') ||
+      (new URLSearchParams(location.search).get('lang')) || 'en';
+
+    function applyStrings(lang) {
+      var s = STRINGS[lang] || STRINGS['en'];
+      document.documentElement.lang = lang === 'zh-TW' ? 'zh-TW' : 'en';
+      document.body.classList.toggle('lang-zh', lang === 'zh-TW');
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n');
+        if (s[key] !== undefined) el[iH] = s[key];
+      });
+    }
+
+    applyStrings(savedLang);
+
+    document.addEventListener('nav:lang', function (e) {
+      applyStrings(e.detail);
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(function (item) {
+      item.querySelector('.faq-q').addEventListener('click', function () {
+        item.classList.toggle('open');
+      });
+    });
+
+    // Scroll reveal
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
+
+    // Page transition for internal links
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var pt = document.getElementById('page-transition');
+        pt.classList.add('active');
+        setTimeout(function () { location.href = href; }, 400);
+      });
+    });
+  }());
+  </script>
 
 </body>
 </html>

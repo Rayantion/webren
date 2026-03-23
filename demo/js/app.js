@@ -279,7 +279,7 @@ function initHeroCTAs() {
     if (e.target.closest('.hero-actions .btn-primary')) {
       e.preventDefault();
       const modeEl = document.getElementById(`mode-${mode}`);
-      const contact = modeEl && modeEl.querySelector('#contact');
+      const contact = modeEl && modeEl.querySelector('#' + mode + '-contact');
       if (contact) contact.scrollIntoView({ behavior: 'smooth' });
     }
     // Secondary button → scroll to services/menu/products
