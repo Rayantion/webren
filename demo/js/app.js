@@ -191,9 +191,7 @@ function initLangToggle() {
   });
   // Also respond to lang:nav event dispatched by shared-nav.js outer nav
   document.addEventListener('nav:lang', e => {
-    runTransition(async () => {
-      await I18N.switchLanguage(e.detail);
-    });
+    I18N.switchLanguage(e.detail);
   });
 }
 
