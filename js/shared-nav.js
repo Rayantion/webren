@@ -9,7 +9,8 @@
   const isDemo    = path.includes('/demo/');
   const isPricing = path.includes('/pricing/');
   const isJoin    = path.includes('/join/');
-  const base = (isDemo || isPricing || isJoin) ? '../' : './';
+  const isPrivacy = path.includes('/privacy/');
+  const base = (isDemo || isPricing || isJoin || isPrivacy) ? '../' : './';
 
   // ── Current lang (used to set active button) ─────────────────────────
   const savedLang = localStorage.getItem('webren_lang') ||
@@ -17,8 +18,8 @@
 
   // ── Nav link translations ─────────────────────────────────────────────
   const NAV_TEXT = {
-    en:      { home: 'Home', pricing: 'Pricing', features: 'Features', contact: 'Contact', demo: 'Demo', join: 'Join Us', portal: 'Portal', tagline: 'Built with clean code & attention to detail.' },
-    'zh-TW': { home: '\u9996\u9801', pricing: '\u50f9\u683c\u65b9\u6848', features: '\u529f\u80fd\u7279\u8272', contact: '\u806f\u7d61\u6211\u5011', demo: '\u793a\u7bc4', join: '\u52a0\u5165\u6211\u5011', portal: '\u4ee3\u7406\u5f8c\u53f0', tagline: '\u4ee5\u7cbe\u7c21\u7a0b\u5f0f\u78bc\u8207\u7d30\u7bc0\u6253\u9020\u3002' }
+    en:      { home: 'Home', pricing: 'Pricing', features: 'Features', contact: 'Contact', demo: 'Demo', join: 'Join Us', portal: 'Portal', tagline: 'Built with clean code & attention to detail.', privacy: 'Privacy Policy' },
+    'zh-TW': { home: '\u9996\u9801', pricing: '\u50f9\u683c\u65b9\u6848', features: '\u529f\u80fd\u7279\u8272', contact: '\u806f\u7d61\u6211\u5011', demo: '\u793a\u7bc4', join: '\u52a0\u5165\u6211\u5011', portal: '\u4ee3\u7406\u5f8c\u53f0', tagline: '\u4ee5\u7cbe\u7c21\u7a0b\u5f0f\u78bc\u8207\u7d30\u7bc0\u6253\u9020\u3002', privacy: '\u96b1\u79c1\u653f\u7b56' }
   };
 
   // ── Nav HTML ─────────────────────────────────────────────────────────
@@ -30,7 +31,7 @@
       Web<span>人</span>
     </a>
     <ul class="nav-links">
-      <li><a href="${base}"${!isPricing && !isDemo ? ' class="active"' : ''} data-nav-key="home">Home</a></li>
+      <li><a href="${base}"${!isPricing && !isDemo && !isJoin && !isPrivacy ? ' class="active"' : ''} data-nav-key="home">Home</a></li>
       <li><a href="${base}pricing/"${isPricing ? ' class="active"' : ''} data-nav-key="pricing">Pricing</a></li>
       <li><a href="${base}#features" data-nav-key="features">Features</a></li>
       <li><a href="${base}#contact" data-nav-key="contact">Contact</a></li>
@@ -57,7 +58,7 @@
   // ── Mobile menu HTML ─────────────────────────────────────────────────
   const mobileMenuHTML = `
 <nav id="shared-mobile-menu" aria-label="Mobile navigation">
-  <a href="${base}"${!isPricing && !isDemo ? ' class="active"' : ''} data-nav-key="home">Home</a>
+  <a href="${base}"${!isPricing && !isDemo && !isJoin && !isPrivacy ? ' class="active"' : ''} data-nav-key="home">Home</a>
   <a href="${base}pricing/"${isPricing ? ' class="active"' : ''} data-nav-key="pricing">Pricing</a>
   <a href="${base}#features" data-nav-key="features">Features</a>
   <a href="${base}#contact" data-nav-key="contact">Contact</a>
@@ -77,6 +78,9 @@
   <div class="footer-inner">
     <a href="${base}" class="footer-logo">Web<span>人</span></a>
     <span class="footer-tagline" data-nav-key="tagline">Built with clean code &amp; attention to detail.</span>
+    <div class="footer-links">
+      <a href="${base}privacy/" data-nav-key="privacy">Privacy Policy</a>
+    </div>
     <span class="footer-copy">&copy; 2025 Webren. All rights reserved.</span>
   </div>
 </footer>`;

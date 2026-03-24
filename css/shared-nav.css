@@ -180,6 +180,9 @@
   background-clip: text;
 }
 #shared-footer .footer-tagline { color: var(--nav-text-2); font-size: 0.88rem; }
+#shared-footer .footer-links { display: flex; gap: 1rem; }
+#shared-footer .footer-links a { color: #94A3B8; font-size: 0.82rem; text-decoration: none; transition: color 0.2s; }
+#shared-footer .footer-links a:hover { color: var(--nav-teal); }
 #shared-footer .footer-copy { color: #94A3B8; font-size: 0.8rem; }
 
 /* ── Responsive ── */
