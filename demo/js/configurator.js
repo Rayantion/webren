@@ -34,9 +34,14 @@ function initDrawer(onOpen) {
   const open = () => {
     drawer.classList.add('open');
     backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
     if (onOpen) onOpen();
   };
-  const closeDrawer = () => { drawer.classList.remove('open'); backdrop.classList.remove('open'); };
+  const closeDrawer = () => {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  };
 
   toggle.addEventListener('click', open);
   close.addEventListener('click', closeDrawer);

@@ -36,7 +36,7 @@
       <li><a href="${base}#contact" data-nav-key="contact">Contact</a></li>
       <li><a href="${base}demo/"${isDemo ? ' class="active"' : ''} data-nav-key="demo">Demo</a></li>
       <li><a href="${base}join/"${isJoin ? ' class="active"' : ''} data-nav-key="join">Join Us</a></li>
-      <li><a href="${base}portal/" class="nav-portal-link" data-nav-key="portal">Portal</a></li>
+      ${!isDemo ? `<li><a href="${base}portal/" class="nav-portal-link" data-nav-key="portal">Portal</a></li>` : ''}
     </ul>
     <div class="nav-right">
       <div class="lang-toggle">
@@ -63,7 +63,7 @@
   <a href="${base}#contact" data-nav-key="contact">Contact</a>
   <a href="${base}demo/"${isDemo ? ' class="active"' : ''} data-nav-key="demo">Demo</a>
   <a href="${base}join/"${isJoin ? ' class="active"' : ''} data-nav-key="join">Join Us</a>
-  <a href="${base}portal/" data-nav-key="portal">Portal</a>
+  ${!isDemo ? `<a href="${base}portal/" data-nav-key="portal">Portal</a>` : ''}
   <div class="mobile-menu-lang">
     <button class="lang-btn${savedLang === 'en' ? ' active' : ''}" data-lang="en">EN</button>
     <button class="lang-btn${savedLang !== 'en' ? ' active' : ''}" data-lang="zh-TW">中文</button>
@@ -135,15 +135,24 @@
     if (dx >  50 &&  menu.classList.contains('open')) closeMenu();
   }, { passive: true });
 
-  // ── Scroll behavior (hide on down, show on up) ───────────────────────
+  // ── Scroll behavior (hide on down, auto-hide on idle, show on up) ────
   var nav = document.getElementById('shared-nav');
   var lastY = 0;
+  var idleTimer = null;
   window.addEventListener('scroll', function () {
     var y = window.scrollY;
+    clearTimeout(idleTimer);
     nav.classList.toggle('scrolled', y > 40);
     nav.classList.toggle('hidden-nav', y > lastY + 5 && y > 200);
     nav.classList.toggle('visible-nav', y < lastY - 5);
     lastY = y;
+    if (y > 200) {
+      idleTimer = setTimeout(function () { nav.classList.add('hidden-nav'); nav.classList.remove('visible-nav'); }, 1500);
+    }
+  }, { passive: true });
+  window.addEventListener('scrollend', function () {
+    clearTimeout(idleTimer);
+    if (window.scrollY > 200) { nav.classList.add('hidden-nav'); nav.classList.remove('visible-nav'); }
   }, { passive: true });
 
   // ── Language buttons — dispatch event for page to handle ─────────────

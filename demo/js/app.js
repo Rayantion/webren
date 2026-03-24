@@ -378,6 +378,7 @@ class HeroBg {
     this._ro.observe(canvas.parentElement || canvas);
     this._resize();
     this._mx = -9999; this._my = -9999;
+    this._isTouching = false;
     this._burstPts = [];
     this._bindMouse();
   }
@@ -451,6 +452,8 @@ class HeroBg {
           speed:     0.5 + Math.random() * 0.5,
         }))
       };
+    } else if (this.style === 'aurora') {
+      this._state = { auroraClicks: [] };
     } else if (this.style === 'fireflies') {
       this._state = {
         fireflies: Array.from({ length: 22 }, () => ({
@@ -489,21 +492,30 @@ class HeroBg {
     el.addEventListener('mouseleave', () => { this._mx = -9999; this._my = -9999; }, { passive: true });
     el.addEventListener('click', e => {
       const [bx, by] = toXY(e.clientX, e.clientY);
-      if (bx > -999) this._burstPts.push({ x: bx, y: by, r: 0, max: 65 + Math.random() * 55, a: 0.7 });
+      if (bx > -999) {
+        this._burstPts.push({ x: bx, y: by, r: 0, max: 65 + Math.random() * 55, a: 0.7 });
+        if (this.style === 'aurora' && this._state.auroraClicks) {
+          this._state.auroraClicks.push({ x: bx, t: 0 });
+        }
+      }
     });
     el.addEventListener('touchstart', e => {
       const t = e.touches[0];
       const [bx, by] = toXY(t.clientX, t.clientY);
+      this._isTouching = true;
       if (bx > -999) {
         this._burstPts.push({ x: bx, y: by, r: 0, max: 65 + Math.random() * 55, a: 0.7 });
         [this._mx, this._my] = [bx, by];
+        if (this.style === 'aurora' && this._state.auroraClicks) {
+          this._state.auroraClicks.push({ x: bx, t: 0 });
+        }
       }
     }, { passive: true });
     el.addEventListener('touchmove', e => {
       const t = e.touches[0];
       [this._mx, this._my] = toXY(t.clientX, t.clientY);
     }, { passive: true });
-    el.addEventListener('touchend', () => { this._mx = -9999; this._my = -9999; }, { passive: true });
+    el.addEventListener('touchend', () => { this._mx = -9999; this._my = -9999; this._isTouching = false; }, { passive: true });
   }
 
   _drawOverlay(ctx, rgb) {
@@ -748,12 +760,23 @@ class HeroBg {
   }
 
   _ripple(ctx, rgb, w, h, t) {
+    const mx = this._mx, my = this._my, hasMouse = mx > -999;
     for (const r of this._state.rings) {
       r.radius += r.speed;
       if (r.radius >= r.maxRadius) {
         r.radius = 0;
         r.x = Math.random() * w;
         r.y = Math.random() * h;
+      }
+      // Desktop: rings drift toward cursor. Mobile tap: rings flee.
+      if (hasMouse) {
+        const dx = mx - r.x, dy = my - r.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 180 && d > 0) {
+          const dir = this._isTouching ? -1 : 1;
+          r.x += (dx / d) * 0.4 * dir;
+          r.y += (dy / d) * 0.4 * dir;
+        }
       }
       const alpha = (1 - r.radius / r.maxRadius) * 0.45;
       ctx.beginPath();
@@ -767,13 +790,13 @@ class HeroBg {
   _fireflies(ctx, rgb, w, h, t) {
     const mx = this._mx, my = this._my, hasMouse = mx > -999;
     for (const f of this._state.fireflies) {
-      // Fireflies are gently drawn toward the cursor
+      // Fireflies flee from cursor / tap
       if (hasMouse) {
         const dx = mx - f.baseX, dy = my - f.baseY;
         const d = Math.sqrt(dx * dx + dy * dy);
         if (d < 200 && d > 0) {
-          f.baseX += (dx / d) * 0.35;
-          f.baseY += (dy / d) * 0.35;
+          f.baseX -= (dx / d) * 0.45;
+          f.baseY -= (dy / d) * 0.45;
         }
       }
       f.baseX = (f.baseX + 0.08 + w) % w;
@@ -797,6 +820,11 @@ class HeroBg {
 
   _aurora(ctx, rgb, w, h, t) {
     const mx = this._mx, my = this._my, hasMouse = mx > -999;
+    const clicks = this._state.auroraClicks || [];
+    // Age click events; remove expired ones
+    for (const ev of clicks) ev.t++;
+    this._state.auroraClicks = clicks.filter(ev => ev.t < 70);
+
     for (let b = 0; b < 4; b++) {
       const yBase = h * (0.18 + b * 0.22);
       const amp   = 22 + b * 12;
@@ -812,6 +840,12 @@ class HeroBg {
           const dx = x - mx;
           bend = Math.exp(-dx * dx / 12000) * (my - yBase) * 0.32;
         }
+        // Click-wave: ripple outward from click X, time-decaying
+        for (const ev of this._state.auroraClicks) {
+          const dx = x - ev.x;
+          const strength = Math.max(0, 1 - ev.t / 70) * 38;
+          bend += Math.exp(-dx * dx / 9000) * strength * Math.sin(ev.t * 0.18);
+        }
         ctx.lineTo(x, yBase - thick + wave + bend);
       }
       for (let x = w; x >= 0; x -= 4) {
@@ -821,6 +855,11 @@ class HeroBg {
         if (hasMouse) {
           const dx = x - mx;
           bend = Math.exp(-dx * dx / 12000) * (my - yBase) * 0.32;
+        }
+        for (const ev of this._state.auroraClicks) {
+          const dx = x - ev.x;
+          const strength = Math.max(0, 1 - ev.t / 70) * 38;
+          bend += Math.exp(-dx * dx / 9000) * strength * Math.sin(ev.t * 0.18);
         }
         ctx.lineTo(x, yBase + thick + wave + bend);
       }
@@ -868,12 +907,15 @@ function initDemoNavScroll() {
       nav.classList.remove('demo-nav-hidden'); // always show near top
     } else if (y > lastY + 4) {
       nav.classList.add('demo-nav-hidden');    // hide scrolling down
-      // Reappear after user stops scrolling
-      stopTimer = setTimeout(() => nav.classList.remove('demo-nav-hidden'), 500);
+      stopTimer = setTimeout(() => nav.classList.remove('demo-nav-hidden'), 80);
     } else if (y < lastY - 4) {
       nav.classList.remove('demo-nav-hidden'); // show scrolling up
     }
     lastY = y;
+  }, { passive: true });
+  window.addEventListener('scrollend', () => {
+    clearTimeout(stopTimer);
+    if (window.scrollY > 60) nav.classList.remove('demo-nav-hidden');
   }, { passive: true });
 }
 
@@ -1253,7 +1295,12 @@ function initScrollHideToggle() {
   window.addEventListener('scroll', () => {
     btn.classList.add('scroll-hidden');
     clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => btn.classList.remove('scroll-hidden'), 600);
+    scrollTimer = setTimeout(() => btn.classList.remove('scroll-hidden'), 80);
+  }, { passive: true });
+  // scrollend fires exactly when momentum scroll stops (Chrome 114+, Firefox 109+)
+  window.addEventListener('scrollend', () => {
+    clearTimeout(scrollTimer);
+    btn.classList.remove('scroll-hidden');
   }, { passive: true });
 }
 
