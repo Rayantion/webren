@@ -30,6 +30,7 @@ function initDrawer(onOpen) {
   const drawer = document.getElementById('config-drawer');
   const backdrop = document.getElementById('config-backdrop');
   const close = document.getElementById('config-close');
+  const back = document.getElementById('config-back');
 
   const open = () => {
     drawer.classList.add('open');
@@ -45,6 +46,7 @@ function initDrawer(onOpen) {
 
   toggle.addEventListener('click', open);
   close.addEventListener('click', closeDrawer);
+  if (back) back.addEventListener('click', closeDrawer);
   backdrop.addEventListener('click', closeDrawer);
 }
 

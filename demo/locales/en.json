@@ -227,6 +227,7 @@
     "send": "Send to Web人",
     "sending": "Sending...",
     "success": "Sent! We'll be in touch soon.",
-    "error": "Something went wrong. Please try again."
+    "error": "Something went wrong. Please try again.",
+    "back": "Back"
   }
 }
