@@ -40,6 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-add-email').addEventListener('click', addAllowedEmail);
   document.getElementById('btn-download-contract').addEventListener('click', () => downloadContract(agentName, new Date().toLocaleDateString('en-GB')));
   document.getElementById('btn-download-contract-reg').addEventListener('click', function () { downloadContract(this.dataset.name, this.dataset.date); });
+  document.getElementById('client-search').addEventListener('input', applyFilters);
+  document.getElementById('client-filter-type').addEventListener('change', applyFilters);
+  document.getElementById('client-sort').addEventListener('change', applyFilters);
   document.getElementById('client-plan').addEventListener('change', e => {
     const fees = { 'Option A Basic': 3000, 'Option A Professional': 4500, 'Option A Premium': 5000 };
     const fee = (fees[e.target.value] != null) ? fees[e.target.value] : '';
@@ -105,25 +108,29 @@ async function loadDashboard() {
 }
 async function loadClients() {
   const tbody = document.getElementById('clients-tbody');
-  const cols = isAdmin ? 9 : 6;
+  const cols = isAdmin ? 10 : 7;
   tbody.innerHTML = '<tr><td colspan="' + cols + '" class="empty-row">' + pt('loading', 'Loading\u2026') + '</td></tr>';
   const query = isAdmin ? sb.from('clients').select('*, agents(full_name)').order('created_at', { ascending: false }) : sb.from('clients').select('*').eq('agent_id', currentUser.id).order('created_at', { ascending: false });
   const { data, error } = await query;
   if (error) { tbody.innerHTML = '<tr><td colspan="' + cols + '" class="empty-row">' + pt('err_clients', 'Error loading clients.') + '</td></tr>'; return; }
-  renderClients(data || []); renderStats(data || []); await loadTotalEarned();
+  lastClients = data || [];
+  renderStats(lastClients);
+  applyFilters();
+  await loadTotalEarned();
 }
 function renderClients(clients) {
-  lastClients = clients;
   const tbody = document.getElementById('clients-tbody');
-  const cols = isAdmin ? 9 : 6;
+  const cols = isAdmin ? 10 : 7;
   if (!clients.length) { tbody.innerHTML = '<tr><td colspan="' + cols + '" class="empty-row">' + pt('no_clients', 'No clients yet.') + '</td></tr>'; document.getElementById('total-commission').textContent = 'NT$0'; return; }
   let totalComm = 0;
+  const typeLabels = { store: pt('type_store', 'Store'), restaurant: pt('type_restaurant', 'Restaurant'), company: pt('type_company', 'Company') };
   const rows = clients.map(c => {
     const fee = Number(c.monthly_fee) || 0; const comm = fee * COMMISSION;
     if (c.status === 'active') totalComm += comm;
     const badge = statusBadge(c.status);
     const agentInfo = (isAdmin && c.agents) ? '<span style="font-size:0.8rem;color:var(--text-muted)">' + escHtml(c.agents.full_name) + '</span><br>' : '';
     const startDate = c.start_date ? new Date(c.start_date).toLocaleDateString() : '—';
+    const typeLabel = typeLabels[c.type] || escHtml(c.type) || '—';
     let adminCols = '';
     if (isAdmin) {
       const statuses = ['hold', 'active', 'cancelled', 'inactive'];
@@ -140,6 +147,7 @@ function renderClients(clients) {
       + '</td><td>NT$' + comm.toLocaleString()
       + '</td><td>' + badge
       + '</td><td>' + startDate
+      + '</td><td>' + typeLabel
       + adminCols + '</tr>';
   });
   tbody.innerHTML = rows.join('');
@@ -218,6 +226,7 @@ async function handleAddClient(e) {
     start_date: startVal || null,
     payment_deadline: payDeadline,
     description: document.getElementById('client-desc').value.trim() || null,
+    type: document.getElementById('client-type').value,
     status: 'hold',
   });
   if (error) { showMsg('add-client-error', error.message); }
@@ -294,11 +303,38 @@ async function toggleAEFlag(id, field, val) {
   if (error) showToast('Error updating.');
 }
 
+function applyFilters() {
+  const search = (document.getElementById('client-search')?.value || '').toLowerCase().trim();
+  const filterType = document.getElementById('client-filter-type')?.value || '';
+  const sortVal = document.getElementById('client-sort')?.value || 'newest';
+  let filtered = lastClients.slice();
+  if (search) {
+    filtered = filtered.filter(c => {
+      const name = (c.client_name || '').toLowerCase();
+      const agent = ((c.agents && c.agents.full_name) || '').toLowerCase();
+      return name.includes(search) || agent.includes(search);
+    });
+  }
+  if (filterType) {
+    filtered = filtered.filter(c => (c.type || 'store') === filterType);
+  }
+  if (sortVal === 'agent') {
+    filtered.sort((a, b) => {
+      const an = ((a.agents && a.agents.full_name) || '').toLowerCase();
+      const bn = ((b.agents && b.agents.full_name) || '').toLowerCase();
+      return an.localeCompare(bn);
+    });
+  } else if (sortVal === 'type') {
+    filtered.sort((a, b) => (a.type || 'store').localeCompare(b.type || 'store'));
+  }
+  renderClients(filtered);
+}
+
 document.addEventListener('portal:lang', () => {
   if (window.applyPortalStrings) window.applyPortalStrings(localStorage.getItem('webren_lang') || 'en');
   const welcomeEl = document.getElementById('header-welcome');
   if (welcomeEl && agentName) welcomeEl.textContent = pt('welcome', 'Welcome, ') + agentName;
-  renderClients(lastClients);
+  applyFilters();
   renderInvoices(lastInvoices);
   if (currentUser && isAdmin) loadAllowedEmails();
 });

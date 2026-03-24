@@ -98,7 +98,7 @@
         <div class="form-message hidden" id="reg-error" role="alert"></div>
         <div class="form-message success hidden" id="reg-success" role="status"></div>
         <button type="button" class="btn-primary btn-full hidden" id="btn-download-contract-reg" data-i18n="btn_download_contract">Download Your Contract (PDF)</button>
-        <button type="submit" class="btn-primary btn-full" id="btn-register" data-i18n="btn_create_account">Create Account</button>
+        <button type="button" class="btn-primary btn-full" id="btn-register" data-i18n="btn_create_account">Create Account</button>
       </form>
 
       <!-- Forgot Password Form -->
@@ -148,6 +148,21 @@
         <button type="button" id="btn-open-add-client" class="btn-primary btn-sm" data-i18n="btn_add_client">+ Add Client</button>
       </div>
 
+      <div class="table-controls">
+        <input type="search" id="client-search" data-i18n-ph="ph_search" placeholder="Search clients…">
+        <select id="client-filter-type">
+          <option value="" data-i18n="filter_all">All Types</option>
+          <option value="store" data-i18n="filter_store">Store</option>
+          <option value="restaurant" data-i18n="filter_restaurant">Restaurant</option>
+          <option value="company" data-i18n="filter_company">Company</option>
+        </select>
+        <select id="client-sort">
+          <option value="newest" data-i18n="sort_newest">Newest First</option>
+          <option value="agent" data-i18n="sort_agent">Agent Name</option>
+          <option value="type" data-i18n="sort_type">Type</option>
+        </select>
+      </div>
+
       <div class="table-wrap">
         <table class="data-table" id="clients-table">
           <thead>
@@ -158,6 +173,7 @@
               <th data-i18n="th_commission">Commission (15%)</th>
               <th data-i18n="th_status">Status</th>
               <th data-i18n="th_start">Start Date</th>
+              <th data-i18n="th_type">Type</th>
               <th id="col-paydue" class="hidden" data-i18n="th_paydue">Payment Due</th>
               <th id="col-desc" class="hidden" data-i18n="th_notes">Notes</th>
               <th id="col-approve" class="hidden" data-i18n="th_actions">Actions</th>
@@ -261,6 +277,14 @@
           <label for="client-desc"><span data-i18n="label_notes">Notes</span> <span class="label-optional" data-i18n="label_notes_opt">(optional)</span></label>
           <textarea id="client-desc" rows="2" placeholder="Restaurant name, contact, any notes…"></textarea>
         </div>
+        <div class="form-group">
+          <label for="client-type" data-i18n="label_type">Website Type</label>
+          <select id="client-type" required>
+            <option value="store" data-i18n="type_store">Store</option>
+            <option value="restaurant" data-i18n="type_restaurant">Restaurant</option>
+            <option value="company" data-i18n="type_company">Company</option>
+          </select>
+        </div>
         <div class="form-message hidden" id="add-client-error" role="alert"></div>
         <div class="modal-note" data-i18n="modal_note">Status will default to <span class="status-badge status-hold">On Hold</span> until Aaron approves.</div>
         <button type="submit" class="btn-primary btn-full" id="btn-submit-client" data-i18n="btn_submit_client">Submit for Approval</button>
@@ -336,6 +360,11 @@
         toast_client: 'Client submitted for approval!',
         toast_email_added: 'Email added!', toast_email_removed: 'Email removed.',
         toast_enter_email: 'Enter an email address.',
+        ph_search: 'Search clients\u2026',
+        filter_all: 'All Types', filter_store: 'Store', filter_restaurant: 'Restaurant', filter_company: 'Company',
+        sort_newest: 'Newest First', sort_agent: 'Agent Name', sort_type: 'Type',
+        label_type: 'Website Type', th_type: 'Type',
+        type_store: 'Store', type_restaurant: 'Restaurant', type_company: 'Company',
       },
       'zh-TW': {
         tab_login: '\u767b\u5165', tab_register: '\u8a3b\u518a',
@@ -388,6 +417,11 @@
         toast_email_added: '\u96fb\u5b50\u90f5\u4ef6\u5df2\u65b0\u589e\uff01',
         toast_email_removed: '\u96fb\u5b50\u90f5\u4ef6\u5df2\u79fb\u9664\u3002',
         toast_enter_email: '\u8acb\u8f38\u5165\u96fb\u5b50\u90f5\u4ef6\u5730\u5740\u3002',
+        ph_search: '\u641c\u5c0b\u5ba2\u6236\u2026',
+        filter_all: '\u5168\u90e8\u985e\u578b', filter_store: '\u5546\u5e97', filter_restaurant: '\u9910\u5ef3', filter_company: '\u516c\u53f8',
+        sort_newest: '\u6700\u65b0\u512a\u5148', sort_agent: '\u4ee3\u7406\u4eba\u540d\u7a31', sort_type: '\u985e\u578b',
+        label_type: '\u7db2\u7ad9\u985e\u578b', th_type: '\u985e\u578b',
+        type_store: '\u5546\u5e97', type_restaurant: '\u9910\u5ef3', type_company: '\u516c\u53f8',
       }
     };
 
@@ -423,6 +457,196 @@
         applyPortalStrings(lang);
         document.dispatchEvent(new CustomEvent('portal:lang', { detail: lang }));
       });
+    });
+  }());
+  </script>
+
+  <!-- ── T&C Accept Modal ────────────────────────────────────────────────────── -->
+  <div id="tnc-overlay" role="dialog" aria-modal="true" aria-labelledby="tnc-title">
+    <div class="tnc-modal">
+      <div class="tnc-modal-header">
+        <h2 id="tnc-title">Agent Referral Agreement / 代理人推薦協議</h2>
+        <p class="tnc-modal-subtitle">↓ Scroll to the bottom to accept &nbsp;·&nbsp; 請捲動至底部以接受</p>
+      </div>
+      <div class="tnc-scroll-body" id="tnc-scroll-body">
+
+        <div class="tnc-section">
+          <div class="tnc-section-title">1. Commission &amp; Refunds / 佣金與退款</div>
+          <div class="tnc-block">
+            <p class="tnc-en"><strong>Rate:</strong> You will receive 15% of the net monthly subscription fee received (excluding VAT and third-party payment fees) for each active client you refer.</p>
+            <p class="tnc-zh">推薦每一位有效客戶，您將獲得實際收訖淨額之 15%（不含營業稅及第三方支付手續費）作為佣金。</p>
+          </div>
+          <div class="tnc-block">
+            <p class="tnc-en"><strong>Clawback:</strong> If a client receives a refund or files a chargeback, any commission paid for that transaction will be deducted from your future earnings.</p>
+            <p class="tnc-zh">若客戶獲得退款或發生信用卡退款爭議，該交易所支付之佣金將從您後續之佣金中扣除。</p>
+          </div>
+          <div class="tnc-block">
+            <p class="tnc-en"><strong>Minimum Payout:</strong> Commissions will be disbursed once your earned balance reaches NT$1,000 TWD.</p>
+            <p class="tnc-zh">佣金累計達到 1,000 TWD 後方予發放。</p>
+          </div>
+          <div class="tnc-block">
+            <p class="tnc-en"><strong>Timeline:</strong> Payment is made within 7 days after the client's subscription is successfully renewed and funds are cleared.</p>
+            <p class="tnc-zh">於客戶成功續約且款項入帳後 7 日內支付。</p>
+          </div>
+        </div>
+
+        <div class="tnc-section">
+          <div class="tnc-section-title">2. Independent Contractor Status / 獨立承攬人地位</div>
+          <div class="tnc-block">
+            <p class="tnc-en"><strong>No Employment:</strong> This is a "Contract for Hire" (承攬契約). You are NOT an employee, partner, or joint venture of the Company. You are responsible for your own taxes, Labor Insurance, and Health Insurance.</p>
+            <p class="tnc-zh">本協議屬承攬關係而非雇傭關係。您非本公司之員工、合夥人或合資對象。您須自行負擔相關稅務、勞保及健保。</p>
+          </div>
+          <div class="tnc-block">
+            <p class="tnc-en"><strong>No Authority:</strong> You have no authority to sign contracts, make legal promises, or offer custom discounts on behalf of Aaron (Web人).</p>
+            <p class="tnc-zh">您無權代表 Aaron (Web人) 簽署契約、做出任何法律承諾或提供客製化折扣。</p>
+          </div>
+        </div>
+
+        <div class="tnc-section">
+          <div class="tnc-section-title">3. Conduct &amp; Brand Protection / 行為準則與品牌保護</div>
+          <div class="tnc-block">
+            <p class="tnc-en"><strong>Brand Usage:</strong> You may use the "Web人" name and logo for marketing purposes only in accordance with our guidelines.</p>
+            <p class="tnc-zh">您得依本公司規範於行銷活動中使用「Web人」品牌名稱與標誌。</p>
+          </div>
+          <div class="tnc-block">
+            <p class="tnc-en"><strong>No Spam:</strong> No unsolicited messaging or deceptive marketing. Breach results in immediate termination and forfeiture of unpaid commissions.</p>
+            <p class="tnc-zh">嚴禁發送垃圾郵件或進行欺騙性行銷。違者將立即終止協議，且未領取之佣金將予沒收。</p>
+          </div>
+          <div class="tnc-block">
+            <p class="tnc-en"><strong>Non-Solicitation:</strong> You shall not solicit other agents or clients of the Company to move to a competing service during this agreement and for 1 year post-termination.</p>
+            <p class="tnc-zh">於本協議期間及終止後一年內，您不得誘導本公司之其他代理人或客戶轉向競爭對手。</p>
+          </div>
+        </div>
+
+        <div class="tnc-section">
+          <div class="tnc-section-title">4. Confidentiality / 保密義務</div>
+          <div class="tnc-block">
+            <p class="tnc-en">You agree not to disclose Web人 internal business information, including pricing structures, client lists, or business strategies to any third party.</p>
+            <p class="tnc-zh">您同意不向第三方洩露「Web人」之內部商業資訊，包含定價結構、客戶名單或商業策略。</p>
+          </div>
+        </div>
+
+        <div class="tnc-section">
+          <div class="tnc-section-title">5. Liability &amp; Indemnity / 責任與賠償</div>
+          <div class="tnc-block">
+            <p class="tnc-en"><strong>Service Liability:</strong> Aaron (Web人) is solely liable for the technical delivery of services to the client.</p>
+            <p class="tnc-zh">Aaron (Web人) 僅對提供予客戶之技術服務負責。</p>
+          </div>
+          <div class="tnc-block">
+            <p class="tnc-en"><strong>Indemnity:</strong> You agree to indemnify Aaron (Web人) for any legal costs or damages arising directly from your marketing actions or misrepresentations.</p>
+            <p class="tnc-zh">若因您的行銷行為或錯誤陳述導致本公司受損，您同意賠償本公司之法律費用及損失。</p>
+          </div>
+        </div>
+
+        <div class="tnc-section">
+          <div class="tnc-section-title">6. Termination / 協議終止</div>
+          <div class="tnc-block">
+            <p class="tnc-en"><strong>For Convenience:</strong> Either party may terminate at any time with 30 days' notice. Commissions for active clients continue for 3 months post-termination.</p>
+            <p class="tnc-zh">雙方均得隨時於 30 日前通知終止本協議。現有活躍客戶之佣金將繼續發放至終止後 3 個月。</p>
+          </div>
+          <div class="tnc-block">
+            <p class="tnc-en"><strong>For Cause:</strong> Fraud, spamming, or breach of confidentiality will result in immediate termination and cancellation of all pending and future payments.</p>
+            <p class="tnc-zh">若有詐欺、發送垃圾郵件或洩密等違約行為，將立即終止本協議並取消所有未付及未來之款項。</p>
+          </div>
+        </div>
+
+        <div class="tnc-section">
+          <div class="tnc-section-title">7. Governing Law / 準據法</div>
+          <div class="tnc-block">
+            <p class="tnc-en">This agreement is governed by the laws of Taiwan (R.O.C.) and complies with the Electronic Signatures Act. Any disputes shall be resolved in the Taipei District Court.</p>
+            <p class="tnc-zh">本協議受中華民國（台灣）法律管轄，並符合《電子簽章法》之規定。如生爭議，合意以台灣台北地方法院為第一審管轄法院。</p>
+          </div>
+        </div>
+
+        <div class="tnc-accept-box">
+          <h3>8. Electronic Acceptance / 電子簽署確認</h3>
+          <p class="tnc-en" style="font-size:0.88rem;color:#D1D5DB;margin-bottom:8px;">By accepting, you confirm that:</p>
+          <ul>
+            <li>You are at least 18 years of age and have the legal capacity to enter into this agreement.</li>
+            <li>You have read, understood, and agree to all terms and conditions above.</li>
+            <li>Your digital action constitutes a binding legal signature.</li>
+            <li class="zh">您已滿 18 歲，且具備簽署本協議之完全法律行為能力。</li>
+            <li class="zh">您已閱讀、理解並同意上述所有條款與條件。</li>
+            <li class="zh">您的電子操作構成具法律約束力之簽署，等同於手寫簽名。</li>
+          </ul>
+        </div>
+
+      </div><!-- end tnc-scroll-body -->
+
+      <div class="tnc-scroll-indicator" id="tnc-scroll-indicator">↓ Keep scrolling to unlock acceptance</div>
+
+      <div class="tnc-modal-footer">
+        <label class="tnc-check-label" id="tnc-check-label" for="tnc-accept">
+          <input type="checkbox" id="tnc-accept" disabled>
+          <span>I have read and agree to the Agent Referral Agreement / 我已閱讀並同意代理人推薦協議</span>
+        </label>
+        <button type="button" id="tnc-confirm" class="btn-primary btn-full" disabled>Create Account / 建立帳號</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var overlay   = document.getElementById('tnc-overlay');
+    var scrollBody = document.getElementById('tnc-scroll-body');
+    var indicator  = document.getElementById('tnc-scroll-indicator');
+    var checkbox   = document.getElementById('tnc-accept');
+    var label      = document.getElementById('tnc-check-label');
+    var confirmBtn = document.getElementById('tnc-confirm');
+    var regBtn     = document.getElementById('btn-register');
+    var form       = document.getElementById('form-register');
+
+    // Intercept "Create Account" — show T&C modal after validating fields
+    regBtn.addEventListener('click', function () {
+      var name  = document.getElementById('reg-name');
+      var email = document.getElementById('reg-email');
+      var pass  = document.getElementById('reg-password');
+      // Trigger native validation on required inputs
+      if (!name.value.trim() || !email.checkValidity() || !pass.value || pass.value.length < 8) {
+        name.reportValidity && name.reportValidity();
+        email.reportValidity && email.reportValidity();
+        pass.reportValidity && pass.reportValidity();
+        return;
+      }
+      // Reset modal state
+      scrollBody.scrollTop = 0;
+      checkbox.checked = false;
+      checkbox.disabled = true;
+      confirmBtn.disabled = true;
+      label.classList.remove('enabled');
+      indicator.classList.remove('hidden');
+      overlay.classList.add('open');
+    });
+
+    // Unlock checkbox when scrolled near bottom (within 40px)
+    scrollBody.addEventListener('scroll', function () {
+      if (checkbox.disabled) {
+        var remaining = scrollBody.scrollHeight - scrollBody.scrollTop - scrollBody.clientHeight;
+        if (remaining < 40) {
+          checkbox.disabled = false;
+          label.classList.add('enabled');
+          indicator.classList.add('hidden');
+        }
+      }
+    });
+
+    // Enable confirm only when checkbox is ticked
+    checkbox.addEventListener('change', function () {
+      confirmBtn.disabled = !this.checked;
+    });
+
+    // On confirm: mark terms accepted and dispatch form submit
+    confirmBtn.addEventListener('click', function () {
+      overlay.classList.remove('open');
+      // Mark the reg-terms checkbox so handleRegister can proceed
+      var termsBox = document.getElementById('reg-terms');
+      if (termsBox) termsBox.checked = true;
+      form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    });
+
+    // Allow closing by clicking the dark backdrop (not the modal card)
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) overlay.classList.remove('open');
     });
   }());
   </script>
