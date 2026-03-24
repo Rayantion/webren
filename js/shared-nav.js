@@ -143,8 +143,8 @@
     var y = window.scrollY;
     clearTimeout(idleTimer);
     nav.classList.toggle('scrolled', y > 40);
-    nav.classList.toggle('hidden-nav', y > lastY + 5 && y > 200);
-    nav.classList.toggle('visible-nav', y < lastY - 5);
+    nav.classList.toggle('hidden-nav', y > lastY + 2 && y > 120);
+    nav.classList.toggle('visible-nav', y < lastY - 2);
     lastY = y;
     if (y > 200) {
       idleTimer = setTimeout(function () { nav.classList.add('hidden-nav'); nav.classList.remove('visible-nav'); }, 1500);

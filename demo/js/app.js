@@ -1285,13 +1285,18 @@ function initDemoNavControls() {
   // Force nav to always show solid background on the demo page
   sharedNav.classList.add('demo-nav-solid');
 
-  // Expose outer nav height so inner demo nav sticks just below it
+  // Expose outer nav height so inner demo nav sticks just below it.
+  // When outer nav auto-hides (hidden-nav), set offset to 0 so demo nav fills top.
+  let _navH = 0;
   const setNavOffset = () => {
     const h = sharedNav.getBoundingClientRect().height;
-    if (h > 0) document.documentElement.style.setProperty('--outer-nav-h', h + 'px');
+    if (h > 0) _navH = h;
+    const hidden = sharedNav.classList.contains('hidden-nav');
+    document.documentElement.style.setProperty('--outer-nav-h', hidden ? '0px' : _navH + 'px');
   };
   setNavOffset();
   setTimeout(setNavOffset, 200); // re-check after fonts settle
+  new MutationObserver(setNavOffset).observe(sharedNav, { attributes: true, attributeFilter: ['class'] });
 
   const badge = document.querySelector('#demo-bar .demo-badge');
   const switcher = document.getElementById('mode-switcher-wrap');
