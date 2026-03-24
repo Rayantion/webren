@@ -257,19 +257,6 @@ function initCardTilt() {
   });
 }
 
-// ─── Page/Section Transitions ─────────────────────────────────────────────────
-function initPageTransitions() {
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
-      const target = document.querySelector(link.getAttribute('href'));
-      if (!target) return;
-
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-}
-
 // ─── Boot ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await I18N.init();
@@ -280,7 +267,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   initLangToggle();
   initCursorGlow();
   initCardTilt();
-  initPageTransitions();
 
   // Three.js loads async via CDN — wait for it
   if (typeof THREE !== 'undefined') {
