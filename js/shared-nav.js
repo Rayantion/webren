@@ -15,6 +15,12 @@
   const savedLang = localStorage.getItem('webren_lang') ||
     (new URLSearchParams(location.search).get('lang')) || 'en';
 
+  // ── Nav link translations ─────────────────────────────────────────────
+  const NAV_TEXT = {
+    en:      { home: 'Home', pricing: 'Pricing', features: 'Features', contact: 'Contact', demo: 'Demo', join: 'Join Us', portal: 'Portal', tagline: 'Built with clean code & attention to detail.' },
+    'zh-TW': { home: '\u9996\u9801', pricing: '\u50f9\u683c\u65b9\u6848', features: '\u529f\u80fd\u7279\u8272', contact: '\u806f\u7d61\u6211\u5011', demo: '\u793a\u7bc4', join: '\u52a0\u5165\u6211\u5011', portal: '\u4ee3\u7406\u5f8c\u53f0', tagline: '\u4ee5\u7cbe\u7c21\u7a0b\u5f0f\u78bc\u8207\u7d30\u7bc0\u6253\u9020\u3002' }
+  };
+
   // ── Nav HTML ─────────────────────────────────────────────────────────
   const navHTML = `
 <nav id="shared-nav">
@@ -24,13 +30,13 @@
       Web<span>人</span>
     </a>
     <ul class="nav-links">
-      <li><a href="${base}"${!isPricing && !isDemo ? ' class="active"' : ''}>Home</a></li>
-      <li><a href="${base}pricing/"${isPricing ? ' class="active"' : ''}>Pricing</a></li>
-      <li><a href="${base}#features">Features</a></li>
-      <li><a href="${base}#contact">Contact</a></li>
-      <li><a href="${base}demo/"${isDemo ? ' class="active"' : ''}>Demo</a></li>
-      <li><a href="${base}join/"${isJoin ? ' class="active"' : ''}>Join Us</a></li>
-      <li><a href="${base}portal/" class="nav-portal-link">Portal</a></li>
+      <li><a href="${base}"${!isPricing && !isDemo ? ' class="active"' : ''} data-nav-key="home">Home</a></li>
+      <li><a href="${base}pricing/"${isPricing ? ' class="active"' : ''} data-nav-key="pricing">Pricing</a></li>
+      <li><a href="${base}#features" data-nav-key="features">Features</a></li>
+      <li><a href="${base}#contact" data-nav-key="contact">Contact</a></li>
+      <li><a href="${base}demo/"${isDemo ? ' class="active"' : ''} data-nav-key="demo">Demo</a></li>
+      <li><a href="${base}join/"${isJoin ? ' class="active"' : ''} data-nav-key="join">Join Us</a></li>
+      <li><a href="${base}portal/" class="nav-portal-link" data-nav-key="portal">Portal</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang-toggle">
@@ -51,13 +57,13 @@
   // ── Mobile menu HTML ─────────────────────────────────────────────────
   const mobileMenuHTML = `
 <nav id="shared-mobile-menu" aria-label="Mobile navigation">
-  <a href="${base}"${!isPricing && !isDemo ? ' class="active"' : ''}>Home</a>
-  <a href="${base}pricing/"${isPricing ? ' class="active"' : ''}>Pricing</a>
-  <a href="${base}#features">Features</a>
-  <a href="${base}#contact">Contact</a>
-  <a href="${base}demo/"${isDemo ? ' class="active"' : ''}>Demo</a>
-  <a href="${base}join/"${isJoin ? ' class="active"' : ''}>Join Us</a>
-  <a href="${base}portal/">Portal</a>
+  <a href="${base}"${!isPricing && !isDemo ? ' class="active"' : ''} data-nav-key="home">Home</a>
+  <a href="${base}pricing/"${isPricing ? ' class="active"' : ''} data-nav-key="pricing">Pricing</a>
+  <a href="${base}#features" data-nav-key="features">Features</a>
+  <a href="${base}#contact" data-nav-key="contact">Contact</a>
+  <a href="${base}demo/"${isDemo ? ' class="active"' : ''} data-nav-key="demo">Demo</a>
+  <a href="${base}join/"${isJoin ? ' class="active"' : ''} data-nav-key="join">Join Us</a>
+  <a href="${base}portal/" data-nav-key="portal">Portal</a>
   <div class="mobile-menu-lang">
     <button class="lang-btn${savedLang === 'en' ? ' active' : ''}" data-lang="en">EN</button>
     <button class="lang-btn${savedLang !== 'en' ? ' active' : ''}" data-lang="zh-TW">中文</button>
@@ -70,7 +76,7 @@
 <footer id="shared-footer">
   <div class="footer-inner">
     <a href="${base}" class="footer-logo">Web<span>人</span></a>
-    <span class="footer-tagline">Built with clean code &amp; attention to detail.</span>
+    <span class="footer-tagline" data-nav-key="tagline">Built with clean code &amp; attention to detail.</span>
     <span class="footer-copy">&copy; 2025 Webren. All rights reserved.</span>
   </div>
 </footer>`;
@@ -78,6 +84,16 @@
   // ── Inject into page ────────────────────────────────────────────────
   document.body.insertAdjacentHTML('afterbegin', navHTML + mobileMenuHTML);
   document.body.insertAdjacentHTML('beforeend', footerHTML);
+
+  // ── Apply nav text translations ──────────────────────────────────────
+  function updateNavText(lang) {
+    var t = NAV_TEXT[lang] || NAV_TEXT['en'];
+    document.querySelectorAll('[data-nav-key]').forEach(function (el) {
+      var key = el.getAttribute('data-nav-key');
+      if (t[key] !== undefined) el.textContent = t[key];
+    });
+  }
+  updateNavText(savedLang);
 
   // ── Mobile menu logic ────────────────────────────────────────────────
   const toggle  = document.getElementById('shared-menu-toggle');
@@ -143,6 +159,7 @@
       if (btn.classList.contains('active')) return;
       var lang = btn.dataset.lang;
       setActiveLang(lang);
+      updateNavText(lang);
       document.dispatchEvent(new CustomEvent('nav:lang', { detail: lang }));
       closeMenu();
     });
