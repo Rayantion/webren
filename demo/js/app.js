@@ -602,10 +602,29 @@ class HeroBg {
         }
       }
     }
-    ctx.fillStyle = `rgba(${rgb},0.7)`;
+    // Draw lines from nearby particles to cursor + color-shift those particles
+    if (hasMouse) {
+      const CURSOR_THRESH = 140;
+      for (const p of pts) {
+        const dx = p.x - mx, dy = p.y - my;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < CURSOR_THRESH) {
+          const alpha = (1 - d / CURSOR_THRESH) * 0.55;
+          ctx.strokeStyle = `rgba(${rgb},${alpha})`;
+          ctx.lineWidth = 1.2;
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mx, my); ctx.stroke();
+        }
+      }
+    }
     for (const p of pts) {
+      let near = false;
+      if (hasMouse) {
+        const dx = p.x - mx, dy = p.y - my;
+        near = Math.sqrt(dx * dx + dy * dy) < 140;
+      }
       ctx.beginPath();
-      ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, near ? 3 : 2, 0, Math.PI * 2);
+      ctx.fillStyle = near ? `rgba(${rgb},1)` : `rgba(${rgb},0.7)`;
       ctx.fill();
     }
   }
@@ -1304,6 +1323,23 @@ function initScrollHideToggle() {
   }, { passive: true });
 }
 
+// ── Whole-page cursor glow ────────────────────────────────────────────────────
+function initCursorGlow() {
+  const el = document.createElement('div');
+  el.id = 'cursor-glow';
+  el.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;width:320px;height:320px;border-radius:50%;transform:translate(-50%,-50%);opacity:0;transition:opacity 0.3s;will-change:transform,left,top;';
+  document.body.appendChild(el);
+  let active = false;
+  document.addEventListener('mousemove', e => {
+    el.style.left = e.clientX + 'px';
+    el.style.top  = e.clientY + 'px';
+    const rgb = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
+    el.style.background = `radial-gradient(circle, ${rgb}18 0%, transparent 70%)`;
+    if (!active) { el.style.opacity = '1'; active = true; }
+  }, { passive: true });
+  document.addEventListener('mouseleave', () => { el.style.opacity = '0'; active = false; }, { passive: true });
+}
+
 // ── Boot ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await loadConfig();
@@ -1324,6 +1360,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initDemoBarSwitcher();
   initScrollHideToggle();
   initHeroBackgrounds();
+  initCursorGlow();
   // initScrollReveal() is called inside showMode()
 });
 
