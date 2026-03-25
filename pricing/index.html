@@ -9,15 +9,20 @@
   <meta name="author" content="Web人">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://rayantion.me/webren/pricing/">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#0d9488">
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://rayantion.me/webren/pricing/">
   <meta property="og:title" content="Pricing — Web人">
   <meta property="og:description" content="Simple, transparent pricing. Option A starts at NT$3,000/mo. Option B for fully custom websites.">
+  <meta property="og:image" content="https://webren.dev/og-image.jpg">
+  <meta property="og:site_name" content="Web人">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Pricing — Web人">
   <meta name="twitter:description" content="Simple, transparent pricing for professional websites.">
+  <meta name="twitter:image" content="https://webren.dev/og-image.jpg">
 
   <link rel="alternate" hreflang="en" href="https://rayantion.me/webren/pricing/">
   <link rel="alternate" hreflang="zh-TW" href="https://rayantion.me/webren/pricing/?lang=zh-TW">
@@ -459,18 +464,19 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to content</a>
 <div id="page-transition"></div>
 
 
 <!-- HERO -->
-<section class="pricing-hero">
+<section id="main-content" class="pricing-hero" tabindex="-1">
   <div class="container">
     <div class="badge badge-teal reveal" data-i18n="pricing.badge">Transparent Pricing</div>
     <h1 class="reveal" data-i18n="pricing.title">Simple, Honest Pricing</h1>
     <p class="reveal" data-i18n="pricing.subtitle">No surprises. Choose the plan that fits your business — start with a ready-made template or go fully custom.</p>
     <div class="hero-actions reveal">
       <a href="../demo/" class="btn-primary" data-i18n="pricing.try_demo">Demo &amp; Make Now</a>
-      <a href="https://wa.me/6285183005811" class="btn-secondary" target="_blank" rel="noopener" data-i18n="pricing.ask_question">Ask a Question</a>
+      <a href="https://wa.me/6285183005811" class="btn-secondary" target="_blank" rel="noopener noreferrer" data-i18n="pricing.ask_question">Ask a Question</a>
     </div>
   </div>
 </section>
@@ -582,7 +588,7 @@
               <div class="optionb-price">NT$12,000<span class="price-plus">++</span></div>
               <div class="optionb-price-note" data-i18n="pricing.optionb.price_note">One-time build fee + NT$3,000/year maintenance + domain renewal</div>
             </div>
-            <a href="https://wa.me/6285183005811" class="optionb-cta" target="_blank" rel="noopener" data-i18n="pricing.optionb.cta">
+            <a href="https://wa.me/6285183005811" class="optionb-cta" target="_blank" rel="noopener noreferrer" data-i18n="pricing.optionb.cta">
               Get a Custom Quote ↗
             </a>
           </div>
@@ -780,7 +786,7 @@
     <p class="reveal" data-i18n="pricing.cta_footer.subtitle">Try the demo and send us your preferences, or chat on WhatsApp for a free consultation.</p>
     <div class="hero-actions reveal">
       <a href="../demo/" class="btn-white" data-i18n="pricing.try_demo">Demo &amp; Make Now</a>
-      <a href="https://wa.me/6285183005811" class="btn-primary" target="_blank" rel="noopener" data-i18n="pricing.whatsapp">Chat on WhatsApp</a>
+      <a href="https://wa.me/6285183005811" class="btn-primary" target="_blank" rel="noopener noreferrer" data-i18n="pricing.whatsapp">Chat on WhatsApp</a>
     </div>
   </div>
 </section>
@@ -1025,7 +1031,7 @@ document.addEventListener('DOMContentLoaded', initReveal);
 document.addEventListener('nav:lang', function(e) { switchLang(e.detail); });
 
 </script>
-<script src="../js/shared-nav.js?v=30"></script>
+<script src="../js/shared-nav.js?v=30" defer></script>
 
 </body>
 </html>

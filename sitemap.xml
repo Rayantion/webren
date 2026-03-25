@@ -2,26 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- English default -->
+  <!-- Homepage -->
   <url>
     <loc>https://webren.dev/</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-03-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en"    href="https://webren.dev/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://webren.dev/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="en"      href="https://webren.dev/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW"   href="https://webren.dev/?lang=zh-TW"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://webren.dev/"/>
   </url>
 
-  <!-- Traditional Chinese variant -->
   <url>
     <loc>https://webren.dev/?lang=zh-TW</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-03-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="en"    href="https://webren.dev/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://webren.dev/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="en"      href="https://webren.dev/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW"   href="https://webren.dev/?lang=zh-TW"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://webren.dev/"/>
+  </url>
+
+  <!-- Pricing -->
+  <url>
+    <loc>https://webren.dev/pricing/</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en"      href="https://webren.dev/pricing/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW"   href="https://webren.dev/pricing/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://webren.dev/pricing/"/>
+  </url>
+
+  <url>
+    <loc>https://webren.dev/pricing/?lang=zh-TW</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en"      href="https://webren.dev/pricing/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW"   href="https://webren.dev/pricing/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://webren.dev/pricing/"/>
+  </url>
+
+  <!-- Join / Agent Programme -->
+  <url>
+    <loc>https://webren.dev/join/</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en"      href="https://webren.dev/join/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW"   href="https://webren.dev/join/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://webren.dev/join/"/>
+  </url>
+
+  <url>
+    <loc>https://webren.dev/join/?lang=zh-TW</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en"      href="https://webren.dev/join/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW"   href="https://webren.dev/join/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://webren.dev/join/"/>
+  </url>
+
+  <!-- Demo / Configurator -->
+  <url>
+    <loc>https://webren.dev/demo/</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en"      href="https://webren.dev/demo/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW"   href="https://webren.dev/demo/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://webren.dev/demo/"/>
+  </url>
+
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://webren.dev/privacy/</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 
 </urlset>

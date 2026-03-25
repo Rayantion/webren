@@ -1,5 +1,22 @@
 /* ── Shared Nav + Footer (matches main webren site) ────────────────── */
 
+/* ── Skip to main content (keyboard / screen reader) ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 8px 16px;
+  background: #0D9488;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 0 0 8px 0;
+  z-index: 9999;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 0; }
+
 :root {
   --nav-teal:    #0D9488;
   --nav-violet:  #7C3AED;

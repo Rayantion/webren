@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,8 @@
   <meta name="author" content="Web人">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#0d9488">
   <link rel="canonical" href="https://webren.dev/">
 
   <!-- ── Open Graph ────────────────────────────────────────────────────── -->
@@ -19,11 +21,13 @@
   <meta property="og:title" content="Web人 — Modern Web Development">
   <meta property="og:description" content="Premium websites engineered for SEO, AI discovery, and global audiences. i18n-native from day one.">
   <meta property="og:image" content="https://webren.dev/og-image.jpg">
+  <meta property="og:site_name" content="Web人">
 
   <!-- ── Twitter Card ──────────────────────────────────────────────────── -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Web人 — Modern Web Development">
   <meta name="twitter:description" content="Premium websites built for SEO, GEO, AIO & multilingual audiences.">
+  <meta name="twitter:image" content="https://webren.dev/og-image.jpg">
 
   <!-- ── Hreflang (i18n SEO) ───────────────────────────────────────────── -->
   <link rel="alternate" hreflang="en" href="https://webren.dev/">
@@ -98,6 +102,8 @@
 
 <body>
 
+<a href="#hero" class="skip-link">Skip to content</a>
+
 <!-- Language switch overlay for dropdown animation -->
 <div id="lang-overlay" aria-hidden="true"></div>
 
@@ -108,7 +114,7 @@
 <!-- ───────────────────────────────────────────────────────────────────────────
      HERO
 ──────────────────────────────────────────────────────────────────────────── -->
-<section id="hero" aria-labelledby="hero-title">
+<section id="hero" aria-labelledby="hero-title" tabindex="-1">
   <canvas id="hero-canvas" aria-hidden="true"></canvas>
 
   <div class="container hero-content">

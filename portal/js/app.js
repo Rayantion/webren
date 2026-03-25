@@ -11,6 +11,7 @@ function pt(key, fallback) {
 }
 let lastClients = [];
 let lastInvoices = [];
+let _pendingRegData = null;
 
 function escHtml(str) {
   if (str == null) return '';
@@ -75,12 +76,26 @@ async function handleRegister(e) {
   e.preventDefault();
   const btn = document.getElementById('btn-register');
   btn.disabled = true; showMsg('reg-error', ''); showMsg('reg-success', '');
-  const name = document.getElementById('reg-name').value.trim();
+  const name  = document.getElementById('reg-name').value.trim();
   const email = document.getElementById('reg-email').value.trim();
   const phone = document.getElementById('reg-phone').value.trim();
   const pass  = document.getElementById('reg-password').value;
+  // Check allowed_emails — DB green light required before showing T&C
   const { data: allowed } = await sb.from('allowed_emails').select('id').eq('email', email).maybeSingle();
   if (!allowed) { showMsg('reg-error', 'Registration closed. Contact Aaron to join.'); btn.disabled = false; return; }
+  // Green light — store pending data and show T&C modal
+  _pendingRegData = { name, email, phone, pass };
+  btn.disabled = false;
+  window.showTncModal && window.showTncModal();
+}
+
+async function doSignUp() {
+  if (!_pendingRegData) return;
+  const { name, email, phone, pass } = _pendingRegData;
+  _pendingRegData = null;
+  const btn = document.getElementById('btn-register');
+  btn.disabled = true;
+  showMsg('reg-error', ''); showMsg('reg-success', '');
   const { error } = await sb.auth.signUp({ email, password: pass, options: { data: { full_name: name, phone } } });
   if (error) { showMsg('reg-error', error.message); }
   else {
@@ -89,10 +104,11 @@ async function handleRegister(e) {
     dlBtn.dataset.name = name;
     dlBtn.dataset.date = new Date().toLocaleDateString('en-GB');
     dlBtn.classList.remove('hidden');
-    e.target.reset();
+    document.getElementById('form-register').reset();
   }
   btn.disabled = false;
 }
+window.doSignUp = doSignUp;
 async function handleForgotPassword(e) {
   e.preventDefault();
   showMsg('forgot-error', ''); showMsg('forgot-success', '');

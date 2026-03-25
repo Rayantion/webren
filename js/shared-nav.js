@@ -41,8 +41,8 @@
     </ul>
     <div class="nav-right">
       <div class="lang-toggle">
-        <button class="lang-btn${savedLang === 'en' ? ' active' : ''}" data-lang="en">EN</button>
-        <button class="lang-btn${savedLang !== 'en' ? ' active' : ''}" data-lang="zh-TW">中文</button>
+        <button class="lang-btn${savedLang === 'en' ? ' active' : ''}" data-lang="en" aria-label="Switch to English">EN</button>
+        <button class="lang-btn${savedLang !== 'en' ? ' active' : ''}" data-lang="zh-TW" aria-label="Switch to Traditional Chinese">中文</button>
       </div>
       <a href="https://wa.me/6285183005811" class="btn-cta-sm" target="_blank" rel="noopener noreferrer">
         WhatsApp ↗
@@ -66,8 +66,8 @@
   <a href="${base}join/"${isJoin ? ' class="active"' : ''} data-nav-key="join">Join Us</a>
   ${!isDemo ? `<a href="${base}portal/" data-nav-key="portal">Portal</a>` : ''}
   <div class="mobile-menu-lang">
-    <button class="lang-btn${savedLang === 'en' ? ' active' : ''}" data-lang="en">EN</button>
-    <button class="lang-btn${savedLang !== 'en' ? ' active' : ''}" data-lang="zh-TW">中文</button>
+    <button class="lang-btn${savedLang === 'en' ? ' active' : ''}" data-lang="en" aria-label="Switch to English">EN</button>
+    <button class="lang-btn${savedLang !== 'en' ? ' active' : ''}" data-lang="zh-TW" aria-label="Switch to Traditional Chinese">中文</button>
   </div>
 </nav>
 <div id="shared-menu-overlay"></div>`;

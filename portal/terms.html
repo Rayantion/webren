@@ -121,6 +121,15 @@
 </head>
 <body>
 
+  <script>
+    // Block direct URL access — only accessible from the portal with a valid session token
+    (function () {
+      var token = sessionStorage.getItem('webren_tnc_view');
+      sessionStorage.removeItem('webren_tnc_view');
+      if (!token) { window.location.replace('index.html'); }
+    }());
+  </script>
+
   <header>
     <a href="../" class="logo">Web<span>人</span></a>
     <a href="javascript:window.close()" class="back-link">← Close</a>

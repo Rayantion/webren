@@ -1,3 +1,7 @@
+/* ── Skip to main content (keyboard / screen reader) ── */
+.skip-link { position: absolute; top: -100%; left: 0; padding: 8px 16px; background: var(--color-primary); color: #fff; font-weight: 600; font-size: 0.875rem; border-radius: 0 0 8px 0; z-index: 9999; text-decoration: none; transition: top 0.2s; }
+.skip-link:focus { top: 0; }
+
 /* ── Theme Variables (set by JS from config) ─────────────────────────── */
 :root {
   --color-primary: #0D9488;
@@ -244,7 +248,7 @@ section { padding: 5rem 0; }
 .contact-form { margin-top: 2rem; text-align: left; display: flex; flex-direction: column; gap: 1rem; }
 .cf-group { display: flex; flex-direction: column; gap: 0.35rem; }
 .cf-group label { font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted); }
-.cf-group input, .cf-group textarea { width: 100%; padding: 0.7rem 1rem; border-radius: 0.5rem; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); font-family: var(--font-body); font-size: 0.95rem; transition: border-color 0.2s, box-shadow 0.2s; resize: vertical; }
+.cf-group input, .cf-group textarea { width: 100%; padding: 0.7rem 1rem; border-radius: 0.5rem; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); font-family: var(--font-body); font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; resize: vertical; }
 .cf-group input:focus, .cf-group textarea:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent); }
 .cf-submit { align-self: flex-start; margin-top: 0.5rem; }
 .cf-group input.cf-error, .cf-group textarea.cf-error { border-color: #f87171; box-shadow: 0 0 0 3px rgba(248,113,113,0.2); }
