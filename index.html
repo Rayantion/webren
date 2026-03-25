@@ -37,6 +37,7 @@
 
   <!-- ── Styles ────────────────────────────────────────────────────────── -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/shared-nav.css?v=30">
 
   <!-- ── Structured Data ───────────────────────────────────────────────── -->
   <script type="application/ld+json">
@@ -103,58 +104,6 @@
 <!-- Cursor glow -->
 <div id="cursor-glow" aria-hidden="true"></div>
 
-<!-- ───────────────────────────────────────────────────────────────────────────
-     NAVBAR
-──────────────────────────────────────────────────────────────────────────── -->
-<nav id="navbar" aria-label="Main navigation">
-  <div class="container nav-inner">
-
-    <a href="#" class="nav-logo" aria-label="Web人 home">
-      <div class="logo-dot"></div>
-      Web<span>人</span>
-    </a>
-
-    <ul class="nav-links">
-      <li><a href="#hero" data-i18n="nav.home">Home</a></li>
-      <li><a href="pricing/" data-i18n="nav.pricing">Pricing</a></li>
-      <li><a href="#features" data-i18n="nav.features">Features</a></li>
-      <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
-      <li><a href="./demo/" data-i18n="nav.demo">Demo</a></li>
-      <li><a href="join/" data-i18n="nav.join">Join Us</a></li>
-      <li><a href="portal/" class="nav-portal-link">Portal</a></li>
-    </ul>
-
-    <div class="nav-right">
-      <div class="lang-toggle" role="group" aria-label="Language selector">
-        <button type="button" class="lang-btn" data-lang="en" aria-label="Switch to English">EN</button>
-        <button type="button" class="lang-btn active" data-lang="zh-TW" aria-label="切換至繁體中文">中文</button>
-      </div>
-      <a href="https://wa.me/6285183005811" class="btn-cta-sm desktop-only" target="_blank" rel="noopener noreferrer" data-i18n="nav.cta">
-        Get a Quote
-      </a>
-      <button type="button" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-
-  </div>
-</nav>
-
-<!-- Mobile Menu -->
-<nav id="mobile-menu" aria-label="Mobile navigation">
-  <a href="#hero" data-i18n="nav.home">Home</a>
-  <a href="pricing/" data-i18n="nav.pricing">Pricing</a>
-  <a href="#features" data-i18n="nav.features">Features</a>
-  <a href="#contact" data-i18n="nav.contact">Contact</a>
-  <a href="./demo/" data-i18n="nav.demo">Demo</a>
-  <a href="join/" data-i18n="nav.join">Join Us</a>
-  <a href="portal/">Portal</a>
-  <div class="mobile-lang-row">
-    <button type="button" class="lang-btn" data-lang="en">EN</button>
-    <button type="button" class="lang-btn active" data-lang="zh-TW">中文</button>
-  </div>
-</nav>
-<div id="menu-overlay" aria-hidden="true"></div>
 
 <!-- ───────────────────────────────────────────────────────────────────────────
      HERO
@@ -531,19 +480,6 @@
   </div>
 </section>
 
-<!-- ───────────────────────────────────────────────────────────────────────────
-     FOOTER
-──────────────────────────────────────────────────────────────────────────── -->
-<footer>
-  <div class="container footer-inner">
-    <a href="#" class="footer-logo" aria-label="Webren">Web<span>人</span></a>
-    <span class="footer-tagline" data-i18n="footer.built_with">Built with clean code &amp; attention to detail.</span>
-    <div class="footer-links">
-      <a href="privacy/" data-i18n="footer.privacy">Privacy Policy</a>
-    </div>
-    <span class="footer-copy" data-i18n="footer.copyright">© 2025 Webren. All rights reserved.</span>
-  </div>
-</footer>
 
 <!-- ───────────────────────────────────────────────────────────────────────────
      SCRIPTS (CDN)
@@ -555,6 +491,7 @@
         onload="window.dispatchEvent(new Event('three-loaded'))"></script>
 
 <!-- App Scripts -->
+<script src="js/shared-nav.js?v=30"></script>
 <script src="js/i18n.js"></script>
 <script src="js/app.js"></script>
 

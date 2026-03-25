@@ -120,62 +120,30 @@ function initScrollReveal() {
   });
 }
 
-// ─── Navbar ───────────────────────────────────────────────────────────────────
-function initNav() {
-  const nav = document.getElementById('navbar');
-  let lastY = 0;
-
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    nav.classList.toggle('scrolled', y > 40);
-    nav.classList.toggle('hidden-nav', y > lastY + 5 && y > 200);
-    nav.classList.toggle('visible-nav', y < lastY - 5);
-    lastY = y;
-  }, { passive: true });
-
-  // Smooth scroll for anchor links with page transition
+// ─── Anchor Scroll ────────────────────────────────────────────────────────────
+function initAnchorScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
       const target = document.querySelector(a.getAttribute('href'));
       if (!target) return;
-      // close mobile menu if open
-      mobileMenu.classList.remove('open');
-      menuOverlay.classList.remove('open');
+      // close shared-nav mobile menu if open
+      document.getElementById('shared-mobile-menu')?.classList.remove('open');
+      document.getElementById('shared-menu-overlay')?.classList.remove('open');
 
-      const overlay = document.getElementById('page-transition');
-      if (overlay) {
-        overlay.classList.add('active');
+      const transition = document.getElementById('page-transition');
+      if (transition) {
+        transition.classList.add('active');
         setTimeout(() => {
-          // instant scroll under the overlay
           document.documentElement.style.scrollBehavior = 'auto';
           target.scrollIntoView({ block: 'start' });
           document.documentElement.style.scrollBehavior = '';
-          setTimeout(() => overlay.classList.remove('active'), 50);
+          setTimeout(() => transition.classList.remove('active'), 50);
         }, 200);
       } else {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
-  });
-}
-
-// ─── Mobile Menu ─────────────────────────────────────────────────────────────
-let mobileMenu, menuOverlay;
-function initMobileMenu() {
-  mobileMenu = document.getElementById('mobile-menu');
-  menuOverlay = document.getElementById('menu-overlay');
-  const toggle = document.getElementById('menu-toggle');
-
-  toggle?.addEventListener('click', () => {
-    const open = mobileMenu.classList.toggle('open');
-    menuOverlay.classList.toggle('open', open);
-    toggle.setAttribute('aria-expanded', open);
-  });
-
-  menuOverlay?.addEventListener('click', () => {
-    mobileMenu.classList.remove('open');
-    menuOverlay.classList.remove('open');
   });
 }
 
@@ -209,18 +177,11 @@ function initCounters() {
 function initLangToggle() {
   const overlay = document.getElementById('lang-overlay');
 
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (btn.classList.contains('active')) return;
-
-      // Trigger dropdown fill animation
-      overlay.classList.add('active');
-
-      I18N.switchLanguage(btn.dataset.lang).then(() => {
-        setTimeout(() => {
-          overlay.classList.remove('active');
-        }, 300);
-      });
+  // shared-nav.js owns the lang buttons and dispatches nav:lang when clicked
+  document.addEventListener('nav:lang', e => {
+    overlay.classList.add('active');
+    I18N.switchLanguage(e.detail).then(() => {
+      setTimeout(() => overlay.classList.remove('active'), 300);
     });
   });
 }
@@ -260,8 +221,7 @@ function initCardTilt() {
 // ─── Boot ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await I18N.init();
-  initNav();
-  initMobileMenu();
+  initAnchorScroll();
   initScrollReveal();
   initCounters();
   initLangToggle();
