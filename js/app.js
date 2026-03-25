@@ -127,22 +127,9 @@ function initAnchorScroll() {
       e.preventDefault();
       const target = document.querySelector(a.getAttribute('href'));
       if (!target) return;
-      // close shared-nav mobile menu if open
       document.getElementById('shared-mobile-menu')?.classList.remove('open');
       document.getElementById('shared-menu-overlay')?.classList.remove('open');
-
-      const transition = document.getElementById('page-transition');
-      if (transition) {
-        transition.classList.add('active');
-        setTimeout(() => {
-          document.documentElement.style.scrollBehavior = 'auto';
-          target.scrollIntoView({ block: 'start' });
-          document.documentElement.style.scrollBehavior = '';
-          setTimeout(() => transition.classList.remove('active'), 50);
-        }, 200);
-      } else {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 }
@@ -175,13 +162,12 @@ function initCounters() {
 
 // ─── Language Toggle ──────────────────────────────────────────────────────────
 function initLangToggle() {
-  const overlay = document.getElementById('lang-overlay');
-
-  // shared-nav.js owns the lang buttons and dispatches nav:lang when clicked
+  // shared-nav.js dispatches nav:lang when a lang button is clicked
   document.addEventListener('nav:lang', e => {
-    overlay.classList.add('active');
-    I18N.switchLanguage(e.detail).then(() => {
-      setTimeout(() => overlay.classList.remove('active'), 300);
+    const overlay = document.getElementById('page-transition');
+    if (overlay) overlay.classList.add('active');
+    I18N.switchLanguage(e.detail, false).then(() => {
+      if (overlay) setTimeout(() => overlay.classList.remove('active'), 300);
     });
   });
 }

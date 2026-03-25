@@ -139,25 +139,38 @@
     if (dx >  50 &&  menu.classList.contains('open')) closeMenu();
   }, { passive: true });
 
-  // ── Scroll behavior (hide on down, auto-hide on idle, show on up) ────
+  // ── Scroll behavior (hide on down, show on up or stop) ──────────────
   var nav = document.getElementById('shared-nav');
   var lastY = 0;
-  var idleTimer = null;
   window.addEventListener('scroll', function () {
     var y = window.scrollY;
-    clearTimeout(idleTimer);
     nav.classList.toggle('scrolled', y > 40);
     nav.classList.toggle('hidden-nav', y > lastY + 2 && y > 120);
     nav.classList.toggle('visible-nav', y < lastY - 2);
     lastY = y;
-    if (y > 200) {
-      idleTimer = setTimeout(function () { nav.classList.add('hidden-nav'); nav.classList.remove('visible-nav'); }, 1500);
-    }
   }, { passive: true });
   window.addEventListener('scrollend', function () {
-    clearTimeout(idleTimer);
-    if (window.scrollY > 200) { nav.classList.add('hidden-nav'); nav.classList.remove('visible-nav'); }
+    nav.classList.remove('hidden-nav');
+    nav.classList.add('visible-nav');
   }, { passive: true });
+
+  // ── Page transition on nav link clicks ───────────────────────────────
+  document.querySelectorAll('#shared-nav .nav-links a, #shared-mobile-menu a').forEach(function (link) {
+    try {
+      var url = new URL(link.href, window.location.href);
+      if (url.hostname !== window.location.hostname) return; // external
+      if (url.pathname === window.location.pathname) return; // same page
+    } catch (e) { return; }
+    link.addEventListener('click', function (e) {
+      var pt = document.getElementById('page-transition');
+      if (!pt) return;
+      e.preventDefault();
+      closeMenu();
+      pt.classList.add('active');
+      var dest = link.href;
+      setTimeout(function () { window.location.href = dest; }, 400);
+    });
+  });
 
   // ── Language buttons — dispatch event for page to handle ─────────────
   function setActiveLang(lang) {

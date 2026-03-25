@@ -185,6 +185,26 @@
 #shared-footer .footer-links a:hover { color: var(--nav-teal); }
 #shared-footer .footer-copy { color: #94A3B8; font-size: 0.8rem; }
 
+/* ── Page Transition Overlay ── */
+#page-transition {
+  position: fixed; inset: 0;
+  background: #0D9488;
+  transform: scaleY(0); transform-origin: top;
+  z-index: 9999; pointer-events: none;
+  transition: transform 0.4s ease-in-out;
+}
+#page-transition.active { transform: scaleY(1); pointer-events: all; }
+
+/* ── Remove tap highlight on mobile ── */
+#shared-nav .nav-links a,
+#shared-nav .lang-btn,
+#shared-nav .btn-cta-sm,
+#shared-nav #shared-menu-toggle,
+#shared-mobile-menu a,
+.mobile-menu-lang .lang-btn {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   #shared-nav .nav-links { display: none; }
