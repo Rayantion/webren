@@ -686,6 +686,25 @@ section { padding: 5rem 0; }
   .demo-nav-links { display: none; }
   .demo-nav-cta { display: none; }
   .demo-hint { display: none; }
+
+  /* Demo bar: hide badge, center mode switcher */
+  #demo-bar .demo-badge { display: none; }
+  .demo-bar-inner { justify-content: center; }
+
+  /* Relocate "DEMO PREVIEW" as a fixed edge tab (top-right, below outer nav) */
+  #demo-bar::after {
+    content: 'DEMO PREVIEW';
+    position: fixed;
+    top: 70px; right: 0;
+    background: #0D9488; color: #fff;
+    font-size: 0.55rem; font-weight: 700; letter-spacing: 0.13em;
+    padding: 3px 8px;
+    border-radius: 0 0 0 5px;
+    text-transform: uppercase;
+    z-index: 300;
+    pointer-events: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
 }
 
 /* ── Footer ──────────────────────────────────────────────────────────── */
