@@ -182,6 +182,20 @@
     });
   });
 
+  // ── Entry curtain animation (retract overlay on page load) ───────────
+  document.addEventListener('DOMContentLoaded', function () {
+    var pt = document.getElementById('page-transition');
+    if (!pt) return;
+    pt.style.transition = 'none';
+    pt.classList.add('active');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        pt.style.transition = '';
+        pt.classList.remove('active');
+      });
+    });
+  });
+
   // ── Language buttons — dispatch event for page to handle ─────────────
   function setActiveLang(lang) {
     document.querySelectorAll('#shared-nav .lang-btn, #shared-mobile-menu .lang-btn').forEach(function (btn) {
