@@ -778,7 +778,7 @@ section { padding: 5rem 0; }
 .restaurant-feature { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }.restaurant-img { width: 100%; border-radius: 1rem; object-fit: cover; aspect-ratio: 16/9; }.restaurant-feature-text { text-align: left; }.restaurant-feature-text h2 { margin: 0.5rem 0 1rem; }.restaurant-feature-text p { color: var(--color-text-muted); }@media (max-width: 768px) { .restaurant-feature { grid-template-columns: 1fr; } }
 
 /* ── Categories ───────────────────────────────────────────────────────── */
-.cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
+.cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr)); gap: 1rem; }
 .cat-card {
   background: var(--color-surface); border: 1px solid var(--color-border);
   border-radius: 0.75rem; padding: 2rem 1rem;
@@ -916,7 +916,7 @@ section { padding: 5rem 0; }
   padding: 0.5rem 0.25rem;
   cursor: pointer; color: rgba(249,250,251,0.7);
   font-size: 0.7rem; font-family: var(--font-body);
-  transition: all 0.2s; touch-action: manipulation;
+  transition: all 0.2s; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
 }
 .bg-style-tile:hover { background: rgba(255,255,255,0.12); color: #F9FAFB; }
 .bg-style-tile.active {
@@ -1027,7 +1027,7 @@ section { padding: 5rem 0; }
   flex: 1; padding: 0.6rem 0.75rem; border-radius: 0.4rem; min-height: 44px;
   background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
   color: #F9FAFB; cursor: pointer; font-size: 0.9rem; transition: all 0.2s;
-  touch-action: manipulation;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
 }
 .mode-btn.active, .mode-btn:hover {
   background: var(--color-primary); border-color: var(--color-primary); color: #fff;
@@ -1040,7 +1040,7 @@ section { padding: 5rem 0; }
 input[type="color"] {
   width: 40px; height: 40px; border: none; border-radius: 6px;
   cursor: pointer; padding: 2px; background: none;
-  touch-action: manipulation;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
 }
 .hex-input {
   flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
@@ -1052,7 +1052,7 @@ input[type="color"] {
   background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
   color: #F9FAFB; border-radius: 0.4rem; padding: 0.6rem 1rem; min-height: 44px;
   cursor: pointer; font-size: 0.85rem; transition: all 0.2s; align-self: flex-start;
-  touch-action: manipulation;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
 }
 .btn-auto-theme:hover { background: rgba(13,148,136,0.25); border-color: var(--color-primary); }
 
@@ -1066,7 +1066,7 @@ input[type="color"] {
   background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
   color: #F9FAFB; border-radius: 6px; padding: 0.6rem 0.75rem;
   font-size: 0.9rem; min-height: 44px; cursor: pointer; text-align: left;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
 }
 .custom-font-btn:hover, .custom-font-select.open .custom-font-btn { border-color: var(--color-primary); }
 .custom-font-arrow { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.6; transition: transform 0.2s; }
@@ -1080,7 +1080,7 @@ input[type="color"] {
 .custom-font-select.open .custom-font-list { display: block; }
 .custom-font-option {
   padding: 0.5rem 0.75rem; font-size: 0.9rem; color: #F9FAFB; cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s; -webkit-tap-highlight-color: transparent;
 }
 .custom-font-option:hover { background: rgba(255,255,255,0.08); }
 .custom-font-option.active { color: var(--color-primary); background: rgba(255,255,255,0.05); }
