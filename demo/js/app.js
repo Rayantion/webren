@@ -1126,12 +1126,19 @@ function showSubPage(pageId) {
 }
 
 function closeSubPage() {
-  document.querySelectorAll('.sub-page.active').forEach(page => {
-    page.classList.remove('active');
-    const modeEl = page.closest('.mode-sections');
-    if (modeEl) modeEl.classList.remove('sub-page-open');
-  });
   window.scrollTo({ top: 0, behavior: 'auto' });
+  document.querySelectorAll('.sub-page.active').forEach(page => {
+    page.classList.add('exiting');
+    const modeEl = page.closest('.mode-sections');
+    setTimeout(() => {
+      page.classList.remove('active', 'exiting');
+      if (modeEl) {
+        modeEl.classList.remove('sub-page-open');
+        modeEl.classList.add('sub-page-returning');
+        setTimeout(() => modeEl.classList.remove('sub-page-returning'), 300);
+      }
+    }, 220);
+  });
 }
 
 // ── Sub-pages init ────────────────────────────────────────────────────────────

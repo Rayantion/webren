@@ -95,6 +95,18 @@
     "feature_3": "Fast turnaround times",
     "feature_4": "Transparent pricing"
   },
+  "sneak": {
+    "badge": "Coming Soon",
+    "label": "Option A Upgraded",
+    "title": "Digital Menu & Order System",
+    "desc": "The next evolution of Option A — let restaurants showcase menus, accept orders, and manage the kitchen. Customers scan QR codes to browse, order, and pay from their phones.",
+    "f1": "QR Code Menu — Every table gets its own menu",
+    "f2": "Easy Ordering — Customers order from their phone",
+    "f3": "Kitchen Dashboard — Orders appear instantly",
+    "f4": "Email Receipts — Automatic PDF receipts",
+    "subtext": "For current Option A clients — seamless upgrade available",
+    "cta": "Coming 2026"
+  },
   "footer": {
     "tagline": "Premium web development for modern businesses.",
     "copyright": "© 2025 Web人. All rights reserved.",

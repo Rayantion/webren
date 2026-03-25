@@ -315,6 +315,137 @@
     .compare-table .td-featured { background: rgba(13,148,136,0.03); }
     .compare-table .td-na { color: var(--text-3); }
     .compare-table tbody tr:last-child td { border-bottom: none; }
+
+    /* ── Sneak Peek ── */
+    .sneak-section {
+      padding: 5rem 0;
+      background: linear-gradient(160deg, #0F172A 0%, #1E1B4B 55%, #0A2A28 100%);
+      position: relative; overflow: hidden;
+    }
+    .sneak-section::before {
+      content: ''; position: absolute;
+      top: -120px; right: -120px; width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .sneak-section::after {
+      content: ''; position: absolute;
+      bottom: -100px; left: -80px; width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(13,148,136,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .sneak-inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 80px; align-items: center;
+    }
+    .sneak-label-row {
+      display: flex; align-items: center; gap: 12px;
+      flex-wrap: wrap; margin-bottom: 0.75rem;
+    }
+    .sneak-section .badge { margin-bottom: 0; }
+    .badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: currentColor; flex-shrink: 0;
+    }
+    .sneak-tag {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--teal); font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .sneak-inner h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem); color: #fff; margin-bottom: 1rem;
+    }
+    .sneak-content > p {
+      color: #94A3B8; font-size: 0.98rem; line-height: 1.7;
+      max-width: 520px; margin-bottom: 1.75rem;
+    }
+    .sneak-features {
+      list-style: none; padding: 0; margin: 0 0 1.5rem;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .sneak-features li {
+      display: flex; align-items: flex-start; gap: 12px;
+      color: #CBD5E1; font-size: 0.95rem;
+    }
+    .sneak-bullet { flex-shrink: 0; font-size: 1.1rem; line-height: 1.45; }
+    .sneak-subtext {
+      font-size: 0.85rem; color: rgba(167,139,250,0.9); font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .sneak-cta {
+      display: inline-flex; align-items: center;
+      padding: 11px 26px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 100px; color: rgba(255,255,255,0.65);
+      font-weight: 700; font-size: 0.88rem; letter-spacing: 0.06em;
+      cursor: default; user-select: none;
+    }
+    .sneak-visual { position: relative; flex-shrink: 0; }
+    .sneak-phone {
+      width: 190px; background: #1E293B; border-radius: 30px;
+      border: 2px solid rgba(255,255,255,0.1);
+      padding: 14px 14px 22px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+    }
+    .sneak-phone-bar {
+      width: 56px; height: 5px; background: rgba(255,255,255,0.12);
+      border-radius: 10px; margin: 0 auto 14px;
+    }
+    .sneak-phone-screen {
+      background: #0F172A; border-radius: 18px; padding: 16px 14px;
+      min-height: 230px; display: flex; flex-direction: column; gap: 14px;
+    }
+    .sneak-qr {
+      width: 72px; height: 72px; margin: 0 auto; border-radius: 8px;
+      position: relative;
+      background: repeating-conic-gradient(rgba(13,148,136,0.5) 0% 25%, transparent 0% 50%) 0/8px 8px;
+      opacity: 0.75;
+    }
+    .sneak-qr::before, .sneak-qr::after {
+      content: ''; position: absolute;
+      width: 20px; height: 20px;
+      border: 3px solid rgba(13,148,136,0.95); border-radius: 4px;
+      box-sizing: border-box; background: #0F172A;
+    }
+    .sneak-qr::before { top: 4px; left: 4px; }
+    .sneak-qr::after  { top: 4px; right: 4px; }
+    .sneak-menu-items { display: flex; flex-direction: column; gap: 10px; }
+    .sneak-menu-item { display: flex; align-items: center; gap: 8px; }
+    .sneak-menu-dot {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: rgba(255,255,255,0.07); flex-shrink: 0;
+    }
+    .sneak-menu-lines { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+    .sneak-menu-line { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.1); }
+    .sneak-menu-line.short { width: 55%; }
+    .sneak-order-btn {
+      height: 32px;
+      background: linear-gradient(135deg, #0D9488, #7C3AED);
+      border-radius: 8px; opacity: 0.85;
+    }
+    .sneak-ping {
+      position: absolute; border-radius: 50%;
+      animation: sneakPing 2.2s ease-in-out infinite;
+    }
+    .sneak-ping-1 {
+      width: 12px; height: 12px; background: rgba(13,148,136,0.4);
+      border: 2px solid rgba(13,148,136,0.65); top: 24px; right: -16px;
+    }
+    .sneak-ping-2 {
+      width: 10px; height: 10px; background: rgba(124,58,237,0.4);
+      border: 2px solid rgba(124,58,237,0.55); bottom: 50px; left: -16px;
+      animation-delay: 1s;
+    }
+    @keyframes sneakPing {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.7); opacity: 0.25; }
+    }
+    @media (max-width: 768px) {
+      .sneak-inner { grid-template-columns: 1fr; }
+      .sneak-visual { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -530,6 +661,63 @@
   </div>
 </section>
 
+<!-- SNEAK PEEK -->
+<section class="sneak-section" aria-labelledby="sneak-title-pricing">
+  <div class="container">
+    <div class="sneak-inner reveal">
+
+      <div class="sneak-content">
+        <div class="sneak-label-row">
+          <span class="badge badge-violet">
+            <span class="badge-dot"></span>
+            <span data-i18n="sneak.badge">Coming Soon</span>
+          </span>
+          <span class="sneak-tag" data-i18n="sneak.label">Option A Upgraded</span>
+        </div>
+        <h2 id="sneak-title-pricing" data-i18n="sneak.title">Digital Menu &amp; Order System</h2>
+        <p data-i18n="sneak.desc">The next evolution of Option A — let restaurants showcase menus, accept orders, and manage the kitchen. Customers scan QR codes to browse, order, and pay from their phones.</p>
+        <ul class="sneak-features">
+          <li><span class="sneak-bullet">🍽️</span><span data-i18n="sneak.f1">QR Code Menu — Every table gets its own menu</span></li>
+          <li><span class="sneak-bullet">📱</span><span data-i18n="sneak.f2">Easy Ordering — Customers order from their phone</span></li>
+          <li><span class="sneak-bullet">👨‍🍳</span><span data-i18n="sneak.f3">Kitchen Dashboard — Orders appear instantly</span></li>
+          <li><span class="sneak-bullet">📩</span><span data-i18n="sneak.f4">Email Receipts — Automatic PDF receipts</span></li>
+        </ul>
+        <p class="sneak-subtext" data-i18n="sneak.subtext">For current Option A clients — seamless upgrade available</p>
+        <span class="sneak-cta" data-i18n="sneak.cta">Coming 2026</span>
+      </div>
+
+      <div class="sneak-visual" aria-hidden="true">
+        <div class="sneak-phone">
+          <div class="sneak-phone-bar"></div>
+          <div class="sneak-phone-screen">
+            <div class="sneak-qr"></div>
+            <div class="sneak-menu-items">
+              <div class="sneak-menu-item">
+                <div class="sneak-menu-dot"></div>
+                <div class="sneak-menu-lines">
+                  <div class="sneak-menu-line"></div>
+                  <div class="sneak-menu-line short"></div>
+                </div>
+              </div>
+              <div class="sneak-menu-item">
+                <div class="sneak-menu-dot"></div>
+                <div class="sneak-menu-lines">
+                  <div class="sneak-menu-line"></div>
+                  <div class="sneak-menu-line short"></div>
+                </div>
+              </div>
+            </div>
+            <div class="sneak-order-btn"></div>
+          </div>
+        </div>
+        <div class="sneak-ping sneak-ping-1"></div>
+        <div class="sneak-ping sneak-ping-2"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section class="section section-alt">
   <div class="container">
@@ -671,7 +859,17 @@ const STRINGS = {
     "pricing.cta_footer.title": "Ready to Get Started?",
     "pricing.cta_footer.subtitle": "Try the demo and send us your preferences, or chat on WhatsApp for a free consultation.",
     "pricing.whatsapp": "Chat on WhatsApp",
-    "footer.copyright": "© 2025 Web人. All rights reserved."
+    "footer.copyright": "© 2025 Web人. All rights reserved.",
+    "sneak.badge": "Coming Soon",
+    "sneak.label": "Option A Upgraded",
+    "sneak.title": "Digital Menu & Order System",
+    "sneak.desc": "The next evolution of Option A — let restaurants showcase menus, accept orders, and manage the kitchen. Customers scan QR codes to browse, order, and pay from their phones.",
+    "sneak.f1": "QR Code Menu — Every table gets its own menu",
+    "sneak.f2": "Easy Ordering — Customers order from their phone",
+    "sneak.f3": "Kitchen Dashboard — Orders appear instantly",
+    "sneak.f4": "Email Receipts — Automatic PDF receipts",
+    "sneak.subtext": "For current Option A clients — seamless upgrade available",
+    "sneak.cta": "Coming 2026"
   },
   "zh-TW": {
     "nav.home": "首頁", "nav.services": "服務", "nav.pricing": "定價",
@@ -752,7 +950,17 @@ const STRINGS = {
     "pricing.cta_footer.title": "準備好開始了嗎？",
     "pricing.cta_footer.subtitle": "試用 Demo 並傳送您的偏好，或透過 WhatsApp 免費諮詢。",
     "pricing.whatsapp": "WhatsApp 聯絡",
-    "footer.copyright": "© 2025 Web人。保留所有權利。"
+    "footer.copyright": "© 2025 Web人。保留所有權利。",
+    "sneak.badge": "即將推出",
+    "sneak.label": "方案 A 進化版",
+    "sneak.title": "數位菜單 & 點餐系統",
+    "sneak.desc": "方案 A 的下一步進化——讓餐廳展示菜單、接受訂單並管理廚房。顧客掃描 QR 碼即可瀏覽、點餐並付款。",
+    "sneak.f1": "QR 碼菜單——每張桌子都有專屬菜單",
+    "sneak.f2": "輕鬆點餐——顧客用手機直接點餐",
+    "sneak.f3": "廚房看板——訂單即時顯示",
+    "sneak.f4": "電子收據——自動發送 PDF 收據",
+    "sneak.subtext": "現有方案 A 客戶可無縫升級",
+    "sneak.cta": "2026 年推出"
   }
 };
 

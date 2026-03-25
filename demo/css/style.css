@@ -260,7 +260,19 @@ section { padding: 5rem 0; }
   from { opacity: 0; transform: translateX(12px); }
   to   { opacity: 1; transform: translateX(0); }
 }
+@keyframes subPageFadeOut {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(12px); }
+}
 .sub-page.active {
+  animation: subPageFadeIn 0.28s ease forwards;
+}
+.sub-page.exiting {
+  display: block;
+  animation: subPageFadeOut 0.22s ease forwards;
+  pointer-events: none;
+}
+.mode-sections.sub-page-returning > section {
   animation: subPageFadeIn 0.28s ease forwards;
 }
 
