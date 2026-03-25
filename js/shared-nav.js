@@ -150,6 +150,7 @@
     lastY = y;
   }, { passive: true });
   window.addEventListener('scrollend', function () {
+    if (isDemo) return; // demo page: keep nav hidden when scrolling stops
     nav.classList.remove('hidden-nav');
     nav.classList.add('visible-nav');
   }, { passive: true });
