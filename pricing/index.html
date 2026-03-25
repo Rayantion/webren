@@ -119,7 +119,7 @@
 
     /* ── Option A Cards ── */
     .pricing-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
       gap: 1.5rem; align-items: start;
     }
     .pricing-card {
@@ -445,6 +445,15 @@
     @media (max-width: 768px) {
       .sneak-inner { grid-template-columns: 1fr; }
       .sneak-visual { display: none; }
+    }
+    @media (max-width: 480px) {
+      .pricing-hero { padding: 4rem 0 2.5rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+      .section { padding: 3rem 0; }
+      .optionb-card { padding: 1.5rem; }
+      .optionb-cta { width: 100%; justify-content: center; }
+      .sneak-section { padding: 3rem 0; }
     }
   </style>
 </head>
