@@ -186,14 +186,12 @@
   document.addEventListener('DOMContentLoaded', function () {
     var pt = document.getElementById('page-transition');
     if (!pt) return;
+    // Ensure overlay is fully opaque before fading out
     pt.style.transition = 'none';
     pt.classList.add('active');
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        pt.style.transition = '';
-        pt.classList.remove('active');
-      });
-    });
+    void pt.offsetHeight; // force reflow — ensures opacity:1 is painted before transition starts
+    pt.style.transition = '';
+    pt.classList.remove('active');
   });
 
   // ── Language buttons — dispatch event for page to handle ─────────────

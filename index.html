@@ -553,6 +553,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
+        async
         onload="window.dispatchEvent(new Event('three-loaded'))"></script>
 
 <!-- App Scripts -->
@@ -561,7 +562,7 @@
 <script src="js/app.js"></script>
 
 <!-- Transition overlays -->
-<div id="page-transition" aria-hidden="true"></div>
+<div id="page-transition" class="active" aria-hidden="true"></div>
 
 </body>
 </html>
