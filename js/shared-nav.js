@@ -150,7 +150,10 @@
     lastY = y;
   }, { passive: true });
   window.addEventListener('scrollend', function () {
-    if (isDemo) return; // demo page: keep nav hidden when scrolling stops
+    if (isDemo) {
+      nav.classList.remove('visible-nav'); // undo any brief show from decel twitch
+      return;
+    }
     nav.classList.remove('hidden-nav');
     nav.classList.add('visible-nav');
   }, { passive: true });
