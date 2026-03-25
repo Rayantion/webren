@@ -145,8 +145,14 @@
   window.addEventListener('scroll', function () {
     var y = window.scrollY;
     nav.classList.toggle('scrolled', y > 40);
-    nav.classList.toggle('hidden-nav', y > lastY + 2 && y > 120);
-    nav.classList.toggle('visible-nav', y < lastY - 2);
+    if (y > lastY + 2 && y > 120) {
+      nav.classList.add('hidden-nav');
+      nav.classList.remove('visible-nav');
+    } else if (y < lastY - 2) {
+      nav.classList.remove('hidden-nav');
+      nav.classList.add('visible-nav');
+    }
+    // tiny movement → keep current state (prevents decel twitch)
     lastY = y;
   }, { passive: true });
   window.addEventListener('scrollend', function () {

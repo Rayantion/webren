@@ -691,6 +691,14 @@ section { padding: 5rem 0; }
   #demo-bar .demo-badge { display: none; }
   .demo-bar-inner { justify-content: center; }
 
+  /* Slide demo-bar up when outer nav hides — reclaims 70px of screen space */
+  #demo-bar {
+    transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  #shared-nav.hidden-nav ~ #demo-bar {
+    top: 0;
+  }
+
   /* Relocate "DEMO PREVIEW" as a fixed edge tab (top-right, below outer nav) */
   #demo-bar::after {
     content: 'DEMO PREVIEW';
@@ -704,6 +712,10 @@ section { padding: 5rem 0; }
     z-index: 300;
     pointer-events: none;
     font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  #shared-nav.hidden-nav ~ #demo-bar::after {
+    top: 0;
   }
 }
 
