@@ -162,27 +162,18 @@ function initCounters() {
 
 // ─── Language Toggle ──────────────────────────────────────────────────────────
 function initLangToggle() {
-  // Wait for page-transition overlay to cover content, then switch language
+  // lang-overlay handles the cover animation — animate:true uses it
   document.addEventListener('nav:lang', e => {
-    const overlay = document.getElementById('page-transition');
-    if (overlay) {
-      overlay.classList.add('active');
-      setTimeout(() => {
-        I18N.switchLanguage(e.detail, false).then(() => {
-          setTimeout(() => overlay.classList.remove('active'), 300);
-        });
-      }, 250); // let overlay cover content before applying translations
-    } else {
-      I18N.switchLanguage(e.detail, false);
-    }
+    I18N.switchLanguage(e.detail); // animate=true: slides down, covers, swaps text, slides back up
   });
 
   // Wire up section lang buttons (e.g. "i18n in Action") — dispatch nav:lang so nav also updates
   document.querySelectorAll('.lang-btn').forEach(btn => {
     if (btn.closest('#shared-nav, #shared-mobile-menu')) return; // handled by shared-nav.js
     btn.addEventListener('click', () => {
-      if (btn.classList.contains('active')) return;
-      document.dispatchEvent(new CustomEvent('nav:lang', { detail: btn.dataset.lang }));
+      const lang = btn.dataset.lang;
+      if (!lang || lang === I18N.getCurrentLang()) return; // use authoritative state, not CSS class
+      document.dispatchEvent(new CustomEvent('nav:lang', { detail: lang }));
     });
   });
 }
