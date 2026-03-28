@@ -189,9 +189,9 @@ function initLangToggle() {
       });
     });
   });
-  // Also respond to lang:nav event dispatched by shared-nav.js outer nav
+  // Also respond to nav:lang event dispatched by shared-nav.js outer nav
   document.addEventListener('nav:lang', e => {
-    I18N.switchLanguage(e.detail);
+    runTransition(async () => { await I18N.switchLanguage(e.detail); });
   });
 }
 

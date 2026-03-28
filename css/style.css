@@ -1374,33 +1374,7 @@ footer {
   font-family: 'Space Grotesk', sans-serif;
 }
 
-/* ─── Page Transition Overlay (navigation) ──────────────────────────────────── */
-#page-transition {
-  position: fixed;
-  inset: 0;
-  background: var(--teal);
-  transform: scaleY(0);
-  transform-origin: top;
-  z-index: 850;
-  pointer-events: none;
-  transition: transform 0.4s ease-in-out;
-}
-
-#page-transition.active { transform: scaleY(1); }
-
-/* ─── Language Switch Overlay (same style, separate element) ─────────────────── */
-#lang-overlay {
-  position: fixed;
-  inset: 0;
-  background: var(--teal);
-  transform: scaleY(0);
-  transform-origin: top;
-  z-index: 9999;
-  pointer-events: none;
-  transition: transform 0.4s ease-in-out;
-}
-
-#lang-overlay.active { transform: scaleY(1); }
+/* ─── Page Transition + Language Overlay defined in shared-nav.css ───────────── */
 
 /* ─── Portfolio Live Badge ─────────────────────────────────────────────────── */
 .portfolio-live-badge {
