@@ -205,11 +205,14 @@
   document.querySelectorAll('#shared-nav .lang-btn, #shared-mobile-menu .lang-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
       if (btn.classList.contains('active')) return;
-      var lang = btn.dataset.lang;
-      setActiveLang(lang);
-      updateNavText(lang);
-      document.dispatchEvent(new CustomEvent('nav:lang', { detail: lang }));
       closeMenu();
+      document.dispatchEvent(new CustomEvent('nav:lang', { detail: btn.dataset.lang }));
     });
+  });
+
+  // Keep nav text + active state in sync whenever any part of the page switches language
+  document.addEventListener('nav:lang', function (e) {
+    setActiveLang(e.detail);
+    updateNavText(e.detail);
   });
 }());

@@ -162,12 +162,27 @@ function initCounters() {
 
 // ─── Language Toggle ──────────────────────────────────────────────────────────
 function initLangToggle() {
-  // shared-nav.js dispatches nav:lang when a lang button is clicked
+  // Wait for page-transition overlay to cover content, then switch language
   document.addEventListener('nav:lang', e => {
     const overlay = document.getElementById('page-transition');
-    if (overlay) overlay.classList.add('active');
-    I18N.switchLanguage(e.detail, false).then(() => {
-      if (overlay) setTimeout(() => overlay.classList.remove('active'), 300);
+    if (overlay) {
+      overlay.classList.add('active');
+      setTimeout(() => {
+        I18N.switchLanguage(e.detail, false).then(() => {
+          setTimeout(() => overlay.classList.remove('active'), 300);
+        });
+      }, 250); // let overlay cover content before applying translations
+    } else {
+      I18N.switchLanguage(e.detail, false);
+    }
+  });
+
+  // Wire up section lang buttons (e.g. "i18n in Action") — dispatch nav:lang so nav also updates
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    if (btn.closest('#shared-nav, #shared-mobile-menu')) return; // handled by shared-nav.js
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('active')) return;
+      document.dispatchEvent(new CustomEvent('nav:lang', { detail: btn.dataset.lang }));
     });
   });
 }
