@@ -47,7 +47,7 @@ const I18N = (() => {
 
     if (overlay) {
       overlay.classList.add('active');
-      await new Promise(r => setTimeout(r, 320)); // wait for slide-down (300ms) to fully cover
+      await new Promise(r => setTimeout(r, 420)); // wait for scaleY wipe (0.4s) to fully cover
     }
 
     currentLang = lang;

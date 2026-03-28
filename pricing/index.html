@@ -71,14 +71,22 @@
     .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
 
-    /* ── Page transition ── */
+    /* ── Page transition (navigation) ── */
     #page-transition {
+      position: fixed; inset: 0; background: var(--teal);
+      transform: scaleY(0); transform-origin: top;
+      z-index: 850; pointer-events: none;
+      transition: transform 0.4s ease-in-out;
+    }
+    #page-transition.active { transform: scaleY(1); }
+    /* ── Lang overlay (language switch) ── */
+    #lang-overlay {
       position: fixed; inset: 0; background: var(--teal);
       transform: scaleY(0); transform-origin: top;
       z-index: 9999; pointer-events: none;
       transition: transform 0.4s ease-in-out;
     }
-    #page-transition.active { transform: scaleY(1); pointer-events: all; }
+    #lang-overlay.active { transform: scaleY(1); }
 
     /* ── Hero ── */
     .pricing-hero {
@@ -466,6 +474,7 @@
 
 <a href="#main-content" class="skip-link">Skip to content</a>
 <div id="page-transition"></div>
+<div id="lang-overlay" aria-hidden="true"></div>
 
 
 <!-- HERO -->
@@ -996,12 +1005,12 @@ function applyStrings(lang) {
 }
 
 function switchLang(lang) {
-  const overlay = document.getElementById('page-transition');
+  const overlay = document.getElementById('lang-overlay');
   overlay.classList.add('active');
   setTimeout(() => {
     applyStrings(lang);
     overlay.classList.remove('active');
-  }, 300);
+  }, 420);
 }
 
 function toggleFaq(btn) {

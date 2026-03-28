@@ -1374,34 +1374,33 @@ footer {
   font-family: 'Space Grotesk', sans-serif;
 }
 
-/* ─── Page Transition Overlay ───────────────────────────────────────────────── */
+/* ─── Page Transition Overlay (navigation) ──────────────────────────────────── */
 #page-transition {
   position: fixed;
   inset: 0;
-  pointer-events: none;
+  background: var(--teal);
+  transform: scaleY(0);
+  transform-origin: top;
   z-index: 850;
-  opacity: 0;
-  background: linear-gradient(135deg, rgba(13,148,136,0.07) 0%, rgba(124,58,237,0.07) 100%);
-  backdrop-filter: blur(1px);
-  transition: opacity 0.2s ease;
+  pointer-events: none;
+  transition: transform 0.4s ease-in-out;
 }
 
-#page-transition.active { opacity: 1; }
+#page-transition.active { transform: scaleY(1); }
 
-/* ─── Language Switch Overlay ───────────────────────────────────────────────── */
+/* ─── Language Switch Overlay (same style, separate element) ─────────────────── */
 #lang-overlay {
   position: fixed;
   inset: 0;
-  pointer-events: none;
+  background: var(--teal);
+  transform: scaleY(0);
+  transform-origin: top;
   z-index: 9999;
-  background: var(--bg);
-  transform: translateY(-100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  transition: transform 0.4s ease-in-out;
 }
 
-#lang-overlay.active {
-  transform: translateY(0);
-}
+#lang-overlay.active { transform: scaleY(1); }
 
 /* ─── Portfolio Live Badge ─────────────────────────────────────────────────── */
 .portfolio-live-badge {

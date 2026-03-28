@@ -60,14 +60,22 @@
     a { color: var(--teal); text-decoration: none; }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
-    /* Page transition */
+    /* Page transition (navigation) */
     #page-transition {
+      position: fixed; inset: 0; background: var(--teal);
+      transform: scaleY(0); transform-origin: top;
+      z-index: 850; pointer-events: none;
+      transition: transform 0.4s ease-in-out;
+    }
+    #page-transition.active { transform: scaleY(1); }
+    /* Lang overlay (language switch) */
+    #lang-overlay {
       position: fixed; inset: 0; background: var(--teal);
       transform: scaleY(0); transform-origin: top;
       z-index: 9999; pointer-events: none;
       transition: transform 0.4s ease-in-out;
     }
-    #page-transition.active { transform: scaleY(1); pointer-events: all; }
+    #lang-overlay.active { transform: scaleY(1); }
 
     /* Hero */
     .join-hero {
@@ -236,6 +244,7 @@
 
   <a href="#main-content" class="skip-link">Skip to content</a>
   <div id="page-transition"></div>
+  <div id="lang-overlay" aria-hidden="true"></div>
   <script src="../js/shared-nav.js?v=30" defer></script>
 
   <!-- Hero -->
@@ -573,7 +582,13 @@
     applyStrings(savedLang);
 
     document.addEventListener('nav:lang', function (e) {
-      applyStrings(e.detail);
+      var lang = e.detail;
+      var overlay = document.getElementById('lang-overlay');
+      overlay.classList.add('active');
+      setTimeout(function () {
+        applyStrings(lang);
+        overlay.classList.remove('active');
+      }, 420);
     });
 
     // FAQ accordion
