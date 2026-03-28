@@ -1394,24 +1394,13 @@ footer {
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0;
-  background: transparent;
-  transition: none;
+  background: var(--bg);
+  transform: translateY(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #lang-overlay.active {
-  opacity: 0;
-  pointer-events: none;
-  animation: langDropdownFill 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes langDropdownFill {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(0);
-  }
+  transform: translateY(0);
 }
 
 /* ─── Portfolio Live Badge ─────────────────────────────────────────────────── */

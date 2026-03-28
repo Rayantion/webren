@@ -47,7 +47,7 @@ const I18N = (() => {
 
     if (overlay) {
       overlay.classList.add('active');
-      await new Promise(r => setTimeout(r, 200)); // wait for overlay to cover content
+      await new Promise(r => setTimeout(r, 320)); // wait for slide-down (300ms) to fully cover
     }
 
     currentLang = lang;
@@ -64,7 +64,7 @@ const I18N = (() => {
     document.body.classList.toggle('lang-zh', lang === 'zh-TW');
 
     if (overlay) {
-      setTimeout(() => overlay.classList.remove('active'), 50);
+      setTimeout(() => overlay.classList.remove('active'), 50); // trigger slide-back-up
     }
   }
 
