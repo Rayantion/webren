@@ -44,11 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('client-search').addEventListener('input', applyFilters);
   document.getElementById('client-filter-type').addEventListener('change', applyFilters);
   document.getElementById('client-sort').addEventListener('change', applyFilters);
-  document.getElementById('client-plan').addEventListener('change', e => {
-    const fees = { 'Option A Basic': 3000, 'Option A Professional': 4500, 'Option A Premium': 5000 };
-    const fee = (fees[e.target.value] != null) ? fees[e.target.value] : '';
-    if (fee) document.getElementById('client-fee').value = fee;
-  });
+  document.getElementById('client-plan').addEventListener('change', recalcFee);
+  initLangTagInput();
   sb.auth.onAuthStateChange(async (_event, session) => {
     if (session && session.user) {
       currentUser = session.user; await resolveAdmin(); showScreen('dashboard'); loadDashboard();
@@ -80,9 +77,6 @@ async function handleRegister(e) {
   const email = document.getElementById('reg-email').value.trim();
   const phone = document.getElementById('reg-phone').value.trim();
   const pass  = document.getElementById('reg-password').value;
-  // Check whitelist before showing T&C modal
-  const { data: allowed } = await sb.from('allowed_emails').select('id').eq('email', email).maybeSingle();
-  if (!allowed) { showMsg('reg-error', 'Registration closed. Contact Aaron to join.'); btn.disabled = false; return; }
   // Store pending data and show T&C modal
   _pendingRegData = { name, email, phone, pass };
   btn.disabled = false;
@@ -97,7 +91,12 @@ async function doSignUp() {
   btn.disabled = true;
   showMsg('reg-error', ''); showMsg('reg-success', '');
   const { error } = await sb.auth.signUp({ email, password: pass, options: { data: { full_name: name, phone } } });
-  if (error) { showMsg('reg-error', error.message); }
+  if (error) {
+    const msg = error.message.includes('Email not allowed to register')
+      ? 'Registration closed. Contact Aaron to join.'
+      : error.message;
+    showMsg('reg-error', msg);
+  }
   else {
     showMsg('reg-success', 'Account created! Please check your email to confirm.', true);
     const dlBtn = document.getElementById('btn-download-contract-reg');
@@ -227,6 +226,84 @@ async function markInvoicePaid(id) {
   if (error) { showToast('Error updating invoice.'); return; }
   showToast(pt('toast_invoice', 'Invoice marked as paid!')); loadInvoices(); loadTotalEarned();
 }
+/* ── Language tag input ─────────────────────────────────────────────────── */
+const LANG_LIST = [
+  'English','Traditional Chinese','Simplified Chinese','Japanese','Korean',
+  'Thai','Indonesian','Vietnamese','Malay','French','Spanish','German',
+  'Portuguese','Arabic','Hindi','Italian','Dutch','Russian','Turkish','Polish'
+];
+const LANG_FEE = 700;
+const BASE_FEES = { 'Option A Basic': 3000, 'Option A Professional': 4500, 'Option A Premium': 5000 };
+let selectedLangs = [];
+
+function recalcFee() {
+  const plan = document.getElementById('client-plan').value;
+  const feeEl = document.getElementById('client-fee');
+  if (BASE_FEES[plan] != null) {
+    feeEl.value = BASE_FEES[plan] + selectedLangs.length * LANG_FEE;
+    feeEl.readOnly = true;
+  } else {
+    feeEl.readOnly = false;
+    if (!feeEl.value) feeEl.value = '';
+  }
+}
+
+function renderLangTags() {
+  const container = document.getElementById('lang-tags');
+  container.replaceChildren(...selectedLangs.map(l => {
+    const tag = document.createElement('span');
+    tag.className = 'lang-tag';
+    tag.textContent = l + ' ';
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'lang-tag-remove';
+    btn.setAttribute('aria-label', 'Remove'); btn.textContent = '\u00d7';
+    btn.addEventListener('click', () => {
+      selectedLangs = selectedLangs.filter(x => x !== l);
+      renderLangTags(); recalcFee();
+    });
+    tag.appendChild(btn);
+    return tag;
+  }));
+}
+
+function showLangSuggestions(query) {
+  const box = document.getElementById('lang-suggestions');
+  const matches = query
+    ? LANG_LIST.filter(l => l.toLowerCase().includes(query.toLowerCase()) && !selectedLangs.includes(l))
+    : [];
+  if (!matches.length) { box.classList.add('hidden'); return; }
+  const frag = document.createDocumentFragment();
+  matches.slice(0, 7).forEach(l => {
+    const item = document.createElement('div');
+    item.className = 'lang-suggestion-item';
+    item.textContent = l; item.dataset.lang = l;
+    item.addEventListener('mousedown', e => {
+      e.preventDefault();
+      if (!selectedLangs.includes(l)) { selectedLangs.push(l); renderLangTags(); recalcFee(); }
+      document.getElementById('lang-tag-search').value = '';
+      box.classList.add('hidden');
+    });
+    frag.appendChild(item);
+  });
+  box.replaceChildren(frag);
+  box.classList.remove('hidden');
+}
+
+function initLangTagInput() {
+  const search = document.getElementById('lang-tag-search');
+  const wrap   = document.getElementById('lang-tag-wrap');
+  search.addEventListener('input', () => showLangSuggestions(search.value));
+  search.addEventListener('blur',  () => setTimeout(() => document.getElementById('lang-suggestions').classList.add('hidden'), 150));
+  wrap.addEventListener('click',   () => search.focus());
+}
+
+function resetLangTags() {
+  selectedLangs = []; renderLangTags();
+  const s = document.getElementById('lang-tag-search');
+  if (s) s.value = '';
+  document.getElementById('lang-suggestions').classList.add('hidden');
+}
+
 async function handleAddClient(e) {
   e.preventDefault();
   const btn = document.getElementById('btn-submit-client');
@@ -243,10 +320,11 @@ async function handleAddClient(e) {
     payment_deadline: payDeadline,
     description: document.getElementById('client-desc').value.trim() || null,
     type: document.getElementById('client-type').value,
+    languages: selectedLangs.length ? selectedLangs.join(', ') : null,
     status: 'hold',
   });
   if (error) { showMsg('add-client-error', error.message); }
-  else { closeModal(); e.target.reset(); showToast(pt('toast_client', 'Client submitted for approval!')); loadClients(); }
+  else { closeModal(); e.target.reset(); resetLangTags(); showToast(pt('toast_client', 'Client submitted for approval!')); loadClients(); }
   btn.disabled = false;
 }
 function showScreen(name) {
@@ -262,7 +340,7 @@ function showAuthForm(name) {
   if (name === 'login' || name === 'register') switchAuthTab(name);
 }
 function openModal()  { document.getElementById('add-client-overlay').classList.remove('hidden'); }
-function closeModal() { document.getElementById('add-client-overlay').classList.add('hidden'); }
+function closeModal() { document.getElementById('add-client-overlay').classList.add('hidden'); resetLangTags(); }
 function showMsg(id, msg, success) {
   const el = document.getElementById(id); if (!el) return;
   el.textContent = msg; el.classList.toggle('hidden', !msg); el.classList.toggle('success', !!success);
@@ -361,14 +439,10 @@ function downloadContract(name, date) {
   }
   const safeName = name || 'Agent';
   const safeDate = date || new Date().toLocaleDateString('en-GB');
-  const el = document.createElement('div');
-  el.innerHTML = contractHTML(escHtml(safeName), escHtml(safeDate));
-  el.style.cssText = 'position:absolute;left:-9999px;top:0;width:800px;';
-  document.body.appendChild(el);
   html2pdf().set({
     margin: 0,
     filename: 'WebRen-Agent-Agreement.pdf',
-    html2canvas: { scale: 2, useCORS: true, logging: false },
+    html2canvas: { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' },
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  }).from(el).save().then(() => document.body.removeChild(el));
+  }).from(contractHTML(escHtml(safeName), escHtml(safeDate))).save();
 }
