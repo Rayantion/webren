@@ -583,6 +583,14 @@
     var checkbox   = document.getElementById('tnc-accept');
     var label      = document.getElementById('tnc-check-label');
     var confirmBtn = document.getElementById('tnc-confirm');
+    var footer     = document.querySelector('.tnc-modal-footer');
+
+    function unlockFooter() {
+      checkbox.disabled = false;
+      label.classList.add('enabled');
+      indicator.classList.add('hidden');
+      footer.classList.add('unlocked');
+    }
 
     // Called by app.js after allowed_emails DB green light
     window.showTncModal = function () {
@@ -591,19 +599,16 @@
       checkbox.disabled = true;
       confirmBtn.disabled = true;
       label.classList.remove('enabled');
+      footer.classList.remove('unlocked');
       indicator.classList.remove('hidden');
       overlay.classList.add('open');
     };
 
-    // Unlock checkbox when scrolled near bottom (within 40px)
+    // Unlock footer when scrolled near bottom (within 40px)
     scrollBody.addEventListener('scroll', function () {
       if (checkbox.disabled) {
         var remaining = scrollBody.scrollHeight - scrollBody.scrollTop - scrollBody.clientHeight;
-        if (remaining < 40) {
-          checkbox.disabled = false;
-          label.classList.add('enabled');
-          indicator.classList.add('hidden');
-        }
+        if (remaining < 40) { unlockFooter(); }
       }
     });
 
