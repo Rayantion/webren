@@ -360,7 +360,7 @@ function downloadContract(name, date) {
   const safeDate = date || new Date().toLocaleDateString('en-GB');
   const el = document.createElement('div');
   el.innerHTML = contractHTML(escHtml(safeName), escHtml(safeDate));
-  el.style.cssText = 'position:fixed;left:-9999px;top:0;width:800px;';
+  el.style.cssText = 'position:absolute;left:-9999px;top:0;width:800px;';
   document.body.appendChild(el);
   html2pdf().set({
     margin: 0,
