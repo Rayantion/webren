@@ -81,8 +81,10 @@
           <input type="email" id="reg-email" autocomplete="email" required>
         </div>
         <div class="form-group">
-          <label for="reg-phone"><span data-i18n="label_phone">Phone</span> <span class="label-optional" data-i18n="label_phone_opt">(optional)</span></label>
-          <input type="tel" id="reg-phone" autocomplete="tel">
+          <label for="reg-phone"><span data-i18n="label_phone">Phone</span> <span class="label-optional" data-i18n="label_phone_hint">(Taiwan: 09XX-XXX-XXX)</span></label>
+          <input type="tel" id="reg-phone" autocomplete="tel" required
+            pattern="^(09\d{2}-?\d{3}-?\d{3}|0\d{1,2}-?\d{6,8})$"
+            placeholder="09XX-XXX-XXX">
         </div>
         <div class="form-group">
           <label for="reg-password"><span data-i18n="label_password">Password</span> <span class="label-optional" data-i18n="label_pass_hint">(min 8 chars)</span></label>
@@ -260,7 +262,15 @@
         </div>
         <div class="form-group">
           <label for="client-fee" data-i18n="label_fee">Monthly Fee (NT$)</label>
-          <input type="number" id="client-fee" min="0" step="100" required>
+          <input type="number" id="client-fee" min="0" step="1" required readonly>
+        </div>
+        <div class="form-group">
+          <label>Languages <span class="label-optional">(+NT$700 each)</span></label>
+          <div class="lang-tag-wrap" id="lang-tag-wrap">
+            <div class="lang-tags" id="lang-tags"></div>
+            <input type="text" id="lang-tag-search" placeholder="Type a language…" autocomplete="off" spellcheck="false">
+          </div>
+          <div class="lang-suggestions hidden" id="lang-suggestions"></div>
         </div>
         <div class="form-group">
           <label for="client-start" data-i18n="label_start">Start Date</label>
@@ -310,7 +320,7 @@
         btn_signin: 'Sign In', btn_forgot: 'Forgot password?',
         register_notice: 'To create an account, please contact the owner to register your email first. <a href="https://wa.me/6285183005811" target="_blank" rel="noopener noreferrer">Contact Aaron &rarr;</a>',
         label_fullname: 'Full Name', label_phone: 'Phone',
-        label_phone_opt: '(optional)', label_pass_hint: '(min 8 chars)',
+        label_phone_hint: '(Taiwan: 09XX-XXX-XXX)', label_pass_hint: '(min 8 chars)',
         btn_create_account: 'Create Account',
         btn_download_contract: 'Download Your Contract (PDF)',
         h_reset: 'Reset Password',
@@ -363,7 +373,7 @@
         btn_signin: '\u767b\u5165', btn_forgot: '\u5fd8\u8a18\u5bc6\u78bc\uff1f',
         register_notice: '\u5efa\u7acb\u5e33\u865f\u524d\uff0c\u8acb\u5148\u806f\u7d61\u7ba1\u7406\u54e1\u5c07\u60a8\u7684\u96fb\u5b50\u90f5\u4ef6\u52a0\u5165\u540d\u55ae\u3002<a href="https://wa.me/6285183005811" target="_blank" rel="noopener noreferrer">\u806f\u7d61 Aaron &rarr;</a>',
         label_fullname: '\u59d3\u540d', label_phone: '\u96fb\u8a71',
-        label_phone_opt: '\uff08\u9078\u586b\uff09', label_pass_hint: '\uff08\u81f3\u5c11 8 \u5b57\u5143\uff09',
+        label_phone_hint: '\uff08\u53f0\u7063\uff1a09XX-XXX-XXX\uff09', label_pass_hint: '\uff08\u81f3\u5c11 8 \u5b57\u5143\uff09',
         btn_create_account: '\u5efa\u7acb\u5e33\u865f',
         btn_download_contract: '\u4e0b\u8f09\u5408\u7d04\uff08PDF\uff09',
         h_reset: '\u91cd\u8a2d\u5bc6\u78bc',
