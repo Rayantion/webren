@@ -80,6 +80,9 @@ async function handleRegister(e) {
   const email = document.getElementById('reg-email').value.trim();
   const phone = document.getElementById('reg-phone').value.trim();
   const pass  = document.getElementById('reg-password').value;
+  // Check whitelist before showing T&C modal
+  const { data: allowed } = await sb.from('allowed_emails').select('id').eq('email', email).maybeSingle();
+  if (!allowed) { showMsg('reg-error', 'Registration closed. Contact Aaron to join.'); btn.disabled = false; return; }
   // Store pending data and show T&C modal
   _pendingRegData = { name, email, phone, pass };
   btn.disabled = false;
