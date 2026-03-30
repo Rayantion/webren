@@ -83,6 +83,13 @@ async function runTransition(callback) {
 function showMode(mode, withTransition = true) {
   if (isTransitioning) return;
 
+  // Already on this mode — close any sub-page and scroll to top without animating
+  if (withTransition && mode === (currentConfig.mode || 'company')) {
+    closeSubPage();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+
   closeSubPage();
   document.querySelectorAll('.mode-sections').forEach(el => el.classList.remove('active', 'dropping-in'));
   const target = document.getElementById(`mode-${mode}`);
@@ -1351,6 +1358,19 @@ function initCursorGlow() {
   }, { passive: true });
   document.addEventListener('mouseleave', () => { el.style.opacity = '0'; active = false; }, { passive: true });
 }
+
+// ── BFCache restore: clear frozen animation state ─────────────────────────────
+window.addEventListener('pageshow', e => {
+  if (e.persisted) {
+    document.querySelectorAll('.mode-sections.dropping-in').forEach(el => el.classList.remove('dropping-in'));
+    document.querySelectorAll('.custom-font-select.open').forEach(el => {
+      el.classList.remove('open');
+      const btn = el.querySelector('.custom-font-btn');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    });
+    isTransitioning = false;
+  }
+});
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
