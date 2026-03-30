@@ -224,10 +224,12 @@
     "name_placeholder": "姓名",
     "email_placeholder": "電子郵件",
     "phone_placeholder": "電話號碼",
+    "codename_placeholder": "代理商代碼（由您的代理商提供）",
     "send": "傳送給 Web人",
     "sending": "傳送中...",
-    "success": "已傳送！我們將盡快與您聯絡。",
+    "success": "已傳送！您的代理商將盡快與您聯絡。",
     "error": "發生錯誤，請重試。",
+    "error_codename": "找不到代理商代碼，請向您的代理商確認。",
     "back": "關閉"
   }
 }

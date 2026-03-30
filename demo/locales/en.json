@@ -224,10 +224,12 @@
     "name_placeholder": "Full Name",
     "email_placeholder": "Email Address",
     "phone_placeholder": "Phone Number",
+    "codename_placeholder": "Agent Code (given by your agent)",
     "send": "Send to Web人",
     "sending": "Sending...",
-    "success": "Sent! We'll be in touch soon.",
+    "success": "Sent! Your agent will be in touch soon.",
     "error": "Something went wrong. Please try again.",
+    "error_codename": "Agent code not found. Please check with your agent.",
     "back": "Back"
   }
 }

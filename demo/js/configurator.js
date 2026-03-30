@@ -1,6 +1,7 @@
-// configurator.js — Config drawer: presets, color picker, auto-theme, fonts, form, n8n POST
+// configurator.js — Config drawer: presets, color picker, auto-theme, fonts, form, Supabase lead capture
 
-const N8N_WEBHOOK_URL = 'https://YOUR_N8N_WEBHOOK_URL_HERE';
+const SUPABASE_URL = 'https://gfcncubcurtnzupycwnf.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmY25jdWJjdXJ0bnp1cHljd25mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMzQ4MzYsImV4cCI6MjA4OTgxMDgzNn0.Hbuo8Zl1MNjq8bUlc7Ed_HSBmGQiNHc9wDqKd4XDdOE';
 
 const GOOGLE_FONTS = [
   'Inter', 'DM Sans', 'Plus Jakarta Sans', 'Nunito', 'Poppins',
@@ -322,19 +323,30 @@ function initModeButtons() {
 }
 
 // ── Validation ────────────────────────────────────────────────────────────────
+function showFormErrors(errors) {
+  const errEl = document.getElementById('form-errors');
+  errEl.textContent = '';
+  errors.forEach(msg => {
+    const span = document.createElement('span');
+    span.textContent = msg;
+    errEl.appendChild(span);
+  });
+}
+
 function validateForm() {
   const name = document.getElementById('contact-name').value.trim();
   const email = document.getElementById('contact-email').value.trim();
   const phone = document.getElementById('contact-phone').value.trim();
+  const codename = document.getElementById('contact-codename').value.trim();
   const errors = [];
 
   if (name.length < 2) errors.push('Name must be at least 2 characters.');
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('Please enter a valid email address.');
   const digits = phone.replace(/[^0-9]/g, '');
   if (digits.length < 8) errors.push('Phone must contain at least 8 digits.');
+  if (codename.length < 1) errors.push('Agent code is required.');
 
-  const errEl = document.getElementById('form-errors');
-  errEl.innerHTML = errors.map(e => `<span>${e}</span>`).join('');
+  showFormErrors(errors);
   return errors.length === 0;
 }
 
@@ -346,38 +358,67 @@ function showToast(msg, type = 'success') {
   setTimeout(() => { toast.className = 'toast'; }, 3500);
 }
 
-// ── n8n POST ──────────────────────────────────────────────────────────────────
+// ── Supabase helpers ──────────────────────────────────────────────────────────
+async function sbFetch(path, options = {}) {
+  return fetch(`${SUPABASE_URL}/rest/v1${path}`, {
+    ...options,
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      'Content-Type': 'application/json',
+      ...(options.headers || {})
+    }
+  });
+}
+
+// ── Lead submission ───────────────────────────────────────────────────────────
 function initSendButton() {
   const btn = document.getElementById('btn-send');
   btn.addEventListener('click', async () => {
     if (!validateForm()) return;
 
-    const config = AppState.get();
-    const payload = {
-      contact: {
-        name: document.getElementById('contact-name').value.trim(),
-        email: document.getElementById('contact-email').value.trim(),
-        phone: document.getElementById('contact-phone').value.trim()
-      },
-      config: {
-        mode: config.mode,
-        theme: config.theme,
-        fonts: config.fonts,
-        bgStyle: config.bgStyle || 'particles',
-        viewCounter: config.viewCounter
-      }
-    };
+    const name     = document.getElementById('contact-name').value.trim();
+    const email    = document.getElementById('contact-email').value.trim();
+    const phone    = document.getElementById('contact-phone').value.trim();
+    const codename = document.getElementById('contact-codename').value.trim();
+    const config   = AppState.get();
 
     btn.disabled = true;
     btn.textContent = I18N.t('configurator.sending');
 
     try {
-      const res = await fetch(N8N_WEBHOOK_URL, {
+      // Look up agent by codename
+      const agentRes = await sbFetch(`/agents?codename=eq.${encodeURIComponent(codename)}&select=id`);
+      if (!agentRes.ok) throw new Error('agent_lookup');
+      const agents = await agentRes.json();
+      if (!agents.length) {
+        showFormErrors([I18N.t('configurator.error_codename')]);
+        return;
+      }
+
+      // Insert lead into clients
+      const insertRes = await sbFetch('/clients', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        headers: { 'Prefer': 'return=minimal' },
+        body: JSON.stringify({
+          client_name: name,
+          agent_id: agents[0].id,
+          type: config.mode,
+          status: 'possible_client',
+          description: `Email: ${email} | Phone: ${phone}`,
+          demo_data: {
+            contact: { name, email, phone },
+            config: {
+              mode: config.mode,
+              theme: config.theme,
+              fonts: config.fonts,
+              bgStyle: config.bgStyle || 'particles',
+              viewCounter: config.viewCounter
+            }
+          }
+        })
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!insertRes.ok) throw new Error('insert_failed');
       showToast(I18N.t('configurator.success'), 'success');
     } catch(e) {
       showToast(I18N.t('configurator.error'), 'error');
