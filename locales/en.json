@@ -19,7 +19,6 @@
     "cta_secondary": "View Services",
     "cta_pricing": "View Pricing",
     "cta_demo": "Demo & Make Now",
-    "stat_1_label": "Sites Delivered",
     "stat_2_label": "Languages Supported",
     "stat_3_label": "Uptime SLA"
   },
@@ -108,7 +107,6 @@
     "cta": "Coming 2026"
   },
   "footer": {
-    "tagline": "Premium web development for modern businesses.",
     "copyright": "© 2025 Web人. All rights reserved.",
     "built_with": "Built with clean code & attention to detail.",
     "privacy": "Privacy Policy"

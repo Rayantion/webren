@@ -19,7 +19,6 @@
     "cta_secondary": "查看服務",
     "cta_pricing": "查看定價",
     "cta_demo": "試用 & 立即製作",
-    "stat_1_label": "完成專案",
     "stat_2_label": "支援語言",
     "stat_3_label": "正常運行保證"
   },
@@ -108,7 +107,6 @@
     "cta": "2026 年推出"
   },
   "footer": {
-    "tagline": "為現代企業提供頂級網站開發。",
     "copyright": "© 2025 Web人。保留所有權利。",
     "built_with": "以乾淨程式碼與細心打造。",
     "privacy": "隱私政策"
