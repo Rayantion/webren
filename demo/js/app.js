@@ -2,7 +2,13 @@
 
 const STORAGE_KEY_CONFIG = 'webren_demo_v2';
 let isTransitioning = false;
-let currentConfig = {};
+let currentConfig = {
+  mode: 'company',
+  theme: { primary: '#0D9488', accent: '#7C3AED', bg: '#FAFAFA', text: '#111827' },
+  fonts: { heading: 'Playfair Display', body: 'Inter' },
+  bgStyle: 'particles',
+  viewCounter: true
+};
 
 // ── Load config ───────────────────────────────────────────────────────────────
 async function loadConfig() {
