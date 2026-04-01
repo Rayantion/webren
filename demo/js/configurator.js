@@ -72,8 +72,8 @@ function renderPresets() {
 
     const swatch = document.createElement('div');
     swatch.className = `preset-swatch${preset.id === activeName ? ' active' : ''}`;
-    swatch.title = preset.name;
-    swatch.setAttribute('aria-label', preset.name);
+    swatch.title = I18N.t(`configurator.preset_${preset.id}`);
+    swatch.setAttribute('aria-label', I18N.t(`configurator.preset_${preset.id}`));
     swatch.innerHTML = `
       <div class="preset-swatch-inner">
         <div class="preset-swatch-bg" style="background:${preset.bg}"></div>
@@ -88,7 +88,7 @@ function renderPresets() {
 
     const label = document.createElement('div');
     label.className = 'preset-name';
-    label.textContent = preset.name;
+    label.textContent = I18N.t(`configurator.preset_${preset.id}`);
 
     wrap.appendChild(swatch);
     wrap.appendChild(label);
@@ -340,11 +340,11 @@ function validateForm() {
   const codename = document.getElementById('contact-codename').value.trim();
   const errors = [];
 
-  if (name.length < 2) errors.push('Name must be at least 2 characters.');
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('Please enter a valid email address.');
+  if (name.length < 2) errors.push(I18N.t('configurator.error_name'));
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push(I18N.t('configurator.error_email_invalid'));
   const digits = phone.replace(/[^0-9]/g, '');
-  if (digits.length < 8) errors.push('Phone must contain at least 8 digits.');
-  if (codename.length < 1) errors.push('Agent code is required.');
+  if (digits.length < 8) errors.push(I18N.t('configurator.error_phone'));
+  if (codename.length < 1) errors.push(I18N.t('configurator.error_codename_required'));
 
   showFormErrors(errors);
   return errors.length === 0;
