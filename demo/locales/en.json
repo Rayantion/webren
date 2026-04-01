@@ -5,6 +5,7 @@
     "menu": "Menu",
     "products": "Products",
     "about": "About",
+    "gallery": "Gallery",
     "contact": "Contact",
     "back_to_main": "← Back to Website"
   },
@@ -44,6 +45,10 @@
       "badge": "Our Story",
       "title": "Who We Are",
       "body": "We are a passionate team dedicated to delivering exceptional digital experiences. With years of expertise, we help businesses of all sizes establish a powerful online presence."
+    },
+    "gallery": {
+      "badge": "Our Work",
+      "title": "Gallery"
     },
     "features": {
       "badge": "Why Choose Us",
