@@ -12,15 +12,16 @@
   },
   "hero": {
     "badge": "Modern Web Development",
-    "title": "We Build Websites That",
-    "title_highlight": "Perform & Convert",
-    "subtitle": "Premium web experiences engineered for search engines, AI discovery, and global audiences. Your brand, elevated.",
+    "title": "Websites Built for",
+    "title_highlight": "AI Discovery & Global Reach",
+    "subtitle": "Professional websites with built-in SEO, GEO, and native bilingual support. Built to rank, built to convert.",
     "cta_primary": "Start Your Project",
     "cta_secondary": "View Services",
     "cta_pricing": "View Pricing",
-    "cta_demo": "Demo & Make Now",
-    "stat_2_label": "Languages Supported",
-    "stat_3_label": "Uptime SLA"
+    "cta_demo": "Try Demo",
+    "stat_1_label": "Projects Delivered",
+    "stat_2_label": "Languages Built In",
+    "stat_3_label": ""
   },
   "services": {
     "badge": "What We Build",
@@ -29,15 +30,15 @@
     "item_1_title": "SEO Engineering",
     "item_1_desc": "Technical SEO from the ground up. Schema markup, Core Web Vitals optimization, semantic HTML, and structured data that search engines love.",
     "item_2_title": "GEO & AIO Ready",
-    "item_2_desc": "Generative Engine Optimization — built for AI search (ChatGPT, Perplexity, Gemini). Entity-based content structures and AI-indexable markup.",
+    "item_2_desc": "Generative Engine Optimization for AI search (ChatGPT, Perplexity, Gemini). Entity-based content structures and AI-indexable markup.",
     "item_3_title": "Multi-Language (i18n)",
     "item_3_desc": "Native internationalization with hreflang tags, locale-aware routing, and professional translations. Reach every market.",
     "item_4_title": "Performance First",
-    "item_4_desc": "100/100 Lighthouse scores. Sub-2s load times. Optimized assets, lazy loading, and CDN strategies for blazing-fast delivery.",
+    "item_4_desc": "Near-perfect Lighthouse scores. Sub-2s load times. Optimized assets, lazy loading, and CDN strategies for blazing-fast delivery.",
     "item_5_title": "Responsive Design",
     "item_5_desc": "Pixel-perfect across all devices. Mobile-first architecture with fluid layouts that look stunning from phone to 4K.",
     "item_6_title": "Modern Tech Stack",
-    "item_6_desc": "Clean, maintainable code. Vanilla HTML/CSS/JS, React, Next.js, or whatever fits your project — we build it right.",
+    "item_6_desc": "Clean, maintainable code using Vanilla HTML/CSS/JS, React, or Next.js — chosen for your project, built to last.",
     "item_7_title": "Email Service",
     "item_7_desc": "Professional email setup via Gmail — send & receive from your own domain (noreply@yourdomain.com). Branded, reliable, and hassle-free.",
     "item_8_title": "Form → Google Sheets",
@@ -79,7 +80,7 @@
     "badge": "Live Demo",
     "title": "i18n in Action",
     "subtitle": "This entire page is available in multiple languages. Toggle between English and Traditional Chinese using the button above.",
-    "note": "Built with i18next — the industry-standard internationalization library."
+    "note": "Professional-grade translations by native speakers, not machine translation."
   },
   "contact": {
     "badge": "Get In Touch",
