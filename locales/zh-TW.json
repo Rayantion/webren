@@ -12,15 +12,16 @@
   },
   "hero": {
     "badge": "現代網站開發",
-    "title": "我們打造",
-    "title_highlight": "高效能・高轉換率網站",
-    "subtitle": "專業網站體驗，針對搜尋引擎、AI探索及全球受眾優化。讓您的品牌脫穎而出。",
+    "title": "為 AI 探索",
+    "title_highlight": "與全球觸及而建",
+    "subtitle": "專業網站，內建 SEO、GEO，原生雙語支援。為排名而生，為轉換而設計。",
     "cta_primary": "開始您的專案",
     "cta_secondary": "查看服務",
     "cta_pricing": "查看定價",
-    "cta_demo": "試用 & 立即製作",
-    "stat_2_label": "支援語言",
-    "stat_3_label": "正常運行保證"
+    "cta_demo": "試用 Demo",
+    "stat_1_label": "完成專案",
+    "stat_2_label": "內建語言",
+    "stat_3_label": ""
   },
   "services": {
     "badge": "我們的服務",
@@ -33,11 +34,11 @@
     "item_3_title": "多語言支援 (i18n)",
     "item_3_desc": "原生國際化，包含hreflang標籤、地區感知路由及專業翻譯。觸及每一個市場。",
     "item_4_title": "極致效能",
-    "item_4_desc": "Lighthouse滿分100。載入時間低於2秒。優化資源、延遲載入及CDN策略，實現超快速傳遞。",
+    "item_4_desc": "Lighthouse 近滿分。載入時間低於 2 秒。優化資源、延遲載入及 CDN 策略，實現超快速傳遞。",
     "item_5_title": "響應式設計",
     "item_5_desc": "跨裝置像素完美呈現。行動裝置優先架構，流暢佈局在手機到4K螢幕上都令人驚艷。",
     "item_6_title": "現代技術堆疊",
-    "item_6_desc": "乾淨、可維護的程式碼。原生HTML/CSS/JS、React、Next.js或任何適合您專案的技術——我們確保品質。",
+    "item_6_desc": "使用原生 HTML/CSS/JS、React 或 Next.js 的乾淨可維護程式碼——為您的專案挑選，品質長久。",
     "item_7_title": "電子郵件服務",
     "item_7_desc": "透過Gmail建立專業電子郵件——以您的網域收發郵件（noreply@yourdomain.com）。品牌化、可靠且簡單易用。",
     "item_8_title": "表單 → Google試算表",
@@ -79,7 +80,7 @@
     "badge": "實時展示",
     "title": "i18n 實際運作",
     "subtitle": "整個頁面都有多種語言版本。使用上方按鈕在英文和繁體中文之間切換。",
-    "note": "使用 i18next 建構——業界標準的國際化函式庫。"
+    "note": "由專業譯者親自翻譯，非機器翻譯。"
   },
   "contact": {
     "badge": "聯絡我們",
