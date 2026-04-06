@@ -82,6 +82,9 @@
     <lastmod>2026-03-25</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en"      href="https://webren.dev/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW"   href="https://webren.dev/privacy/?lang=zh-TW"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://webren.dev/privacy/"/>
   </url>
 
 </urlset>
