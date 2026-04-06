@@ -77,6 +77,7 @@ function initHeroCanvas() {
   let animId;
   function animate() {
     animId = requestAnimationFrame(animate);
+    if (document.hidden) return;
     const t = Date.now() * 0.001;
 
     shapes.forEach(m => {
@@ -187,12 +188,14 @@ function initCursorGlow() {
   }
   let cx = 0, cy = 0, tx = 0, ty = 0;
   document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
-  (function lerp() {
-    cx += (tx - cx) * 0.1;
-    cy += (ty - cy) * 0.1;
-    glow.style.transform = `translate(${cx - 200}px, ${cy - 200}px)`;
-    requestAnimationFrame(lerp);
-  })();
+  if (!window.matchMedia('(pointer: coarse)').matches) {
+    (function lerp() {
+      cx += (tx - cx) * 0.1;
+      cy += (ty - cy) * 0.1;
+      glow.style.transform = `translate(${cx - 200}px, ${cy - 200}px)`;
+      requestAnimationFrame(lerp);
+    })();
+  }
 }
 
 // ─── Service card hover tilt ──────────────────────────────────────────────────
