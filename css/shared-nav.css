@@ -215,7 +215,7 @@
   background: #0D9488;
   transform: scaleY(0); transform-origin: top;
   z-index: 9999; pointer-events: none;
-  transition: transform 0.4s ease-in-out;
+  transition: transform 0.35s ease-in-out;
 }
 #page-transition.active { transform: scaleY(1); pointer-events: all; }
 
@@ -225,7 +225,7 @@
   background: #0D9488;
   transform: scaleY(0); transform-origin: top;
   z-index: 9999; pointer-events: none;
-  transition: transform 0.4s ease-in-out;
+  transition: transform 0.35s ease-in-out;
 }
 #lang-overlay.active { transform: scaleY(1); pointer-events: all; }
 

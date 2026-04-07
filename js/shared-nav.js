@@ -178,7 +178,7 @@
       closeMenu();
       pt.classList.add('active');
       var dest = link.href;
-      setTimeout(function () { window.location.href = dest; }, 400);
+      setTimeout(function () { window.location.href = dest; }, 350);
     });
   });
 
