@@ -7,7 +7,8 @@
     "about": "關於",
     "gallery": "作品集",
     "contact": "聯絡",
-    "back_to_main": "← 回到主網站"
+    "back_to_main": "← 回到主網站",
+    "back": "返回"
   },
   "hero": {
     "badge": "由 Web人 驅動",
@@ -181,7 +182,7 @@
   },
   "footer": {
     "tagline": "這是一個由 Web人 製作的示範網站。",
-    "copyright": "© 2025 Web人。保留所有權利。",
+    "copyright": "© 2026 Web人。保留所有權利。",
     "counter_today": "今日",
     "counter_yesterday": "昨日",
     "counter_lastmonth": "上月",

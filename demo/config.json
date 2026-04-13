@@ -10,5 +10,6 @@
     "heading": "Playfair Display",
     "body": "Inter"
   },
+  "bgStyle": "particles",
   "viewCounter": true
 }

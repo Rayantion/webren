@@ -7,7 +7,8 @@
     "about": "About",
     "gallery": "Gallery",
     "contact": "Contact",
-    "back_to_main": "← Back to Website"
+    "back_to_main": "← Back to Website",
+    "back": "Back"
   },
   "hero": {
     "badge": "Powered by Web人",
@@ -181,7 +182,7 @@
   },
   "footer": {
     "tagline": "This is a demo website by Web人.",
-    "copyright": "© 2025 Web人. All rights reserved.",
+    "copyright": "© 2026 Web人. All rights reserved.",
     "counter_today": "Today",
     "counter_yesterday": "Yesterday",
     "counter_lastmonth": "Last Month",
