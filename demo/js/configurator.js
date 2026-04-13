@@ -2,6 +2,7 @@
 
 const SUPABASE_URL = 'https://gfcncubcurtnzupycwnf.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmY25jdWJjdXJ0bnp1cHljd25mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMzQ4MzYsImV4cCI6MjA4OTgxMDgzNn0.Hbuo8Zl1MNjq8bUlc7Ed_HSBmGQiNHc9wDqKd4XDdOE';
+const N8N_WEBHOOK_URL = 'https://n8n.rayantion.me/webhook/webren-demo';
 
 const GOOGLE_FONTS = [
   'Inter', 'DM Sans', 'Plus Jakarta Sans', 'Nunito', 'Poppins',
@@ -419,6 +420,26 @@ function initSendButton() {
         })
       });
       if (!insertRes.ok) throw new Error('insert_failed');
+
+      // Send to n8n webhook (fire and forget)
+      try {
+        fetch(N8N_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contact: { name, email, phone },
+            codename,
+            config: {
+              mode: config.mode,
+              theme: config.theme,
+              fonts: config.fonts,
+              bgStyle: config.bgStyle || 'particles',
+              viewCounter: config.viewCounter
+            }
+          })
+        }).catch(() => {});
+      } catch(_) {}
+
       showToast(I18N.t('configurator.success'), 'success');
     } catch(e) {
       showToast(I18N.t('configurator.error'), 'error');
