@@ -49,7 +49,8 @@
     },
     "gallery": {
       "badge": "Our Work",
-      "title": "Gallery"
+      "title": "Gallery",
+      "subtitle": "See our latest projects"
     },
     "features": {
       "badge": "Why Choose Us",
