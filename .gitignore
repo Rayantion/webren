@@ -13,3 +13,7 @@ Thumbs.db
 
 # Logs
 *.log
+.vercel
+
+# OMC state (may contain sensitive data)
+.omc/
