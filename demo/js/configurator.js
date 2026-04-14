@@ -338,12 +338,14 @@ function validateForm() {
   const name = document.getElementById('contact-name').value.trim();
   const email = document.getElementById('contact-email').value.trim();
   const phone = document.getElementById('contact-phone').value.trim();
+  const codename = document.getElementById('contact-codename').value.trim();
   const errors = [];
 
   if (name.length < 2) errors.push(I18N.t('configurator.error_name'));
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push(I18N.t('configurator.error_email_invalid'));
   const digits = phone.replace(/[^0-9]/g, '');
   if (digits.length < 8) errors.push(I18N.t('configurator.error_phone'));
+  if (codename.length < 1) errors.push(I18N.t('configurator.error_codename_required'));
 
   showFormErrors(errors);
   return errors.length === 0;
