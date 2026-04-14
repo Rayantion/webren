@@ -25,11 +25,9 @@ const I18N = (() => {
       if (val !== undefined) el.textContent = val;
     });
 
-    document.querySelectorAll('[data-i18n-html]').forEach(el => {
-      const key = el.getAttribute('data-i18n-html');
-      const val = getNestedValue(data, key);
-      if (val !== undefined) el.innerHTML = val;
-    });
+    // Note: data-i18n-html (innerHTML) intentionally removed — XSS risk.
+    // Use data-i18n (textContent) for all translatable strings.
+    // If HTML content is truly needed, add DOMPurify sanitization first.
 
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
       const key = el.getAttribute('data-i18n-placeholder');

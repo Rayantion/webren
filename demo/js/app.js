@@ -313,18 +313,32 @@ function renderFeaturedMenu() {
   const selection = ['main', 'dessert', 'sides'].flatMap(cat =>
     RESTAURANT_MENU.filter(i => i.category === cat).slice(0, 2)
   );
-  grid.innerHTML = selection.map(item => {
+  while (grid.firstChild) grid.removeChild(grid.firstChild);
+  selection.forEach(item => {
     const primary   = lang === 'zh' ? item.nameZh : item.name;
     const secondary = lang === 'zh' ? item.name   : item.nameZh;
-    return `
-      <div class="menu-item card reveal" data-category="${item.category}">
-        <div class="menu-item-info">
-          <h3>${primary}<span class="item-name-en"> ${secondary}</span></h3>
-          <p>${item.desc}</p>
-        </div>
-        <span class="menu-price">NT$${item.price}</span>
-      </div>`;
-  }).join('');
+    const div = document.createElement('div');
+    div.className = 'menu-item card reveal';
+    div.dataset.category = item.category;
+    const info = document.createElement('div');
+    info.className = 'menu-item-info';
+    const h3 = document.createElement('h3');
+    h3.textContent = primary + ' ';
+    const span = document.createElement('span');
+    span.className = 'item-name-en';
+    span.textContent = secondary;
+    h3.appendChild(span);
+    const p = document.createElement('p');
+    p.textContent = item.desc;
+    info.appendChild(h3);
+    info.appendChild(p);
+    const price = document.createElement('span');
+    price.className = 'menu-price';
+    price.textContent = 'NT$' + item.price;
+    div.appendChild(info);
+    div.appendChild(price);
+    grid.appendChild(div);
+  });
   initScrollReveal();
 }
 
@@ -1081,7 +1095,8 @@ function initCatalog({ data, gridId, searchId, categoryTabsId, subcategoryTabsId
     if (activeSort === 'price_asc')  items.sort((a, b) => a.price - b.price);
     if (activeSort === 'price_desc') items.sort((a, b) => b.price - a.price);
 
-    grid.innerHTML = items.map(renderItem).join('');
+    while (grid.firstChild) grid.removeChild(grid.firstChild);
+    items.forEach(item => grid.appendChild(renderItem(item)));
     // Stagger-animate new items in
     Array.from(grid.children).forEach((el, i) => {
       el.style.opacity = '0';
@@ -1197,28 +1212,58 @@ function initSubPages() {
     const lang = getCurrentLang();
     const primary   = lang === 'zh' ? item.nameZh : item.name;
     const secondary = lang === 'zh' ? item.name   : item.nameZh;
-    return `
-      <div class="menu-catalog-item">
-        <div class="catalog-item-info">
-          <h3 class="catalog-item-name">${primary}<span class="item-name-en">${secondary}</span></h3>
-          <p class="catalog-item-desc">${item.desc}</p>
-        </div>
-        <span class="catalog-item-price">NT$${item.price}</span>
-      </div>`;
+    const wrap = document.createElement('div');
+    wrap.className = 'menu-catalog-item';
+    const info = document.createElement('div');
+    info.className = 'catalog-item-info';
+    const h3 = document.createElement('h3');
+    h3.className = 'catalog-item-name';
+    h3.textContent = primary;
+    const span = document.createElement('span');
+    span.className = 'item-name-en';
+    span.textContent = secondary;
+    h3.appendChild(span);
+    const p = document.createElement('p');
+    p.className = 'catalog-item-desc';
+    p.textContent = item.desc;
+    info.appendChild(h3);
+    info.appendChild(p);
+    const price = document.createElement('span');
+    price.className = 'catalog-item-price';
+    price.textContent = 'NT$' + item.price;
+    wrap.appendChild(info);
+    wrap.appendChild(price);
+    return wrap;
   }
 
   function productRenderItem(item) {
-    return `
-      <div class="product-catalog-item">
-        <img class="catalog-item-img" src="${item.img}" alt="${item.name}" loading="lazy">
-        <div class="catalog-item-body">
-          <h3 class="catalog-item-name">${item.name}</h3>
-          <p class="catalog-item-desc">${item.desc}</p>
-          <div class="catalog-item-footer">
-            <span class="catalog-item-price">NT$${item.price.toLocaleString()}</span>
-          </div>
-        </div>
-      </div>`;
+    const wrap = document.createElement('div');
+    wrap.className = 'product-catalog-item';
+    const img = document.createElement('img');
+    img.className = 'catalog-item-img';
+    img.src = item.img;
+    img.alt = item.name;
+    img.loading = 'lazy';
+    const body = document.createElement('div');
+    body.className = 'catalog-item-body';
+    const h3 = document.createElement('h3');
+    h3.className = 'catalog-item-name';
+    h3.textContent = item.name;
+    const p = document.createElement('p');
+    p.className = 'catalog-item-desc';
+    p.textContent = item.desc;
+    const footer = document.createElement('div');
+    footer.className = 'catalog-item-footer';
+    const price = document.createElement('span');
+    price.className = 'catalog-item-price';
+    price.textContent = 'NT$' + item.price.toLocaleString();
+    footer.appendChild(price);
+    body.appendChild(h3);
+    body.appendChild(p);
+    body.appendChild(footer);
+    wrap.appendChild(img);
+    wrap.appendChild(body);
+    return wrap;
   }
 
   const rerenderMenu = initCatalog({
