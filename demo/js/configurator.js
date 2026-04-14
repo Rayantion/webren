@@ -2,7 +2,7 @@
 
 const SUPABASE_URL = 'https://gfcncubcurtnzupycwnf.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmY25jdWJjdXJ0bnp1cHljd25mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMzQ4MzYsImV4cCI6MjA4OTgxMDgzNn0.Hbuo8Zl1MNjq8bUlc7Ed_HSBmGQiNHc9wDqKd4XDdOE';
-const N8N_WEBHOOK_URL = 'https://n8n.rayantion.me/webhook/webren-demo';
+const NOTIFY_LEAD_URL = `${SUPABASE_URL}/functions/v1/notify-lead`;
 
 const GOOGLE_FONTS = [
   'Inter', 'DM Sans', 'Plus Jakarta Sans', 'Nunito', 'Poppins',
@@ -426,11 +426,14 @@ function initSendButton() {
       });
       if (!insertRes.ok) throw new Error('insert_failed');
 
-      // Send to n8n webhook (fire and forget)
+      // Notify via Edge Function (proxies to n8n with server-side auth)
       try {
-        fetch(N8N_WEBHOOK_URL, {
+        fetch(NOTIFY_LEAD_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY
+          },
           body: JSON.stringify({
             contact: { name, email, phone, gmaps, website, about },
             codename,
