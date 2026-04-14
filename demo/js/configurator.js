@@ -381,6 +381,9 @@ function initSendButton() {
     const name     = document.getElementById('contact-name').value.trim();
     const email    = document.getElementById('contact-email').value.trim();
     const phone    = document.getElementById('contact-phone').value.trim();
+    const gmaps    = document.getElementById('contact-gmaps').value.trim();
+    const website  = document.getElementById('contact-website').value.trim();
+    const about    = document.getElementById('contact-about').value.trim();
     const codename = document.getElementById('contact-codename').value.trim();
     const config   = AppState.get();
 
@@ -408,7 +411,7 @@ function initSendButton() {
           status: 'possible_client',
           description: `Email: ${email} | Phone: ${phone}`,
           demo_data: {
-            contact: { name, email, phone },
+            contact: { name, email, phone, gmaps, website, about },
             config: {
               mode: config.mode,
               theme: config.theme,
@@ -427,7 +430,7 @@ function initSendButton() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contact: { name, email, phone },
+            contact: { name, email, phone, gmaps, website, about },
             codename,
             config: {
               mode: config.mode,
