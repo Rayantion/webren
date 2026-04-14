@@ -406,9 +406,11 @@ function initSendButton() {
         headers: { 'Prefer': 'return=minimal' },
         body: JSON.stringify({
           client_name: name,
+          email: email,
+          phone: phone,
           agent_id: agents[0].id,
           type: config.mode,
-          status: 'possible_client',
+          status: 'new',
           description: `Email: ${email} | Phone: ${phone}`,
           demo_data: {
             contact: { name, email, phone, gmaps, website, about },
